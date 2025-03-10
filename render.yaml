@@ -1,0 +1,26 @@
+# Exported from Render on 2025-03-10T00:37:43Z
+databases:
+- name: CSE340 Database
+  databaseName: cse340_fsl3
+  user: cse340
+  plan: free
+  region: oregon
+  ipAllowList:
+  - source: 0.0.0.0/0
+    description: everywhere
+  postgresMajorVersion: "16"
+services:
+- type: web
+  name: CSE340
+  runtime: node
+  repo: https://github.com/ssmithope/CSE340
+  plan: free
+  envVars:
+  - key: NODE_VERSION
+    sync: false
+  region: oregon
+  buildCommand: pnpm install
+  startCommand: pnpm start
+  autoDeploy: false
+version: "1"
+
