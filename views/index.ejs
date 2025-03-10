@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="en-US">
-  <%- include('partials/head') %>
+  <head>
+    <!-- Include the 'head.ejs' partial -->
+    <%- include('partials/head') %>
+  </head>
   <body>
     <header>
+      <!-- Include the 'header.ejs' partial -->
       <%- include('partials/header') %>
+      <!-- Include the 'navigation.ejs' partial -->
       <%- include('partials/navigation') %>
     </header>
     <main>
       <section class="hero">
-        <!-- Images from 'site' folder -->
+        <!-- Images from the 'site' folder -->
         <img src="/public/images/site/checkerboard.jpg" alt="Checkerboard">
         <img src="/public/images/site/favicon-32x32.png" alt="Site Favicon">
         <img src="/public/images/site/icon.png" alt="Site Icon">
@@ -16,13 +21,13 @@
         <img src="/public/images/site/small_check.jpg" alt="Small Check - JPG">
         <img src="/public/images/site/small_check.png" alt="Small Check - PNG">
 
-        <!-- Images from 'upgrades' folder -->
+        <!-- Images from the 'upgrades' folder -->
         <img src="/public/images/upgrades/bumper_sticker.jpg" alt="Bumper Sticker">
         <img src="/public/images/upgrades/flame.jpg" alt="Flame Design">
         <img src="/public/images/upgrades/flux-cap.png" alt="Flux Capacitor">
         <img src="/public/images/upgrades/hub-cap.jpg" alt="Hub Cap">
 
-        <!-- Images from 'vehicles' folder -->
+        <!-- Images from the 'vehicles' folder -->
         <img src="/public/images/vehicles/adventador-tn.jpg" alt="Adventador Thumbnail">
         <img src="/public/images/vehicles/adventador.jpg" alt="Adventador">
         <img src="/public/images/vehicles/aerocar-tn.jpg" alt="Aerocar Thumbnail">
@@ -51,7 +56,6 @@
         <img src="/public/images/vehicles/monster-truck.jpg" alt="Monster Truck">
         <img src="/public/images/vehicles/mystery-van-tn.jpg" alt="Mystery Van Thumbnail">
         <img src="/public/images/vehicles/mystery-van.jpg" alt="Mystery Van">
-        <img src="/public/images/vehicles/mystery-van.jpg" alt="Mystery Van">
         <img src="/public/images/vehicles/no-image-tn.png" alt="No Image Thumbnail">
         <img src="/public/images/vehicles/no-image.png" alt="No Image">
         <img src="/public/images/vehicles/survan-tn.jpg" alt="Survan Thumbnail">
@@ -66,6 +70,7 @@
       </section>
     </main>
     <footer>
+      <!-- Include the 'footer.ejs' partial -->
       <%- include('partials/footer') %>
     </footer>
   </body>
