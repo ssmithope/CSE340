@@ -1,4 +1,4 @@
-/******* Change box model ***************/
+/******* Change Box Model ***************/
 *,
 *:before,
 *:after {
@@ -7,12 +7,9 @@
 
 body {
   font-family: "Orbitron", sans-serif;
+  background-color: #f4f4f4; /* Neutral background */
+  color: #333; /* Darker text for contrast */
   margin: 0;
-  padding: 0;
-  background-image: url('/images/site/small_check.jpg'); /* Restores the checkered background */
-  background-size: cover;
-  background-position: center;
-  color: #333; /* Ensures text is readable on the background */
 }
 
 header {
@@ -20,8 +17,9 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
-  background-color: black; /* Black header to match the theme */
+  width: 100%;
   color: white;
+  background-color: #333; /* Dark background for header */
   margin-bottom: 15px;
 }
 
@@ -30,21 +28,31 @@ header a {
   color: inherit;
 }
 
+.siteName {
+  font-size: 1.5rem;
+}
+
+.logIn {
+  font-variant: small-caps;
+}
+
 nav {
+  color: white;
+  background-color: black;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: black; /* Matches the header */
-  color: white;
+  width: 100%;
   padding: 10px 40px;
   margin-bottom: 15px;
 }
 
 nav ul {
   display: flex;
-  gap: 15px;
+  gap: 10px;
   list-style: none;
   padding: 0;
+  justify-content: space-between;
 }
 
 nav ul li {
@@ -52,27 +60,37 @@ nav ul li {
 }
 
 nav ul li:hover {
+  background-color: #444; /* Highlight background */
+  color: white;
   transform: scale(1.1);
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
+
+h1, h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/**************OVERLAY DIV*******************************************************/
 
 .overlay {
   display: flex;
-  flex-direction: column;
+  position: relative;
   align-items: center;
+  max-width: 600px;
   margin: 0 auto;
-  background-color: rgba(255, 255, 255, 0.8); /* Makes text sections stand out */
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 800px;
-  text-align: center;
+}
+
+.delorean-sale {
+  position: relative;
+  width: 100%;
 }
 
 .delorean-image-index {
   width: 100%;
-  max-width: 600px;
   height: auto;
-  margin: 10px auto;
+  display: block;
+  margin: 0 auto;
 }
 
 .delorean-image-index:hover {
@@ -81,77 +99,132 @@ nav ul li:hover {
 }
 
 .text-overlay {
-  position: relative;
-  padding: 15px;
-  background-color: rgba(255, 255, 255, 0.9); /* Keeps contrast over the checkered background */
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.7); /* Darker background */
+  padding: 10px;
   border-radius: 5px;
-  text-align: left;
-  margin: 20px auto;
-  max-width: 600px;
 }
 
 .text-overlay ul {
   list-style: none;
-  margin: 0;
   padding: 0;
+  margin: 0;
+  color: white;
+  text-align: left;
 }
 
 .text-overlay li {
-  margin-bottom: 10px;
-  font-size: 1rem;
-  color: black;
+  font-size: 18px;
+  margin-bottom: 5px;
+  text-shadow: 2px 2px 4px black;
 }
 
-/************** Reviews and Upgrades **************/
+.delorean-promo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.own-delorean {
+  background-color: #00b7eb;
+  color: black;
+  padding: 7px 15px;
+  border: none;
+  cursor: pointer;
+  font-family: Orbitron;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.own-delorean:hover {
+  background-color: #008cba;
+  border: 2px solid #000;
+  transform: scale(1.05);
+}
+
+.own-delorean:active {
+  transform: scale(0.95);
+}
+
+/*****Reviews Container***********************/
 
 .review-container {
-  background-color: rgba(255, 255, 255, 0.9); /* Standout box on the checkered background */
-  padding: 15px;
-  border-radius: 5px;
   max-width: 400px;
-  margin: 20px auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#delorean-reviews {
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .reviews {
-  list-style-type: disc;
+  font-size: 14px;
   padding-left: 20px;
+  list-style-type: disc;
 }
 
 .reviews li {
+  margin-left: 0px;
   margin-bottom: 10px;
 }
 
-.upgrade-container {
+/******Upgrades Container*********************/
+
+.upgrades {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  margin: 20px auto;
-  max-width: 800px;
+  gap: 10px;
+  justify-content: start;
+  text-align: left;
 }
 
 .item {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0.9); /* Maintains contrast */
-  padding: 15px;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10px;
 }
 
-/********************** Media Queries **********************/
+.item p {
+  margin-top: 5px;
+}
+
+.image-container {
+  background-color: #00b7eb;
+  border: 2px solid #008cba;
+  padding: 20px;
+  width: 140px;
+  height: 80px;
+  text-align: center;
+}
+
+.image-container img {
+  width: 50px;
+  height: auto;
+}
+
+.image-container img:hover {
+  box-shadow: 0 0 15px #00ffcc, 0 0 30px #00ffcc;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+/**********************Media Queries**********************/
 
 @media (max-width: 768px) {
+  .upgrade-container {
+    grid-template-columns: 1fr; /* Single column for smaller screens */
+  }
+
   nav ul {
     flex-direction: column;
-    gap: 10px;
-  }
-
-  .upgrade-container {
-    grid-template-columns: 1fr; /* Single-column layout for small screens */
-  }
-
-  .review-container, .overlay {
-    margin: 10px;
-    padding: 10px;
+    gap: 5px;
   }
 }
