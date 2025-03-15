@@ -20,6 +20,20 @@ CREATE TABLE inventory (
     inv_thumbnail TEXT
 );
 
+-- Create custom type for account status
+CREATE TYPE account_status AS ENUM ('active', 'inactive', 'suspended');
+
+-- Create account table
+CREATE TABLE account (
+    account_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100),
+    password VARCHAR(100),
+    account_type VARCHAR(20),
+    status account_status
+);
+
 -- Populate inventory table
 INSERT INTO inventory (make, model, classification_id, description, inv_image, inv_thumbnail)
 VALUES 
