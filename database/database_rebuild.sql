@@ -20,6 +20,12 @@ CREATE TABLE inventory (
     inv_thumbnail TEXT
 );
 
+-- Populate inventory table
+INSERT INTO inventory (make, model, classification_id, description, inv_image, inv_thumbnail)
+VALUES 
+('GM', 'Hummer', 1, 'small interiors', '/images/hummer.jpg', '/images/hummer-thumb.jpg'),
+('Tesla', 'Model S', 2, 'luxury electric sedan', '/images/tesla-models.jpg', '/images/tesla-models-thumb.jpg');
+
 -- Create custom type for account status
 CREATE TYPE account_status AS ENUM ('active', 'inactive', 'suspended');
 
@@ -34,8 +40,12 @@ CREATE TABLE account (
     status account_status
 );
 
--- Populate inventory table
-INSERT INTO inventory (make, model, classification_id, description, inv_image, inv_thumbnail)
+-- Populate account table (optional initial data)
+INSERT INTO account (first_name, last_name, email, password, account_type, status)
 VALUES 
-('GM', 'Hummer', 1, 'small interiors', '/images/hummer.jpg', '/images/hummer-thumb.jpg'),
-('Tesla', 'Model S', 2, 'luxury electric sedan', '/images/tesla-models.jpg', '/images/tesla-models-thumb.jpg');
+('Bruce', 'Wayne', 'bruce@wayneent.com', 'IamBatm@n', 'User', 'active'),
+('Clark', 'Kent', 'clark@dailyplanet.com', 'IamSuperman', 'Admin', 'active');
+
+SELECT * FROM classification;
+SELECT * FROM inventory;
+SELECT * FROM account;
