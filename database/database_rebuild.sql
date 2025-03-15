@@ -45,7 +45,3 @@ INSERT INTO account (first_name, last_name, email, password, account_type, statu
 VALUES 
 ('Bruce', 'Wayne', 'bruce@wayneent.com', 'IamBatm@n', 'User', 'active'),
 ('Clark', 'Kent', 'clark@dailyplanet.com', 'IamSuperman', 'Admin', 'active');
-
-SELECT * FROM classification;
-SELECT * FROM inventory;
-SELECT * FROM account;
