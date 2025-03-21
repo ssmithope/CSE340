@@ -3,19 +3,19 @@
  * application. It is used to control the project.
  *******************************************/
 
-import express, { Router } from "express";
-const router = new Router() 
-import invController from "../controllers/invController";
+const express = require("express")
+const router = new express.Router() 
+const invController = require("../controllers/invController")
 
 /* ***********************
  * Require Statements
  *************************/
-import express from "express";
-import expressLayouts from "express-ejs-layouts";
+const express = require("express");
+const expressLayouts = require("express-ejs-layouts");
 const dotenv = require("dotenv").config();
-import { join } from "path";
-import staticRoutes from "./routes/static";
-import { buildHome } from "./controllers/baseController";
+const path = require("path");
+const staticRoutes = require("./routes/static");
+const baseController = require("./controllers/baseController");
 
 
 /* ***************************
@@ -27,14 +27,14 @@ const app = express();
  * View Engine and Templates
  *****************************/
 app.set("view engine", "ejs");
-app.set("views", join(__dirname, "views")); // Set views directory
+app.set("views", path.join(__dirname, "views")); // Set views directory
 app.use(expressLayouts);
 app.set("layout", "./layouts/layout"); // Specify layout file path
 
 /* ***********************
  * Static Files
  *************************/
-app.use('/public'(join(__dirname, 'public')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 /* ***********************
  * Routes
@@ -46,7 +46,7 @@ app.use(staticRoutes); // Include static routes
 //  res.render("index", { title: "Home" });
 //});
 
-app.get("/", utilities.handleErrors(buildHome))
+app.get("/", utilities.handleErrors(baseController.buildHome))
 
 // Inventory routes
 app.use("/inv", inventoryRoute)
