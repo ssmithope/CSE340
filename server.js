@@ -3,7 +3,6 @@
  * application. It is used to control the project.
  *******************************************/
 
-const express = require("express")
 const router = new express.Router() 
 const invController = require("../controllers/invController")
 
