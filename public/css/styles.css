@@ -1,91 +1,72 @@
-/******* Change the box model ***************/
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
-
+/* General Styles */
 body {
-  font-family: "Orbitron", sans-serif; 
+  font-family: "Orbitron", sans-serif;
   margin: 0;
   padding: 0;
-  background-image: url('/images/site/small_check.jpg'); 
-  background-size: cover;
-  background-position: center;
-  color: #333; 
+  background-image: url('/images/site/small_check.jpg');
+  background-repeat: repeat;
+  background-size: auto;
+  background-position: top left;
+  color: #333;
 }
 
+/* Header Styles */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
-  background-color: rgba(0, 0, 0, 0.8); 
-  color: white;
-  margin-bottom: 15px;
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  border-bottom: 2px solid #666;
 }
 
-header a {
-  text-decoration: none;
-  color: inherit;
-}
-
-nav {
+header nav ul {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.8); 
-  color: white;
-  padding: 10px 40px;
-  margin-bottom: 15px;
-}
-
-nav ul {
-  display: flex;
-  gap: 15px;
+  gap: 20px;
   list-style: none;
   padding: 0;
 }
 
-nav ul li {
-  display: inline-block;
+header nav ul li a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 5px;
 }
 
-nav ul li:hover {
-  transform: scale(1.1);
-  transition: transform 0.3s ease-in-out;
+header nav ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
+header .account {
+  margin-left: auto;
+}
+
+/* Main Content */
 main {
   text-align: center;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.9); 
-  max-width: 1200px;
-  margin: 0 auto;
-  border-radius: 8px;
-}
-
-h1, h2 {
-  color: #000; 
-}
-
-.overlay {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 1100px;
   margin: 20px auto;
-  background-color: rgba(255, 255, 255, 0.9); 
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 800px;
-  text-align: center;
+  border-radius: 10px;
 }
 
+main h1 {
+  font-size: 2rem;
+  color: #000;
+}
+
+/* Image Styles */
 .delorean-image-index {
-  width: 100%;
-  max-width: 600px;
+  display: block;
+  margin: 20px auto;
+  max-width: 500px;
   height: auto;
-  margin: 10px auto;
 }
 
 .delorean-image-index:hover {
@@ -93,30 +74,42 @@ h1, h2 {
   transition: transform 0.3s ease-in-out;
 }
 
-.text-overlay {
-  position: relative;
-  padding: 15px;
-  background-color: rgba(255, 255, 255, 0.95); 
-  border-radius: 5px;
-  text-align: left;
+/* Overlay Section */
+.overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 20px auto;
-  max-width: 600px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 800px;
+  text-align: center;
 }
 
 .text-overlay ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  list-style: disc;
+  padding-left: 40px;
 }
 
 .text-overlay li {
-  margin-bottom: 10px;
-  font-size: 1rem;
-  color: #000;
+  font-size: 1.2rem;
+  color: #444;
 }
 
-/************** Reviews and Upgrades **************/
+/* Footer */
+footer {
+  text-align: center;
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: white;
+  border-top: 2px solid #666;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+}
 
+/* Reviews and Upgrades */
 .review-container {
   background-color: rgba(255, 255, 255, 0.9);
   padding: 15px;
@@ -127,7 +120,7 @@ h1, h2 {
 }
 
 .reviews {
-  list-style-type: disc;
+  list-style: none;
   padding-left: 20px;
 }
 
@@ -145,7 +138,7 @@ h1, h2 {
 
 .item {
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.95); 
+  background-color: rgba(255, 255, 255, 0.95);
   padding: 15px;
   border-radius: 5px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
@@ -157,20 +150,24 @@ h1, h2 {
   display: block;
 }
 
-/********************** Media Queries **********************/
-
+/* Media Queries */
 @media (max-width: 768px) {
-  nav ul {
-    flex-direction: column;
-    gap: 10px;
+  header nav ul {
+      flex-direction: column;
+      gap: 15px;
+  }
+
+  main {
+      padding: 15px;
+      margin: 10px;
+  }
+
+  footer {
+      padding: 10px;
+      font-size: 0.9rem;
   }
 
   .upgrade-container {
-    grid-template-columns: 1fr; 
-  }
-
-  .review-container, .overlay, .item {
-    margin: 10px;
-    padding: 10px;
+      grid-template-columns: 1fr;
   }
 }
