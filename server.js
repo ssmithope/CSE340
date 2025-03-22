@@ -82,7 +82,7 @@
 
 import express from "express";
 const app = express();
-import errorHandler from "./middleware/errorHandler";
+import errorHandler from "./middleware/errorHandler.js";
 
 // Use error handler middleware
 app.use(errorHandler);
