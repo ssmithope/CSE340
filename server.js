@@ -79,12 +79,16 @@
 //})
 
 
-
 import express from "express";
 const app = express();
-import errorHandler from "./middleware/errorHandler.js";
 
-// Use error handler middleware
-app.use(errorHandler);
+// Express Error Handler - Place this after all other middleware
+app.use(async (err, req, res, next) => {
+    console.error(`Error at: "${req.originalUrl}": ${err.message}`);
+    res.status(err.status || 500).render('errors/error', {
+      title: err.status || 'Server Error',
+      message: err.message,
+    });
+});
 
 app.listen(3000, () => console.log('Server is running on port 3000'));
