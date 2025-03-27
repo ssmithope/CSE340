@@ -31,3 +31,8 @@ const PORT = 5500
 app.listen(PORT, () => {
 console.log(`trial app listening on ${HOST}:${PORT}`)
 })
+
+const baseController = require("./controllers/baseController")
+
+// Index route
+app.get("/", baseController.buildHome)
