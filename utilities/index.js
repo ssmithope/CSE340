@@ -68,35 +68,48 @@
 //module.exports = Util
 
 
-exports.wrapVehicleDataInHTML = (vehicle) => {
+//exports.wrapVehicleDataInHTML = (vehicle) => {
+//    return `
+//        <!DOCTYPE html>
+//        <html lang="en-US">
+//        <head>
+//            <meta charset="UTF-8">
+//            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//            <title>${vehicle.year} ${vehicle.make} ${vehicle.model}</title>
+//            <style>
+//                body { font-family: Arial, sans-serif; }
+//               .container { display: flex; flex-wrap: wrap; }
+//                .image, .details { flex: 1; margin: 10px; }
+//                .details { max-width: 500px; }
+//            </style>
+//        </head>
+//        <body>
+//            <h1>${vehicle.year} ${vehicle.make} ${vehicle.model}</h1>
+//            <div class="container">
+//                <div class="image">
+//                    <img src="${vehicle.image}" alt="${vehicle.make} ${vehicle.model}" style="max-width: 100%;">
+//                </div>
+//                <div class="details">
+//                    <p><strong>Price:</strong> $${vehicle.price.toLocaleString()}</p>
+//                    <p><strong>Mileage:</strong> ${vehicle.mileage.toLocaleString()} miles</p>
+//                    <p><strong>Exterior Color:</strong> ${vehicle.ext_color}</p>
+//                    <p><strong>Fuel Type:</strong> ${vehicle.fuel_type}</p>
+//                </div>
+//            </div>
+//        </body>
+//        </html>
+//    `;
+//};
+
+
+export function wrapVehicleHTML(vehicle) {
     return `
-        <!DOCTYPE html>
-        <html lang="en-US">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>${vehicle.year} ${vehicle.make} ${vehicle.model}</title>
-            <style>
-                body { font-family: Arial, sans-serif; }
-                .container { display: flex; flex-wrap: wrap; }
-                .image, .details { flex: 1; margin: 10px; }
-                .details { max-width: 500px; }
-            </style>
-        </head>
-        <body>
-            <h1>${vehicle.year} ${vehicle.make} ${vehicle.model}</h1>
-            <div class="container">
-                <div class="image">
-                    <img src="${vehicle.image}" alt="${vehicle.make} ${vehicle.model}" style="max-width: 100%;">
-                </div>
-                <div class="details">
-                    <p><strong>Price:</strong> $${vehicle.price.toLocaleString()}</p>
-                    <p><strong>Mileage:</strong> ${vehicle.mileage.toLocaleString()} miles</p>
-                    <p><strong>Exterior Color:</strong> ${vehicle.ext_color}</p>
-                    <p><strong>Fuel Type:</strong> ${vehicle.fuel_type}</p>
-                </div>
-            </div>
-        </body>
-        </html>
+        <div class="vehicle-detail">
+            <img src="${vehicle.full_image}" alt="${vehicle.make} ${vehicle.model}">
+            <h2>${vehicle.make} ${vehicle.model} (${vehicle.year})</h2>
+            <p><strong>Price:</strong> $${vehicle.price.toLocaleString()}</p>
+            <p><strong>Mileage:</strong> ${vehicle.mileage.toLocaleString()} miles</p>
+            <p>${vehicle.description}</p>
+        </div>
     `;
-};
+}

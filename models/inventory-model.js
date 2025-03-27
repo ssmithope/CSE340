@@ -30,11 +30,22 @@ const pool = require("../database/")
 //module.exports = {getClassifications}
 
 
-const db = require('../database/connection');
+//const db = require('../database/connection');
 
-exports.getVehicleById = async (id) => {
-    const query = 'SELECT * FROM inventory WHERE id = $1'; // Query by ID
-    const values = [id];
-    const result = await db.query(query, values);
-    return result.rows[0]; // Return the specific vehicle
-};
+//exports.getVehicleById = async (id) => {
+//    const query = 'SELECT * FROM inventory WHERE id = $1'; // Query by ID
+//    const values = [id];
+//    const result = await db.query(query, values);
+//    return result.rows[0]; // Return the specific vehicle
+//};
+
+
+
+import db from "../database/connection.js";
+
+export async function getVehicleById(inventoryId) {
+    const query = "SELECT * FROM vehicles WHERE inventory_id = $1";
+    const result = await db.query(query, [inventoryId]);
+    return result.rows[0]; // Return the data for a single vehicle
+}
+

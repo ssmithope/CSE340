@@ -1,5 +1,5 @@
 /* General styling */
-body {
+/*body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
   margin: 0;
@@ -7,7 +7,7 @@ body {
 }
 
 /* Container and layout */
-.container {
+/*.container {
   display: flex;
   flex-wrap: wrap;
   padding: 20px;
@@ -19,20 +19,41 @@ body {
 }
 
 /* Limit the width of the details section */
-.details {
+/*.details {
   max-width: 500px;
 }
 
 /* Image styling */
-img {
+/*img {
   max-width: 100%;
   height: auto;
   border: 1px solid #ccc;
 }
 
 /* Responsive design */
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {
   .container {
       flex-direction: column;
+  }
+}*/
+
+.vehicle-detail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.vehicle-detail img {
+  max-width: 50%;
+  height: auto;
+}
+.vehicle-detail h2, .vehicle-detail p {
+  flex: 1 1 100%;
+}
+@media (min-width: 768px) {
+  .vehicle-detail img {
+      max-width: 40%;
+  }
+  .vehicle-detail h2, .vehicle-detail p {
+      flex: 1;
   }
 }
