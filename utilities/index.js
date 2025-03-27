@@ -61,6 +61,11 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
-console.log(data)
+// In exporting file
+const data = "Exported Data";
+module.exports = { data };
+
+console.log(data);
+
 
 module.exports = Util;

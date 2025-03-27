@@ -5,10 +5,7 @@ const express = require("express")
 
 const app = express()
 
-/* ******************************************
- * Default GET route
- * ***************************************** */
-app.get("/", (req, res) => {res.send("Welcome home!")})
+
 
 const expressLayouts = require("express-ejs-layouts")
 
@@ -33,6 +30,8 @@ console.log(`trial app listening on ${HOST}:${PORT}`)
 })
 
 const baseController = require("./controllers/baseController")
+const inventoryRoute = require("./routes/inventoryRoute"); // Adjust the path based on your project structure
+
 
 // Index route
 app.get("/", baseController.buildHome)

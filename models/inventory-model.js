@@ -8,4 +8,8 @@ async function getInventoryByClassificationId(classificationId) {
   return [];
 }
 
+function getClassifications() {
+  // Implementation here...
+}
+
 module.exports = { getClassifications, getInventoryByClassificationId };
