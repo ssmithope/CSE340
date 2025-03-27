@@ -1,10 +1,10 @@
-import pool from "../database/connection.js";
+const pool = require("../database/connection");
 
-export async function getClassifications() {
+async function getClassifications() {
     return await pool.query("SELECT * FROM public.classification ORDER BY classification_name");
 }
 
-export async function getInventoryByClassificationId(classificationId) {
+async function getInventoryByClassificationId(classificationId) {
     try {
         const result = await pool.query(
             `SELECT * FROM public.inventory AS i 
@@ -20,7 +20,7 @@ export async function getInventoryByClassificationId(classificationId) {
     }
 }
 
-export async function getVehicleByInvId(invId) {
+async function getVehicleByInvId(invId) {
     try {
         const result = await pool.query(
             `SELECT * FROM public.inventory AS i
@@ -35,3 +35,9 @@ export async function getVehicleByInvId(invId) {
         throw err;
     }
 }
+
+module.exports = {
+    getClassifications,
+    getInventoryByClassificationId,
+    getVehicleByInvId,
+};
