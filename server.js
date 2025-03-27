@@ -1,62 +1,28 @@
-/* ******************************************
- * This server.js file is the primary file of the 
- * application. It is used to control the project.
- *******************************************/
-/* ***********************
- * Require Statements
- *************************/
-const express = require("express")
-const expressLayouts = require('express-ejs-layouts')
-const env = require("dotenv").config()
-const app = express()
-const static = require("./routes/static")
-const baseController = require("./controllers/baseController")
-const inventoryRoute = require("./routes/inventoryRoute"); 
-const utilities = require('./utilities');
-const session = require("express-session")
-const pool = require('./database') 
-const bodyParser = require("body-parser")
+import express from "express"; // Import express
+import path from "path"; // For working with file paths
+import staticRoutes from "./routes/static.js"; // Import static routes
+import inventoryRoutes from "./routes/inventoryRoute.js"; // Import inventory routes
 
+const app = express(); // Initialize the app
 
-/* ***********************
- * Middleware
- * ************************/
-app.use(session({
-  store: new (require('connect-pg-simple')(session)) ({
-    createTableIfMissing: true,
-    pool,
-  }),
-  secret: process.env.SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true,
-  name: 'sessionId',
-}))
+// Set the view engine to EJS
+app.set("view engine", "ejs");
 
+// Serve static files (like CSS, images, etc.) from the public folder
+app.use(express.static(path.join(__dirname, "public")));
 
+// Use routes
+app.use("/", staticRoutes); // Homepage and other static pages
+app.use("/inventory", inventoryRoutes); // Inventory-related pages
 
-//Express Messages Middleware
-app.use(require('connect-flash')())
+// Express Error Handler - Place this after all other middleware
+app.use((err, req, res, next) => {
+    console.error(`Error at: "${req.originalUrl}": ${err.message}`);
+    res.status(err.status || 500).render("errors/error", {
+        title: err.status || "Server Error",
+        message: err.message,
+    });
+});
 
-app.use(function(req, res, next){
-  res.locals.messages = require('express-messages')(req, res)
-  next()
-})
-
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-
-
-
-
-/* ***********************
- * View Engine and Templates
- *************************/
-app.set('view engine', 'ejs')
-app.use(expressLayouts)
-app.set('layout', './layouts/layout') 
-
-
-/* ***********************
- * Serve Static Files 
- *************************/
-app.use(express.static("public"));
+// Start the server
+app.listen(3000, () => console.log("Server is running on port 3000"));
