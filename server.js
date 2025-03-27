@@ -1,35 +1,33 @@
-const express = require("express");
-const path = require("path");
+/* ******************************************
+ * This is the application server
+ * ******************************************/
+const express = require("express")
 
-// Import routes and controllers
-const baseController = require("./controllers/baseController");
-const inventoryRoutes = require("./routes/inventoryRoute");
-const staticRoutes = require("./routes/static");
+const app = express()
 
-const app = express();
+/* ******************************************
+ * Default GET route
+ * ***************************************** */
+app.get("/", (req, res) => {res.send("Welcome home!")})
 
-// Set the view engine to ejs
-app.set("view engine", "ejs");
+const expressLayouts = require("express-ejs-layouts")
 
-// Set up static folder
-app.use(express.static(path.join(__dirname, "public")));
+/* *******************************************
+ * View Engine and Templates
+ * ****************************************** */
+app.set("view engine", "ejs")
+app.use(expressLayouts)
+app.set("layout", "./layouts/layout") // not at views root
 
-// Routes
-app.use("/", staticRoutes);
-app.use("/inventory", inventoryRoutes);
+/* ******************************************
+ * Server host name and port
+ * ***************************************** */
+const HOST = 'localhost'
+const PORT = 5500
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-    console.error(`Error at "${req.originalUrl}": ${err.message}`);
-    res.status(err.status || 500).render("errors/error", {
-        title: err.status || "Server Error",
-        message: err.message,
-    });
-});
-
-// Start the server
-const PORT = 3000;
-app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));
-
-// Export the app object for other modules
-module.exports = app;
+/* ***********************
+* Log statement to confirm server operation
+* *********************** */
+app.listen(PORT, () => {
+console.log(`trial app listening on ${HOST}:${PORT}`)
+})
