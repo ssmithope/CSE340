@@ -1,19 +1,11 @@
-/* ***************************
- *  Get all inventory items and classification_name by classification_id
- * ************************** */
-async function getInventoryByClassificationId(classification_id) {
-  try {
-    const data = await pool.query(
-      `SELECT * FROM public.inventory AS i 
-      JOIN public.classification AS c 
-      ON i.classification_id = c.classification_id 
-      WHERE i.classification_id = $1`,
-      [classification_id]
-    )
-    return data.rows
-  } catch (error) {
-    console.error("getclassificationsbyid error " + error)
-  }
+async function getClassifications() {
+  // Add logic to fetch data from the database or return mock data
+  return ["SUV", "Sedan", "Truck"];
 }
 
-module.exports = {getClassifications, getInventoryByClassificationId};
+async function getInventoryByClassificationId(classificationId) {
+  // Add logic to fetch inventory based on the classificationId
+  return [];
+}
+
+module.exports = { getClassifications, getInventoryByClassificationId };
