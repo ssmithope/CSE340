@@ -33,3 +33,5 @@ invController.showVehicleDetail = async (req, res, next) => {
 };
 
 module.exports = invController;
+
+
