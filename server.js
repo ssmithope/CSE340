@@ -2,99 +2,61 @@
  * This server.js file is the primary file of the 
  * application. It is used to control the project.
  *******************************************/
-
-//const express = require("express")
-//const router = new express.Router() 
-//const invController = require("../controllers/invControllers");
-
 /* ***********************
  * Require Statements
  *************************/
-//const express = require("express");
-//const expressLayouts = require("express-ejs-layouts");
-//const dotenv = require("dotenv").config();
-//const path = require("path");
-//const staticRoutes = require("./routes/static");
-//const baseController = require("./controllers/baseController");
+const express = require("express")
+const expressLayouts = require('express-ejs-layouts')
+const env = require("dotenv").config()
+const app = express()
+const static = require("./routes/static")
+const baseController = require("./controllers/baseController")
+const inventoryRoute = require("./routes/inventoryRoute"); 
+const utilities = require('./utilities');
+const session = require("express-session")
+const pool = require('./database') 
+const bodyParser = require("body-parser")
 
 
-/* ***************************
- * App Initialization
- *****************************/
-//const app = express();
+/* ***********************
+ * Middleware
+ * ************************/
+app.use(session({
+  store: new (require('connect-pg-simple')(session)) ({
+    createTableIfMissing: true,
+    pool,
+  }),
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  name: 'sessionId',
+}))
 
-/* ***************************
+
+
+//Express Messages Middleware
+app.use(require('connect-flash')())
+
+app.use(function(req, res, next){
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
+
+
+
+/* ***********************
  * View Engine and Templates
- *****************************/
-//app.set("view engine", "ejs");
-//app.set("views", path.join(__dirname, "views")); // Set views directory
-//app.use(expressLayouts);
-//app.set("layout", "./layouts/layout"); // Specify layout file path
-
-/* ***********************
- * Static Files
  *************************/
-//app.use('/public', express.static(path.join(__dirname, 'public')));
+app.set('view engine', 'ejs')
+app.use(expressLayouts)
+app.set('layout', './layouts/layout') 
+
 
 /* ***********************
- * Routes
+ * Serve Static Files 
  *************************/
-//app.use(staticRoutes); // Include static routes
-
-// Index route
-//app.get("/", (req, res) => {
-//  res.render("index", { title: "Home" });
-//});
-
-//app.get("/", utilities.handleErrors(baseController.buildHome))
-
-// Inventory routes
-//app.use("/inv", inventoryRoute)
-
-/* ***********************
-* Express Error Handler
-* Place after all other middleware
-*************************/
-//app.use(async (err, req, res, next) => {
-//  let nav = await utilities.getNav()
-//  console.error(`Error at: "${req.originalUrl}": ${err.message}`)
-//  res.render("errors/error", {
-//    title: err.status || 'Server Error',
-//    message: err.message,
-//    nav
-//  })
-//})
-
-/* ***********************
- * Server Information
- *************************/
-//const PORT = process.env.PORT || 3000; // Use environment variable PORT or fallback to 3000
-//app.listen(PORT, () => {
-//  console.log(`App listening on port ${PORT}`);
-//});
-
-// File Not Found Route - must be last route in list
-//app.use(async (req, res, next) => {
-//  next({status: 404, message: 'Sorry, we appear to have lost that page.'})
-//})
-
-
-// Other middleware and routes here...
-
-/* ***********************
- * Express Error Handler
- * Place after all other middleware
- *************************/
-import express from "express";
-const app = express();
-
-// Express Error Handler - Place this after all other middleware
-app.use(async (err, req, res, next) => {
-    console.error(`Error at: "${req.originalUrl}": ${err.message}`);
-    res.status(err.status || 500).render('errors/error', {
-      title: err.status || 'Server Error',
-      message: err.message,
-    });
-});
-
-app.listen(3000, () => console.log('Server is running on port 3000'));
+app.use(express.static("public"));

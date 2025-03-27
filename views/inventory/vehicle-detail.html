@@ -1,42 +1,26 @@
-<!-- <!DOCTYPE html>
-<html lang="en-US">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></title>
-    <link rel="stylesheet" href="/css/vehicleDetail.css">
-</head>
-<body>
-    <h1><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></h1>
-    <div class="container">
-        <div class="image">
-            <img src="<%= vehicle.full_image %>" alt="<%= vehicle.make %> <%= vehicle.model %>">
-        </div>
-        <div class="details">
-            <h2>Details</h2>
-            <p><strong>Price:</strong> $<%= vehicle.price.toLocaleString() %></p>
-            <p><strong>Mileage:</strong> <%= vehicle.mileage.toLocaleString() %> miles</p>
-            <p><strong>Exterior Color:</strong> <%= vehicle.ext_color %></p>
-            <p><strong>Interior Color:</strong> <%= vehicle.int_color %></p>
-            <p><strong>Fuel Type:</strong> <%= vehicle.fuel_type %></p>
-            <p><strong>Description:</strong> <%= vehicle.description %></p>
-        </div>
-    </div>
-</body>
-</html> -->
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+
+  <!-- Vehicle Details -->
+<div class="vehicle-detail">
+  
+  <img src="/<%= vehicle.inv_image %>" alt="Image of <%= vehicle.inv_make %> <%= vehicle.inv_model %> on CSE Motors">
+    <div class="vehicle.info"> 
+      <p class="info-header"><%= vehicle.inv_make %> <%= vehicle.inv_model %> Details </p>
+      <p><strong>Description:</strong> <%= vehicle.inv_description %></p>
+      <p><strong>Price:</strong> $<%= new Intl.NumberFormat('en-US').format(vehicle.inv_price) %></p>
+      <p><strong>Color:</strong> <%= vehicle.inv_color %></p>
+      <p><strong>Miles:</strong> <%= new Intl.NumberFormat('en-US').format(vehicle.inv_miles) %> miles</p>
+  </div>
+</div>
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
-    <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
-    <main class="inventory-detail">
-        <%= vehicleHTML %>
-    </main>
-</body>
-</html>
+
+
+    <%# messages() %>
+
+    <!--Inventory Items Display-->
+  

@@ -1,29 +1,23 @@
 // Needed Resources 
-//const express = require("express")
-//const router = new express.Router() 
-//const invController = require("../controllers/invController");
+const express = require("express")
+const router = new express.Router() 
+const invController = require("../controllers/invController")
+const errorController = require('../controllers/errorController');
+
+
+// Debugging - Log when route is hit
+
+router.get("/detail/:invId", (req, res, next) => {
+    console.log(`Route hit: /inv/detail/${req.params.invId}`);
+    next();
+});
 
 // Route to build inventory by classification view
-//router.get("/type/:classificationId", invController.buildByClassificationId);
+router.get("/type/:classificationId", invController.buildByClassificationId);
 
-//module.exports = router;
+// Route to show vehicle details by inv_id
+router.get("/detail/:invId", invController.showVehicleDetail);
 
+router.get('/trigger-error', errorController.throwError);
 
-//const express = require("express");
-//const router = express.Router();
-//const invController = require("../controllers/invController");
-
-// Route to retrieve details for a specific vehicle
-//router.get("/vehicle/:id", invController.getVehicleDetails);
-
-//module.exports = router;
-
-
-import express from "express";
-import invController from "../controllers/invController.js";
-const router = express.Router();
-
-// Route to deliver specific vehicle detail
-router.get("/detail/:inventory_id", invController.buildDetailView);
-
-export default router;
+module.exports = router;
