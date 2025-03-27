@@ -37,7 +37,7 @@
 //    }
 //};
 
-import invModel from "../models/inventory-model.js";
+import invController from "../controllers/invController.js";
 import utilities from "../utilities/index.js";
 
 /**
