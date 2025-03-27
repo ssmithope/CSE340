@@ -36,3 +36,6 @@ const baseController = require("./controllers/baseController")
 
 // Index route
 app.get("/", baseController.buildHome)
+
+// Inventory routes
+app.use("/inv", inventoryRoute)

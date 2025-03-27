@@ -1,11 +1,9 @@
-const express = require("express");
-const invController= require("../controllers/invController");
-const errorController = require("../controllers/errorController");
+// Needed Resources 
+const express = require("express")
+const router = new express.Router() 
+const invController = require("../controllers/invController")
 
-const router = express.Router();
-
+// Route to build inventory by classification view
 router.get("/type/:classificationId", invController.buildByClassificationId);
-router.get("/detail/:invId", invController.showVehicleDetail);
-router.get("/trigger-error", errorController.throwError);
 
 module.exports = router;

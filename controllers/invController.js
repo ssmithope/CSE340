@@ -1,37 +1,22 @@
-const invModel = require("../models/inventory-model");
-const utilities = require("../utilities/index");
+const invModel = require("../models/inventory-model")
+const utilities = require("../utilities/")
 
-const invController = {};
+const invCont = {}
 
-invController.buildByClassificationId = async (req, res, next) => {
-    try {
-        const classificationId = req.params.classificationId;
-        const data = await invModel.getInventoryByClassificationId(classificationId);
-        const grid = await utilities.buildClassificationGrid(data);
-        const nav = await utilities.getNav();
-        res.render("inventory/classification", { title: `${data[0].classification_name} Vehicles`, grid, nav });
-    } catch (err) {
-        next(err);
-    }
-};
+/* ***************************
+ *  Build inventory by classification view
+ * ************************** */
+invCont.buildByClassificationId = async function (req, res, next) {
+  const classification_id = req.params.classificationId
+  const data = await invModel.getInventoryByClassificationId(classification_id)
+  const grid = await utilities.buildClassificationGrid(data)
+  let nav = await utilities.getNav()
+  const className = data[0].classification_name
+  res.render("./inventory/classification", {
+    title: className + " vehicles",
+    nav,
+    grid,
+  })
+}
 
-invController.showVehicleDetail = async (req, res, next) => {
-    try {
-        const invId = req.params.invId;
-        const vehicle = await invModel.getVehicleByInvId(invId);
-        const grid = await utilities.buildGetVehicleByIdGrid([vehicle]);
-        const nav = await utilities.getNav();
-        res.render("inventory/vehicle-detail", {
-            title: `${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model}`,
-            vehicle,
-            grid,
-            nav,
-        });
-    } catch (err) {
-        next(err);
-    }
-};
-
-module.exports = invController;
-
-
+module.exports = invCont
