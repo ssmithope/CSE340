@@ -1,4 +1,4 @@
-const baseController = require("./controllers/baseController")
+const baseController = require("./controllers/baseController");
 
 const express = require("express");
 const path = require("path");
@@ -23,3 +23,6 @@ app.use((err, req, res, next) => {
 
 const PORT = 3000;
 app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));
+
+// Export the app object for other modules
+module.exports = app;
