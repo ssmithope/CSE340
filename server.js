@@ -1,3 +1,5 @@
+const baseController = require("./controllers/baseController")
+
 const express = require("express");
 const path = require("path");
 const staticRoutes = require("./routes/static");
