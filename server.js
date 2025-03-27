@@ -1,23 +1,25 @@
-import express from "express"; // Import express
-import path from "path"; // For working with file paths
-import staticRoutes from "./routes/static.js"; // Import static routes
-import inventoryRoutes from "./routes/inventoryRoute.js"; // Import inventory routes
+import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+import staticRoutes from "./routes/static.js";
+import inventoryRoutes from "./routes/inventoryRoute.js";
 
-const app = express(); // Initialize the app
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const app = express();
 
-// Set the view engine to EJS
+// Set view engine to EJS
 app.set("view engine", "ejs");
 
-// Serve static files (like CSS, images, etc.) from the public folder
+// Serve static files (CSS, images, JS) from the public folder
 app.use(express.static(path.join(__dirname, "public")));
 
 // Use routes
-app.use("/", staticRoutes); // Homepage and other static pages
-app.use("/inventory", inventoryRoutes); // Inventory-related pages
+app.use("/", staticRoutes);
+app.use("/inventory", inventoryRoutes);
 
-// Express Error Handler - Place this after all other middleware
+// Error handling middleware
 app.use((err, req, res, next) => {
-    console.error(`Error at: "${req.originalUrl}": ${err.message}`);
+    console.error(`Error at "${req.originalUrl}": ${err.message}`);
     res.status(err.status || 500).render("errors/error", {
         title: err.status || "Server Error",
         message: err.message,
@@ -25,4 +27,5 @@ app.use((err, req, res, next) => {
 });
 
 // Start the server
-app.listen(3000, () => console.log("Server is running on port 3000"));
+const PORT = 3000;
+app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));

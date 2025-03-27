@@ -1,5 +1,24 @@
-const invModel = require("../models/inventory-model")
-const Util = {}
+//const invModel = require("../models/inventory-model")
+//const Util = {}
+
+import { getClassifications } from "../models/inventory-model.js";
+
+export async function getNav() {
+  const data = await getClassifications();
+  let list = "<ul>";
+  list += '<li><a href="/" title="Home page">Home</a></li>';
+  data.rows.forEach((row) => {
+    list += `<li>
+      <a href="/inv/type/${row.classification_id}" title="See our inventory of ${row.classification_name} vehicles">
+      ${row.classification_name}</a>
+    </li>`;
+  });
+  list += "</ul>";
+  return list;
+}
+
+// Other utility functions (adjust as needed)...
+
 
 /* ************************
  * Constructs the nav HTML unordered list
@@ -95,23 +114,12 @@ Util.buildGetVehicleByIdGrid = async function(data) {
 };
 
 
-
-
-
-
-
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
  * General Error Handling
  **************************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
-
-
-
-
-
-
 
 
 module.exports = Util
