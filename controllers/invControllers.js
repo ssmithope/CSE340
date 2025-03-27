@@ -40,22 +40,37 @@
 import invModel from "../models/inventory-model.js";
 import utilities from "../utilities/index.js";
 
+/**
+ * Builds the detail view for a specific inventory item.
+ * @param {object} req - The request object
+ * @param {object} res - The response object
+ * @param {function} next - The next middleware function
+ */
 export async function buildDetailView(req, res, next) {
     try {
+        // Extract inventory ID from the URL parameters
         const inventoryId = req.params.inventory_id;
+
+        // Fetch vehicle data based on the inventory ID
         const vehicleData = await invModel.getVehicleById(inventoryId);
 
+        // If no vehicle is found, throw an error to be handled by middleware
         if (!vehicleData) {
-            throw new Error("Vehicle not found");
+            const error = new Error("Vehicle not found");
+            error.status = 404; // Set HTTP status code to 404
+            throw error;
         }
 
+        // Generate the HTML string for the vehicle details using utility function
         const htmlString = utilities.wrapVehicleHTML(vehicleData);
+
+        // Render the inventory detail view with the vehicle data
         res.render("inventory/detail", {
-            title: `${vehicleData.make} ${vehicleData.model}`,
-            vehicleHTML: htmlString,
+            title: `${vehicleData.make} ${vehicleData.model}`, // Set page title
+            vehicleHTML: htmlString, // Pass the generated HTML to the view
         });
     } catch (error) {
+        // Pass any errors to the Express error handling middleware
         next(error);
     }
 }
-
