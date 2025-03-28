@@ -4,15 +4,28 @@
 
 <body>
     <div id="wrapper">
-        <%- include('../partials/header') %>
-        <%- include('../partials/navigation') %>
+        <!-- Header Section -->
+        <header>
+            <%- include('../partials/header') %>
+        </header>
 
+        <!-- Navigation Section -->
+        <nav>
+            <%- include('../partials/navigation') %>
+        </nav>
+
+        <!-- Main Content Area -->
         <main>
             <%- body %>
         </main>
 
-        <%- include('../partials/footer') %>
+        <!-- Footer Section -->
+        <footer>
+            <%- include('../partials/footer') %>
+        </footer>
     </div>
-    <script src="/js/script.js"></script>  
+
+    <!-- Load Client-Side JavaScript -->
+    <script src="/js/script.js"></script>
 </body>
 </html>

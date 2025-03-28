@@ -1,22 +1,44 @@
-const invModel = require("../models/inventory-model")
-const utilities = require("../utilities/")
+const invModel = require("../models/inventory-model");
+const utilities = require("../utilities/");
 
-const invCont = {}
+const invCont = {};
 
 /* ***************************
  *  Build inventory by classification view
  * ************************** */
 invCont.buildByClassificationId = async function (req, res, next) {
-  const classification_id = req.params.classificationId
-  const data = await invModel.getInventoryByClassificationId(classification_id)
-  const grid = await utilities.buildClassificationGrid(data)
-  let nav = await utilities.getNav()
-  const className = data[0].classification_name
-  res.render("./inventory/classification", {
-    title: className + " vehicles",
-    nav,
-    grid,
-  })
-}
+  const classification_id = req.params.classificationId;
 
-module.exports = invCont
+  try {
+    // Fetch inventory data
+    const data = await invModel.getInventoryByClassificationId(classification_id);
+
+    // Handle case where no data is found
+    if (!data || data.length === 0) {
+      console.error("No inventory data found for classification ID:", classification_id);
+      const nav = await utilities.getNav();
+      return res.status(404).render("inventory/classification", {
+        title: "No vehicles found",
+        nav,
+        grid: '<p class="notice">No vehicles found for this classification.</p>',
+      });
+    }
+
+    // Build grid and navigation
+    const grid = await utilities.buildClassificationGrid(data);
+    const nav = await utilities.getNav();
+
+    // Render the view
+    const className = data[0].classification_name;
+    res.render("inventory/classification", {
+      title: className + " vehicles",
+      nav,
+      grid,
+    });
+  } catch (error) {
+    console.error("Error building inventory view:", error.message);
+    next(error); // Pass error to error-handling middleware
+  }
+};
+
+module.exports = invCont;

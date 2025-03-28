@@ -3,37 +3,31 @@ require("dotenv").config();
 
 /* ***************
  * Connection Pool
- * SSL Object needed for local testing of app
- * But will cause problems in production environment
- * If - else will make determination which to use
+ * Determines SSL configuration based on the environment
  * *************** */
-let pool;
+const poolConfig = {
+  connectionString: process.env.DATABASE_URL,
+};
 
-if (process.env.NODE_ENV == "development") {
-  pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false,
-    },
-  });
-
-  // Added for troubleshooting queries
-  // during development
-  module.exports = {
-    async query(text, params) {
-      try {
-        const res = await pool.query(text, params);
-        console.log("executed query", { text });
-        return res;
-      } catch (error) {
-        console.error("error in query", { text });
-        throw error;
-      }
-    },
-  };
-} else {
-  pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-  });
-  module.exports = pool;
+// Add SSL options for development environment
+if (process.env.NODE_ENV === "development") {
+  poolConfig.ssl = { rejectUnauthorized: false };
 }
+
+const pool = new Pool(poolConfig);
+
+// Unified module exports
+module.exports = {
+  async query(text, params) {
+    try {
+      const res = await pool.query(text, params);
+      if (process.env.NODE_ENV === "development") {
+        console.log("executed query", { text }); // Log queries in development
+      }
+      return res;
+    } catch (error) {
+      console.error("Database query error:", error.message); // Log errors
+      throw error;
+    }
+  },
+};

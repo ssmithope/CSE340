@@ -8,7 +8,7 @@ databases:
   ipAllowList:
   - source: 0.0.0.0/0
     description: everywhere
-  postgresMajorVersion: "16"
+  postgresMajorVersion: "17"
 services:
 - type: web
   name: CSE340
@@ -16,7 +16,10 @@ services:
   repo: https://github.com/ssmithope/CSE340
   plan: free
   envVars:
-  - key: NODE_VERSION
+  - key: DATABASE_URL
+    value: postgresql://cse340:password@host/cse340_fsl3
+  - key: NODE_ENV
+    value: production
     sync: false
   region: oregon
   buildCommand: pnpm install

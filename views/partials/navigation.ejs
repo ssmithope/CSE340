@@ -1,13 +1,10 @@
-<!-- <nav>
-    <ul>
-        <li>Home</li>
-        <li>Custom</li>
-        <li>Sedan</li>
-        <li>SUV</li>
-        <li>Truck</li>
-    </ul>
-</nav> -->
-
-<nav>
-<%- nav %>
+<nav role="navigation">
+    <% if (nav && nav.trim()) { %>
+        <%- nav %>
+    <% } else { %>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/inv/type/1">Default Category</a></li>
+        </ul>
+    <% } %>
 </nav>
