@@ -6,9 +6,18 @@ baseController.buildHome = async function(req, res){
   res.render("index", {title: "Home", nav})
 }
 
-exports.buildHome = (req, res) => {
-  res.render("index", { layout: "./layouts/layout" });
+const getNav = require("../utilities/index").getNav;
+
+exports.buildHome = async (req, res) => {
+  try {
+    const navData = await getNav();
+    res.render("index", { navData });
+  } catch (error) {
+    console.error("Error building home:", error.message);
+    res.status(500).send("Internal Server Error");
+  }
 };
+
 
 
 module.exports = baseController
