@@ -1,11 +1,16 @@
-const utilities = require("../utilities/");
+const { getNav } = require("../utilities/navigation");
+
 const baseController = {};
 
 baseController.buildHome = async function (req, res) {
   try {
-    const nav = await utilities.getNav().catch(() => {
-      console.error("Navigation data could not be retrieved.");
-      return []; // Default navigation if fetching fails
+    const nav = await getNav().catch(() => {
+      console.error("Fallback navigation used due to error in getNav()");
+      return [
+        { label: "Home", link: "/" },
+        { label: "Inventory", link: "/inv" },
+        { label: "Contact Us", link: "/contact" },
+      ];
     });
     res.render("index", { title: "Home", nav });
   } catch (error) {
