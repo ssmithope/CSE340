@@ -1,34 +1,45 @@
-<main>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>CSE Motors</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header>
+    <% include('../partials/navigation.ejs'); %>
+  </header>
+  <main>
+    <h1>Welcome to CSE Motors!</h1>
     <section>
-      <h1>Welcome to CSE Motors!</h1>
-      <div id="car-showcase">
-        <img src="/images/delorean.jpg" alt="DMC Delorean">
-        <ul>
-          <li>3 Cup holders</li>
-          <li>Superman doors</li>
-          <li>Fuzzy dice!</li>
-        </ul>
-        <button>Own Today</button>
-      </div>
+      <h2>DMC Delorean</h2>
+      <p>3 Cup holders</p>
+      <p>Superman doors</p>
+      <p>Fuzzy dice!</p>
+      <button>Own Today</button>
+      <img src="/images/vehicles/delorean.jpg" alt="DMC Delorean">
     </section>
-    <section id="upgrades">
+    <section>
       <h2>Delorean Upgrades</h2>
-      <div class="upgrade-item">
-        <img src="/images/flux-capacitor.jpg" alt="Flux Capacitor">
-        <p>Flux Capacitor</p>
-      </div>
-      <!-- Add other upgrade items similarly -->
+      <ul>
+        <li><img src="/images/upgrades/flux-capacitor.jpg" alt="Flux Capacitor"><br>Flux Capacitor</li>
+        <li><img src="/images/upgrades/flame-decals.jpg" alt="Flame Decals"><br>Flame Decals</li>
+        <li><img src="/images/upgrades/bumper-stickers.jpg" alt="Bumper Stickers"><br>Bumper Stickers</li>
+        <li><img src="/images/upgrades/hub-caps.jpg" alt="Hub Caps"><br>Hub Caps</li>
+      </ul>
     </section>
-    <section id="reviews">
+    <section>
       <h2>DMC Delorean Reviews</h2>
-      <div class="review-item">
-        <p>"So fast it's almost like traveling in time."</p>
-        <p>Rating: 4/5</p>
-      </div>
-      <!-- Add other reviews similarly -->
+      <ul>
+        <li>"So fast it's almost like traveling in time." (4/5)</li>
+        <li>"Coolest ride on the road." (4/5)</li>
+        <li>"I'm feeling McFly!" (5/5)</li>
+        <li>"The most futuristic ride of our day." (4/5)</li>
+        <li>"80's livin and I love it!" (5/5)</li>
+      </ul>
     </section>
   </main>
   <footer>
-    <p>© 2023, CSE 340 App</p>
+    <p>&copy; 2023, CSE 340 App</p>
   </footer>
-  
+</body>
+</html>

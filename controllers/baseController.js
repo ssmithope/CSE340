@@ -2,19 +2,27 @@ const { getNav } = require("../utilities/navigation");
 
 const baseController = {};
 
-baseController.buildHome = async function (req, res) {
-  try {
-    const nav = await getNav().catch(() => {
-      return '<ul><li><a href="/">Home</a></li></ul>';
-    });
-    res.render("index", { title: "Home", nav });
-  } catch (error) {
-    console.error("Error building home:", error.stack);
-    res.status(500).render("errors", {
-      title: "500 Error",
-      message: "Internal Server Error",
-    });
-  }
+baseController.buildHome = (req, res) => {
+  res.render("index", { title: "Home" });
 };
+
+baseController.buildCustom = (req, res) => {
+  res.render("custom", { title: "Custom" });
+};
+
+baseController.buildSedan = (req, res) => {
+  res.render("sedan", { title: "Sedan" });
+};
+
+baseController.buildSUV = (req, res) => {
+  res.render("suv", { title: "SUV" });
+};
+
+baseController.buildTruck = (req, res) => {
+  res.render("truck", { title: "Truck" });
+};
+
+module.exports = baseController;
+
 
 module.exports = baseController;
