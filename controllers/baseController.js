@@ -40,7 +40,7 @@ baseController.buildCustom = async (req, res, next) => {
   const vehicle = {
     make: "Custom",
     model: "Flame Decals Edition",
-    inv_year: 2023,
+    inv_year: 2009,
     inv_price: Number(25000).toLocaleString("en-US"),
     inv_miles: Number(10000).toLocaleString("en-US"),
     inv_image: "/images/vehicles/custom.jpg",
@@ -54,9 +54,9 @@ baseController.buildSedan = async (req, res, next) => {
   const vehicle = {
     make: "Sedan",
     model: "Flame Decals Edition",
-    inv_year: 2021,
-    inv_price: Number(25000).toLocaleString("en-US"),
-    inv_miles: Number(10000).toLocaleString("en-US"),
+    inv_year: 2011,
+    inv_price: Number(9000).toLocaleString("en-US"),
+    inv_miles: Number(109000).toLocaleString("en-US"),
     inv_image: "/images/vehicles/sedan.jpg",
     inv_description: "Experience elegance with this stylish sedan featuring flame decals.",
   };
@@ -68,9 +68,9 @@ baseController.buildSUV = async (req, res, next) => {
   const vehicle = {
     make: "SUV",
     model: "Flame Decals Edition",
-    inv_year: 2008,
-    inv_price: Number(25000).toLocaleString("en-US"),
-    inv_miles: Number(10000).toLocaleString("en-US"),
+    inv_year: 2023,
+    inv_price: Number(95000).toLocaleString("en-US"),
+    inv_miles: Number(100).toLocaleString("en-US"),
     inv_image: "/images/vehicles/suv.jpg",
     inv_description: "Conquer every terrain with this robust SUV enhanced by bold flame decals.",
   };
@@ -82,9 +82,9 @@ baseController.buildTruck = async (req, res, next) => {
   const vehicle = {
     make: "Truck",
     model: "Flame Decals Edition",
-    inv_year: 1985,
-    inv_price: Number(25000).toLocaleString("en-US"),
-    inv_miles: Number(10000).toLocaleString("en-US"),
+    inv_year: 2024,
+    inv_price: Number(85000).toLocaleString("en-US"),
+    inv_miles: Number(109).toLocaleString("en-US"),
     inv_image: "/images/vehicles/truck.jpg",
     inv_description: "Built tough for every challenge, now with bold flame decals to stand out.",
   };
