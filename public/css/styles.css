@@ -1,11 +1,16 @@
 /* General Body Styling */
+/* General Styles */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0; /* Light gray background */
+  font-family: "Orbitron", sans-serif;
   margin: 0;
   padding: 0;
-  color: #333; /* Dark gray text for readability */
+  background-image: url('/images/site/small_check.jpg');
+  background-repeat: repeat;
+  background-size: auto;
+  background-position: top left;
+  color: #333;
 }
+
 
 /* Navigation Bar */
 nav {
@@ -45,10 +50,17 @@ nav ul li a:focus {
   outline: 2px dashed #ffcc00; /* Accessibility for keyboard navigation */
 }
 
-/* Header Styling */
+/* Header Styles */
 header {
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  border-bottom: 2px solid #666;
 }
+
 
 /* Main Content Styling */
 main {
