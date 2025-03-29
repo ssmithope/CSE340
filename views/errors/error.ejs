@@ -3,26 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
-    <link rel="stylesheet" href="/styles.css"> <!-- Confirm this CSS file exists -->
+    <title><%= title || "Error" %></title>
+    <link rel="stylesheet" href="/styles.css"> <!-- Ensure this file exists -->
 </head>
 <body>
     <header>
-        <% include('../partials/header.ejs'); %> <!-- Ensure partials are correctly placed in the views directory -->
+        <% try { include('../partials/header.ejs'); } catch (e) { %>
+            <p style="color:red;">Header file missing or not loaded.</p>
+        <% } %>
     </header>
 
     <main>
         <section class="error-container">
-            <h1 class="error-title"><%= title %></h1>
-            <img src="/images/upgrades/flame.jpg" alt="Error Image" class="error-image"> <!-- Confirm the image path -->
-            <p class="error-message">Error: <%= message %></p>
-            <p class="error-status">Status: <%= status %></p>
+            <h1 class="error-title"><%= title || "Unexpected Error" %></h1>
+            <img src="/images/upgrades/flame.jpg" alt="Error Image" class="error-image"> <!-- Confirm image path -->
+            <p class="error-message">Error: <%= message || "No additional information provided." %></p>
+            <p class="error-status">Status: <%= status || 500 %></p>
         </section>
 
         <section class="error-suggestions">
-            <% if (title.startsWith("404")) { %>
+            <% if (title && title.startsWith("404")) { %>
                 <p class="error-hint">Sorry, the page you're looking for was not found. Check the URL or <a href="/">return to the homepage</a>.</p>
-            <% } else if (title.startsWith("500")) { %>
+            <% } else if (title && title.startsWith("500")) { %>
                 <p class="error-hint">We're experiencing technical issues. Please try again later or <a href="/contact">contact support</a>.</p>
             <% } else { %>
                 <p class="error-hint">An unexpected error occurred. Please <a href="/">go back to the homepage</a>.</p>
@@ -31,7 +33,9 @@
     </main>
 
     <footer>
-        <% include('../partials/footer.ejs'); %> <!-- Ensure footer exists in the partials directory -->
+        <% try { include('../partials/footer.ejs'); } catch (e) { %>
+            <p style="color:red;">Footer file missing or not loaded.</p>
+        <% } %>
     </footer>
 </body>
 </html>

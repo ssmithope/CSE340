@@ -37,12 +37,13 @@ app.get("/error", errorController.throwError); // Test error route
  * ****************************************** */
 // Handle 404 errors
 app.use((req, res) => {
+  console.error("404 Error: Page not found"); // Log the error
   res.status(404).render("errors", { title: "404 Error", message: "Page not found" });
 });
 
 // Handle other errors
 app.use((err, req, res, next) => {
-  console.error(err.message);
+  console.error(`Error: ${err.message} | Status: ${err.status || 500}`); // Improved error logging
   const status = err.status || 500;
   res.status(status).render("errors", { title: `${status} Error`, message: err.message });
 });
