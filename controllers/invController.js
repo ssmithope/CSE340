@@ -8,21 +8,21 @@ const invController = {};
  * ************************** */
 invController.getVehicleDetails = async (req, res, next) => {
   try {
-    const vehicleId = req.params.id; // Get inventory ID from URL
-    const vehicle = await invModel.getVehicleById(vehicleId); // Use consistent naming
+    const vehicleId = req.params.id;
+    const vehicle = await invModel.getVehicleById(vehicleId);
     if (!vehicle) {
-      res.status(404).render("errors/errors", {
+      return res.status(404).render("errors/errors", {
         title: "404 Error",
         message: "Vehicle not found",
       });
-      return;
     }
     res.render("inventory/vehicle-detail", {
       title: `${vehicle.make} ${vehicle.model}`,
       vehicle,
     });
   } catch (error) {
-    next(error); // Pass errors to middleware
+    console.error(`Error in getVehicleDetails: ${error.message}`);
+    next(error);
   }
 };
 
@@ -34,9 +34,9 @@ invController.buildByClassificationId = async (req, res, next) => {
 
   try {
     const data = await invModel.getInventoryByClassificationId(classification_id);
+    const nav = await utilities.getNav();
 
     if (!data || data.length === 0) {
-      const nav = await utilities.getNav();
       return res.status(404).render("inventory/classification", {
         title: "No vehicles found",
         nav,
@@ -45,7 +45,6 @@ invController.buildByClassificationId = async (req, res, next) => {
     }
 
     const grid = await utilities.buildClassificationGrid(data);
-    const nav = await utilities.getNav();
     const className = data[0].classification_name;
 
     res.render("inventory/classification", {
@@ -54,6 +53,7 @@ invController.buildByClassificationId = async (req, res, next) => {
       grid,
     });
   } catch (error) {
+    console.error(`Error in buildByClassificationId: ${error.message}`);
     next(error);
   }
 };
@@ -71,6 +71,7 @@ invController.renderHomePage = async (req, res, next) => {
     const nav = await utilities.buildNav(classifications);
     res.render("index", { nav });
   } catch (error) {
+    console.error(`Error in renderHomePage: ${error.message}`);
     next(error);
   }
 };

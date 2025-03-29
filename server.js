@@ -32,6 +32,7 @@ app.get("/custom", baseController.buildCustom);
 app.get("/sedan", baseController.buildSedan);
 app.get("/suv", baseController.buildSUV);
 app.get("/truck", baseController.buildTruck);
+app.use("/inventory", inventoryRoute); // Define inventory routes here
 
 /* *******************************************
  * Error Handling Middleware
@@ -49,7 +50,7 @@ app.use((err, req, res, next) => {
   console.error(`Error: ${err.message}`);
   res.status(err.status || 500).render("errors/errors", {
     title: `${err.status || 500} Error`,
-    message: err.message || "Internal Server Error",
+    message: "Internal Server Error",
   });
 });
 
@@ -63,7 +64,7 @@ app.listen(PORT, () => {
   console.log(`Server running at http://${HOST}:${PORT}`);
 });
 
-// shutdown
+// Graceful shutdown
 process.on("SIGINT", () => {
   console.log("Shutting down server...");
   process.exit(0);
