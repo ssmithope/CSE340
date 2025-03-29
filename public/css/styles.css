@@ -1,45 +1,173 @@
+/* General Styles */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  font-family: "Orbitron", sans-serif;
   margin: 0;
+  padding: 0;
+  background-image: url('/images/site/small_check.jpg');
+  background-repeat: repeat;
+  background-size: auto;
+  background-position: top left;
+  color: #333;
+}
+
+/* Header Styles */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  border-bottom: 2px solid #666;
+}
+
+header nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
   padding: 0;
 }
 
-header, footer {
-  text-align: center;
-  background-color: #333;
+header nav ul li a {
+  text-decoration: none;
   color: #fff;
-}
-
-main {
+  font-weight: bold;
   padding: 10px;
+  border-radius: 5px;
 }
 
-h1, h2 {
+header nav ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+header .account {
+  margin-left: auto;
+}
+
+/* Main Content */
+main {
+  text-align: center;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 1100px;
+  margin: 20px auto;
+  border-radius: 10px;
+}
+
+main h1 {
+  font-size: 2rem;
+  color: #000;
+}
+
+/* Image Styles */
+.delorean-image-index {
+  display: block;
+  margin: 20px auto;
+  max-width: 500px;
+  height: auto;
+}
+
+.delorean-image-index:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Overlay Section */
+.overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px auto;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 800px;
+  text-align: center;
+}
+
+.text-overlay ul {
+  list-style: disc;
+  padding-left: 40px;
+}
+
+.text-overlay li {
+  font-size: 1.2rem;
   color: #444;
 }
 
-#car-showcase {
+/* Footer */
+footer {
   text-align: center;
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: white;
+  border-top: 2px solid #666;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
 }
 
-button {
-  background-color: #007BFF;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
+/* Reviews and Upgrades */
+.review-container {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  border-radius: 5px;
+  max-width: 400px;
+  margin: 20px auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
-@media (min-width: 768px) {
-  main {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: flex-start;
+
+.reviews {
+  list-style: none;
+  padding-left: 20px;
+}
+
+.reviews li {
+  margin-bottom: 10px;
+}
+
+.upgrade-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+.item {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.item img {
+  max-width: 100px;
+  margin: 10px auto;
+  display: block;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  header nav ul {
+      flex-direction: column;
+      gap: 15px;
   }
 
-  #car-showcase, #upgrades, #reviews {
-    flex: 1;
-    margin: 10px;
+  main {
+      padding: 15px;
+      margin: 10px;
+  }
+
+  footer {
+      padding: 10px;
+      font-size: 0.9rem;
+  }
+
+  .upgrade-container {
+      grid-template-columns: 1fr;
   }
 }
