@@ -5,8 +5,8 @@ body {
   padding: 0;
   background-image: url('/images/site/small_check.jpg'); /* Checkered pattern */
   background-repeat: repeat;
-  background-size: auto;
-  background-position: top left;
+  background-size: cover;
+  background-position: center;
   color: #333; /* Neutral dark gray for readability */
 }
 
@@ -16,20 +16,20 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 15px 30px;
-  background-color: #222; /* Dark gray background for header */
+  background-color: #111; /* Slightly darker header background */
   color: #fff; /* White text for contrast */
-  border-bottom: 2px solid #444; /* Subtle separator */
+  border-bottom: 2px solid #555; /* Subtle separator */
 }
 
 header .logo {
-  font-size: 1.8rem; /* Larger size for "CSE Motors" */
+  font-size: 2rem; /* Larger size for "CSE Motors" */
   font-weight: bold;
   color: #fff; /* White for logo */
   text-decoration: none;
 }
 
 header .account {
-  font-size: 1rem; /* Matching size for "My Account" */
+  font-size: 1.2rem; /* Slightly larger size for "My Account" */
   color: #fff; /* White for accessibility */
   text-decoration: none;
 }
@@ -40,8 +40,8 @@ header .account:hover {
 
 /* Navigation Bar */
 nav {
-  background-color: #333; /* Medium-dark gray for the navigation bar */
-  padding: 15px 0;
+  background-color: #222; /* Slightly darker navigation bar */
+  padding: 10px 0;
 }
 
 nav ul {
@@ -50,99 +50,99 @@ nav ul {
   padding: 0;
   display: flex;
   justify-content: center;
-  gap: 25px; /* Space between nav links */
-}
-
-nav ul li {
-  margin: 0;
+  gap: 30px; /* More spacing between nav links */
 }
 
 nav ul li a {
   text-decoration: none;
   color: #fff; /* White links for readability */
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: bold;
-  padding: 10px 12px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  padding: 12px 18px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 nav ul li a:hover {
-  background-color: rgba(255, 255, 255, 0.2); /* Subtle transparency effect */
+  background-color: rgba(255, 255, 255, 0.3); /* Subtle transparency effect */
+  transform: scale(1.05); /* Slight zoom on hover */
 }
 
 /* Main Content */
 main {
   text-align: center;
-  padding: 40px;
-  background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white */
+  padding: 50px;
+  background-color: rgba(255, 255, 255, 0.97); /* Slightly transparent white */
   max-width: 1200px;
-  margin: 30px auto;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  margin: 40px auto;
+  border-radius: 12px;
+  box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.25); /* Stronger shadow for depth */
 }
 
 main h1 {
-  font-size: 2.5rem; /* Prominent heading size */
-  color: #222; /* Neutral dark gray */
-  margin-bottom: 20px;
+  font-size: 2.8rem; /* Prominent heading size */
+  color: #111; /* Darker text for main heading */
+  margin-bottom: 25px;
 }
 
 /* Vehicle Detail Section */
 .vehicle-detail {
   display: flex;
   flex-wrap: wrap; /* Allow wrapping for small screens */
-  gap: 20px;
-  align-items: center;
-  max-width: 900px;
-  margin: 20px auto;
+  gap: 25px;
+  align-items: flex-start;
+  max-width: 1000px;
+  margin: 30px auto;
 }
 
 .vehicle-detail img {
   width: 100%;
-  max-width: 600px; /* Larger size for vehicle images */
+  max-width: 650px; /* Larger size for vehicle images */
   height: auto;
-  border-radius: 8px;
-  border: 2px solid #ddd;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  border-radius: 10px;
+  border: 2px solid #ccc;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
 }
 
 .vehicle-info {
   flex: 1;
-  min-width: 300px;
+  min-width: 320px;
   text-align: left;
 }
 
 .vehicle-info p {
-  font-size: 1.1rem; /* Larger font for prominence */
+  font-size: 1.2rem; /* Increased font size for readability */
   line-height: 1.8;
-  margin: 10px 0;
+  margin: 15px 0;
 }
 
 /* Upgrades Section */
 .upgrade-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Responsive grid layout */
-  gap: 20px;
-  max-width: 800px;
-  margin: 20px auto;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Responsive grid layout */
+  gap: 25px;
+  max-width: 900px;
+  margin: 30px auto;
 }
 
 .item {
   background-color: #f9f9f9; /* Light gray background */
   text-align: center;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .item img {
-  max-width: 100px;
-  margin-bottom: 10px;
+  max-width: 120px;
+  margin-bottom: 15px;
 }
 
 .item:hover {
   background-color: #f0f0f0; /* Slight highlight on hover */
+  transform: scale(1.03); /* Slight zoom on hover */
 }
 
 /* Reviews Section */
@@ -152,18 +152,20 @@ main h1 {
 }
 
 .reviews li {
-  font-size: 1rem; /* Larger text for reviews */
-  margin-bottom: 15px; /* Spacing for clarity */
+  font-size: 1.1rem; /* Larger text for reviews */
+  margin-bottom: 20px; /* Increased spacing for clarity */
   color: #555; /* Neutral gray for readability */
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
 }
 
 /* Footer Styling */
 footer {
-  background-color: #222; /* Matching the dark header */
-  color: #ccc; /* Subtle contrast */
-  padding: 20px;
+  background-color: #111; /* Matching the darker header */
+  color: #bbb; /* Slightly brighter contrast */
+  padding: 25px;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 1rem;
   border-top: 2px solid #444;
 }
 
@@ -172,12 +174,12 @@ footer {
   header {
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
   }
 
   nav ul {
     flex-direction: column; /* Stack links vertically */
-    gap: 15px;
+    gap: 20px;
   }
 
   .vehicle-detail {
