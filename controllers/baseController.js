@@ -17,9 +17,9 @@ baseController.buildVehiclePage = async (req, res, next, vehicle, title) => {
       throw new Error("Upgrades data is missing or invalid.");
     }
     const nav = await getNav();
-    res.render("vehicle", { title, vehicle, upgrades, nav });
+    res.render("inventory/vehicle-detail", { title, vehicle, upgrades, nav }); // Correct view path
   } catch (error) {
-    console.error(error.message);
+    console.error(`Error in buildVehiclePage: ${error.message}`);
     next(error);
   }
 };
