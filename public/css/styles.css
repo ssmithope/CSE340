@@ -1,16 +1,18 @@
 /* General Body Styling */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+  background-color: #f0f0f0; /* Light gray background */
   margin: 0;
   padding: 0;
   text-align: center;
+  color: #333; /* Dark gray text for readability */
 }
 
 /* Navigation Bar */
 nav {
-  background-color: #333333; /* Dark gray background as seen in the screenshot */
-  padding: 10px 0;
+  background-color: #2a2a2a; /* Darker gray for the navigation bar */
+  padding: 15px 0;
+  border-bottom: 3px solid #ffcc00; /* Add a yellow border at the bottom */
 }
 
 nav ul {
@@ -18,22 +20,26 @@ nav ul {
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: center; /* Center the navigation items horizontally */
+  justify-content: center;
 }
 
 nav ul li {
-  margin: 0 15px; /* Add spacing between navigation items */
+  margin: 0 20px;
 }
 
 nav ul li a {
-  color: #ffffff; /* White text for links */
+  color: #ffffff; /* White links */
   text-decoration: none;
-  font-size: 18px; /* Slightly larger font for readability */
+  font-size: 18px;
   font-weight: bold;
+  padding: 5px 10px;
+  transition: all 0.3s ease;
 }
 
 nav ul li a:hover {
-  color: #ffcc00; /* Highlight color when hovered */
+  background-color: #ffcc00; /* Yellow background on hover */
+  color: #333; /* Dark text for contrast on hover */
+  border-radius: 5px;
 }
 
 /* Header Styling */
@@ -42,64 +48,84 @@ header {
 }
 
 /* Main Content Styling */
-main h1, h2 {
-  color: #444444; /* Medium-dark gray text for headers */
-}
-
 main {
   padding: 20px;
 }
 
+main h1, h2 {
+  color: #444; /* Medium-dark gray */
+  font-size: 24px;
+}
+
 /* Sections Styling */
 section {
-  border: 2px solid #333333; /* Borders around sections */
-  background-color: #ffffff; /* White background for sections */
-  margin: 20px auto; /* Center sections vertically */
+  border: 2px solid #2a2a2a; /* Darker gray border */
+  background-color: #fff; /* White background for readability */
+  margin: 20px auto;
   padding: 20px;
-  max-width: 800px; /* Restrict section width */
+  max-width: 900px; /* Constrain the width of each section */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
+  border-radius: 10px; /* Rounded corners */
 }
 
 section img {
-  width: 100%; /* Scale images to fit their containers */
-  max-width: 400px; /* Ensure images don’t exceed the width */
+  width: 100%;
+  max-width: 400px;
   height: auto; /* Maintain aspect ratio */
   display: block;
-  margin: 20px auto; /* Center images */
+  margin: 15px auto;
+  border: 3px solid #2a2a2a; /* Add a border to the image */
+  border-radius: 10px; /* Rounded image corners */
+}
+
+section ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+section ul li {
+  margin: 10px 0;
+  font-size: 16px;
+  text-align: left; /* Align list text to the left */
 }
 
 /* Buttons */
 button {
-  background-color: #ffcc00; /* Yellow button color matching the screenshot */
-  color: #333333; /* Dark text on buttons */
+  background-color: #ffcc00; /* Bright yellow button */
+  color: #333; /* Dark text for contrast */
+  font-weight: bold;
+  font-size: 16px;
   border: none;
   padding: 10px 20px;
   cursor: pointer;
-  font-weight: bold;
+  border-radius: 5px;
+  transition: all 0.3s ease;
 }
 
 button:hover {
-  background-color: #ffd633; /* Slightly lighter yellow on hover */
+  background-color: #ffd633; /* Slightly lighter yellow */
+  transform: scale(1.05); /* Add a slight zoom effect on hover */
 }
 
 /* Footer Styling */
 footer {
-  background-color: #333333; /* Footer matches nav bar */
-  color: #ffffff; /* White text */
+  background-color: #2a2a2a; /* Same dark gray as nav */
+  color: #fff; /* White text for contrast */
   padding: 10px 0;
+  font-size: 14px; /* Smaller footer font */
 }
 
 footer p {
   margin: 0;
-  font-size: 14px; /* Smaller text for footer */
 }
 
-/* Reviews List */
-ul {
-  list-style-type: none; /* Remove bullets */
-  padding: 0;
+/* Reviews Styling */
+section.reviews ul {
+  text-align: left;
 }
 
-ul li {
+section.reviews ul li {
   margin: 10px 0;
-  text-align: left; /* Align text to the left within reviews */
+  font-size: 16px;
+  color: #666; /* Slightly lighter gray */
 }
