@@ -5,6 +5,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const expressLayouts = require("express-ejs-layouts");
 const baseController = require("./controllers/baseController");
+const inventoryRoute = require("./routes/inventoryRoute"); // Import the correct route file
 
 const app = express();
 

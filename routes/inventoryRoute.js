@@ -12,6 +12,9 @@ function validateClassificationId(req, res, next) {
   next();
 }
 
+// Route for specific inventory item detail view
+router.get("/:id", invController.getVehicleDetails);
+
 // Route to build inventory by classification view
 router.get("/type/:classificationId", validateClassificationId, invController.buildByClassificationId);
 

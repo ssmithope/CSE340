@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header>
+    <% include('../partials/navigation.ejs'); %>
+  </header>
+  <main>
+    <h1><%= title %></h1>
+    <section class="vehicle-detail">
+      <img src="<%= vehicle.inv_image %>" alt="<%= vehicle.make %> <%= vehicle.model %>" />
+      <div class="vehicle-info">
+        <p><strong>Make:</strong> <%= vehicle.make %></p>
+        <p><strong>Model:</strong> <%= vehicle.model %></p>
+        <p><strong>Year:</strong> <%= vehicle.inv_year %></p>
+        <p><strong>Price:</strong> $<%= vehicle.inv_price.toLocaleString("en-US") %></p>
+        <p><strong>Mileage:</strong> <%= vehicle.inv_miles.toLocaleString() %> miles</p>
+        <p><strong>Description:</strong> <%= vehicle.inv_description %></p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <% include('../partials/footer.ejs'); %>
+  </footer>
+</body>
+</html>

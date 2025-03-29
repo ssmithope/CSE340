@@ -1,62 +1,78 @@
-const invModel = require("../models/inventory-model");
+const invModel = require("../models/inventory-model"); // Match file name
 const utilities = require("../utilities/");
-const database = require("../database");
 
-const invCont = {};
+const invController = {};
 
 /* ***************************
- *  Build inventory by classification view
+ * Get Vehicle Details
  * ************************** */
-invCont.buildByClassificationId = async function (req, res, next) {
-    const classification_id = req.params.classificationId;
-
-    try {
-        // Fetch inventory data
-        const data = await invModel.getInventoryByClassificationId(classification_id);
-
-        // Handle case where no data is found
-        if (!data || data.length === 0) {
-            console.error("No inventory data found for classification ID:", classification_id);
-            const nav = await utilities.getNav();
-            return res.status(404).render("inventory/classification", {
-                title: "No vehicles found",
-                nav,
-                grid: '<p class="notice">No vehicles found for this classification.</p>',
-            });
-        }
-
-        // Build grid and navigation
-        const grid = await utilities.buildClassificationGrid(data);
-        const nav = await utilities.getNav();
-
-        // Render the view
-        const className = data[0].classification_name;
-        res.render("inventory/classification", {
-            title: className + " vehicles",
-            nav,
-            grid,
-        });
-    } catch (error) {
-        console.error("Error building inventory view:", error.message);
-        next(error); // Pass error to error-handling middleware
+invController.getVehicleDetails = async (req, res, next) => {
+  try {
+    const vehicleId = req.params.id; // Get inventory ID from URL
+    const vehicle = await invModel.getVehicleById(vehicleId); // Use consistent naming
+    if (!vehicle) {
+      res.status(404).render("errors/errors", {
+        title: "404 Error",
+        message: "Vehicle not found",
+      });
+      return;
     }
+    res.render("inventory/vehicle-detail", {
+      title: `${vehicle.make} ${vehicle.model}`,
+      vehicle,
+    });
+  } catch (error) {
+    next(error); // Pass errors to middleware
+  }
 };
 
 /* ***************************
- *  Render Home Page
+ * Build inventory by classification view
  * ************************** */
-invCont.renderHomePage = async function (req, res, next) {
-    try {
-        const classifications = await database.getClassifications();
-        if (!classifications.length) throw new Error("No classifications found");
+invController.buildByClassificationId = async (req, res, next) => {
+  const classification_id = req.params.classificationId;
 
-        const generatedNav = classifications.map(classification => classification.name);
-        res.render("index", { nav: generatedNav });
-    } catch (err) {
-        console.error("Error rendering home page:", err.message);
-        next(err); // Pass error to error-handling middleware
+  try {
+    const data = await invModel.getInventoryByClassificationId(classification_id);
+
+    if (!data || data.length === 0) {
+      const nav = await utilities.getNav();
+      return res.status(404).render("inventory/classification", {
+        title: "No vehicles found",
+        nav,
+        grid: '<p class="notice">No vehicles found for this classification.</p>',
+      });
     }
+
+    const grid = await utilities.buildClassificationGrid(data);
+    const nav = await utilities.getNav();
+    const className = data[0].classification_name;
+
+    res.render("inventory/classification", {
+      title: `${className} vehicles`,
+      nav,
+      grid,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
-// Export the controller object
-module.exports = invCont;
+/* ***************************
+ * Render Home Page
+ * ************************** */
+invController.renderHomePage = async (req, res, next) => {
+  try {
+    const classifications = await utilities.getClassifications();
+    if (!classifications || classifications.length === 0) {
+      throw new Error("No classifications found");
+    }
+
+    const nav = await utilities.buildNav(classifications);
+    res.render("index", { nav });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = invController;

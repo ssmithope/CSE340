@@ -57,6 +57,35 @@ main h1, h2 {
   font-size: 24px;
 }
 
+.vehicle-detail {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping for small screens */
+  align-items: center;
+  gap: 20px; /* Spacing between image and details */
+  margin: 20px auto;
+  max-width: 900px;
+}
+
+.vehicle-detail img {
+  width: 100%;
+  max-width: 400px; /* Restrict image size */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 10px;
+  border: 3px solid #2a2a2a;
+}
+
+.vehicle-info {
+  flex: 1; /* Allow the text to take remaining space */
+  text-align: left;
+}
+
+.vehicle-info p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 10px 0;
+}
+
+
 /* Sections Styling */
 section {
   border: 2px solid #2a2a2a; /* Darker gray border */

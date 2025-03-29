@@ -1,36 +1,31 @@
-const db = require("../database"); // Import the database connection pool
+const db = require("../database");
 
-/**
- * Fetch all classifications from the database.
- */
-async function getClassifications() {
+const invModel = {};
+
+/* ***************************
+ * Get Vehicle Details by ID
+ * ************************** */
+invModel.getVehicleById = async (id) => {
   try {
-    const result = await db.query("SELECT * FROM classification ORDER BY classification_name;");
-    return result.rows; // Return the rows from the query result
+    const sql = "SELECT * FROM inventory WHERE inv_id = $1";
+    const result = await db.query(sql, [id]);
+    return result.rows[0]; // Return vehicle details
   } catch (error) {
-    console.error("Error fetching classifications:", error.message);
-    throw error; // Rethrow the error to be handled by the caller
+    throw error;
   }
-}
+};
 
-/**
- * Fetch inventory based on classification ID.
- * @param {number} classificationId - The ID of the classification.
- */
-async function getInventoryByClassificationId(classificationId) {
+/* ***************************
+ * Get Inventory by Classification ID
+ * ************************** */
+invModel.getInventoryByClassificationId = async (classificationId) => {
   try {
-    const query = `
-      SELECT * FROM inventory
-      WHERE classification_id = $1
-      ORDER BY inv_make, inv_model;
-    `;
-    const values = [classificationId];
-    const result = await db.query(query, values);
-    return result.rows; // Return the rows from the query result
+    const sql = "SELECT * FROM inventory WHERE classification_id = $1";
+    const result = await db.query(sql, [classificationId]);
+    return result.rows; // Return inventory list
   } catch (error) {
-    console.error("Error fetching inventory by classification ID:", error.message);
-    throw error; // Rethrow the error to be handled by the caller
+    throw error;
   }
-}
+};
 
-module.exports = { getClassifications, getInventoryByClassificationId };
+module.exports = invModel;
