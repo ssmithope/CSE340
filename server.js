@@ -24,6 +24,11 @@ app.get('/', (req, res) => {
   res.render('index'); // Example route
 });
 
+// Example route
+app.get('/', (req, res) => {
+  res.render('layouts/layout', { title: 'Home Page' }); // Render layout.ejs
+});
+
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
 });
