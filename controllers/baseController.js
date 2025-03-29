@@ -5,12 +5,7 @@ const baseController = {};
 baseController.buildHome = async function (req, res) {
   try {
     const nav = await getNav().catch(() => {
-      console.error("Fallback navigation used due to error in getNav()");
-      return [
-        { label: "Home", link: "/" },
-        { label: "Inventory", link: "/inv" },
-        { label: "Contact Us", link: "/contact" },
-      ];
+      return '<ul><li><a href="/">Home</a></li></ul>';
     });
     res.render("index", { title: "Home", nav });
   } catch (error) {

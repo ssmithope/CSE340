@@ -1,10 +1,10 @@
-<nav role="navigation">
-    <% if (nav && nav.trim()) { %>
-        <%- nav %>
+<nav>
+    <% if (nav && typeof nav === "string") { %>
+      <%- nav %>
     <% } else { %>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/inv/type/1">Default Category</a></li>
-        </ul>
+      <ul>
+        <li><a href="/">Home</a></li>
+      </ul>
     <% } %>
-</nav>
+  </nav>
+  

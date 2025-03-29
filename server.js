@@ -37,15 +37,16 @@ app.get("/error", errorController.throwError); // Test error route
  * ****************************************** */
 // Handle 404 errors
 app.use((req, res) => {
-  console.error("404 Error: Page not found"); // Log the error
   res.status(404).render("errors", { title: "404 Error", message: "Page not found" });
 });
 
 // Handle other errors
 app.use((err, req, res, next) => {
-  console.error(`Error: ${err.message} | Status: ${err.status || 500}`); // Improved error logging
-  const status = err.status || 500;
-  res.status(status).render("errors", { title: `${status} Error`, message: err.message });
+  console.error(`Error: ${err.message}`);
+  res.status(err.status || 500).render("errors", {
+    title: `${err.status || 500} Error`,
+    message: err.message,
+  });
 });
 
 /* *******************************************
@@ -58,10 +59,8 @@ app.listen(PORT, () => {
   console.log(`Server running at http://${HOST}:${PORT}`);
 });
 
-/* *******************************************
- * Graceful Shutdown
- * ****************************************** */
 process.on("SIGINT", () => {
   console.log("Shutting down server...");
   process.exit(0);
 });
+
