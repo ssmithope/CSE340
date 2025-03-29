@@ -1,6 +1,6 @@
 /* General Body Styling */
 body {
-  font-family: 'Roboto', Arial, sans-serif;
+  font-family: 'Roboto', Arial, sans-serif; /* Google Fonts: Roboto */
   margin: 0;
   padding: 0;
   background-color: #f7f7f7;
@@ -163,3 +163,4 @@ footer {
   padding: 15px;
   font-size: 0.9rem;
 }
+
