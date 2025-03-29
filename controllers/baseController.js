@@ -15,53 +15,108 @@ baseController.buildHome = async (req, res, next) => {
 // Build Custom Page
 baseController.buildCustom = async (req, res, next) => {
   try {
-    res.render("custom", { 
-      title: "Custom", 
-      image: "/images/upgrades/flame-decals.jpg", 
-      details: "Personalize your vehicle with flame decals for a bold, standout look." 
-    });
+    const vehicle = {
+      make: "Custom",
+      model: "Flame Decals Edition",
+      inv_year: 2023,
+      inv_price: 25000,
+      inv_miles: 10000,
+      inv_image: "/images/vehicles/custom.jpg",
+      inv_description: "Personalize your ride with bold flame decals.",
+    };
+
+    const upgrades = [
+      { name: "Flame Decals", image: "/images/upgrades/flame-decals.jpg" },
+      { name: "Bumper Stickers", image: "/images/upgrades/bumper-stickers.jpg" },
+      { name: "Hub Caps", image: "/images/upgrades/hub-caps.jpg" },
+    ];
+
+    res.render("custom", { title: `${vehicle.make} ${vehicle.model}`, vehicle, upgrades });
   } catch (error) {
     next(error);
   }
 };
+
+// Repeat similar structures for Sedan, SUV, and Truck
 
 // Build Sedan Page
 baseController.buildSedan = async (req, res, next) => {
   try {
-    res.render("sedan", { 
-      title: "Sedan", 
-      image: "/images/vehicles/sedan.jpg", 
-      details: "Stylish, comfortable, and perfect for city driving." 
-    });
+    const vehicle = {
+      make: "Sedan",
+      model: "Flame Decals Edition",
+      inv_year: 2021,
+      inv_price: 25000,
+      inv_miles: 10000,
+      inv_image: "/images/vehicles/sedan.jpg",
+      inv_description: "Personalize your ride with bold flame decals.",
+    };
+
+    const upgrades = [
+      { name: "Flame Decals", image: "/images/upgrades/flame-decals.jpg" },
+      { name: "Bumper Stickers", image: "/images/upgrades/bumper-stickers.jpg" },
+      { name: "Hub Caps", image: "/images/upgrades/hub-caps.jpg" },
+    ];
+
+    res.render("sedan", { title: `${vehicle.make} ${vehicle.model}`, vehicle, upgrades });
   } catch (error) {
     next(error);
   }
 };
 
+// Repeat similar structures for Sedan, SUV, and Truck
 // Build SUV Page
 baseController.buildSUV = async (req, res, next) => {
   try {
-    res.render("suv", { 
-      title: "SUV", 
-      image: "/images/vehicles/suv.jpg", 
-      details: "Spacious and powerful, ready for your next adventure." 
-    });
+    const vehicle = {
+      make: "SUV",
+      model: "Flame Decals Edition",
+      inv_year: 2008,
+      inv_price: 25000,
+      inv_miles: 10000,
+      inv_image: "/images/vehicles/suv.jpg",
+      inv_description: "Personalize your ride with bold flame decals.",
+    };
+
+    const upgrades = [
+      { name: "Flame Decals", image: "/images/upgrades/flame-decals.jpg" },
+      { name: "Bumper Stickers", image: "/images/upgrades/bumper-stickers.jpg" },
+      { name: "Hub Caps", image: "/images/upgrades/hub-caps.jpg" },
+    ];
+
+    res.render("suv", { title: `${vehicle.make} ${vehicle.model}`, vehicle, upgrades });
   } catch (error) {
     next(error);
   }
 };
+
+// Repeat similar structures for Sedan, SUV, and Truck
 
 // Build Truck Page
 baseController.buildTruck = async (req, res, next) => {
   try {
-    res.render("truck", { 
-      title: "Truck", 
-      image: "/images/vehicles/truck.jpg", 
-      details: "Built tough to handle any job, big or small." 
-    });
+    const vehicle = {
+      make: "Truck",
+      model: "Flame Decals Edition",
+      inv_year: 1985,
+      inv_price: 25000,
+      inv_miles: 10000,
+      inv_image: "/images/vehicles/truck.jpg",
+      inv_description: "Personalize your ride with bold flame decals.",
+    };
+
+    const upgrades = [
+      { name: "Flame Decals", image: "/images/upgrades/flame-decals.jpg" },
+      { name: "Bumper Stickers", image: "/images/upgrades/bumper-stickers.jpg" },
+      { name: "Hub Caps", image: "/images/upgrades/hub-caps.jpg" },
+    ];
+
+    res.render("truck", { title: `${vehicle.make} ${vehicle.model}`, vehicle, upgrades });
   } catch (error) {
     next(error);
   }
 };
+
+// Repeat similar structures for Sedan, SUV, and Truck
 
 module.exports = baseController;
