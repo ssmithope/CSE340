@@ -1,12 +1,11 @@
 /* General Body Styling */
 body {
-  font-family: "Orbitron", sans-serif;
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-image: url('/images/site/small_check.jpg'); /* Checkered pattern */
+  background-image: url('/images/site/small_check.jpg'); /* Light checkered pattern */
   background-repeat: repeat;
-  background-size: cover;
-  background-position: center;
+  background-size: auto;
   color: #333; /* Neutral dark gray for readability */
 }
 
@@ -16,21 +15,20 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 15px 30px;
-  background-color: #111; /* Slightly darker header background */
-  color: #fff; /* White text for contrast */
-  border-bottom: 2px solid #555; /* Subtle separator */
+  background-color: #222; /* Dark header background */
+  color: #fff; /* White text */
 }
 
 header .logo {
-  font-size: 2rem; /* Larger size for "CSE Motors" */
+  font-size: 1.8rem; /* Larger text for the logo */
   font-weight: bold;
-  color: #fff; /* White for logo */
+  color: #fff; /* White text */
   text-decoration: none;
 }
 
 header .account {
-  font-size: 1.2rem; /* Slightly larger size for "My Account" */
-  color: #fff; /* White for accessibility */
+  font-size: 1rem;
+  color: #fff; /* White text for My Account */
   text-decoration: none;
 }
 
@@ -39,155 +37,167 @@ header .account:hover {
 }
 
 /* Navigation Bar */
-nav {
-  background-color: #222; /* Slightly darker navigation bar */
-  padding: 10px 0;
-}
-
 nav ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
-  gap: 30px; /* More spacing between nav links */
+  gap: 20px; /* Space between nav links */
+}
+
+nav ul li {
+  margin: 0;
 }
 
 nav ul li a {
   text-decoration: none;
-  color: #fff; /* White links for readability */
-  font-size: 1.1rem;
+  color: #fff; /* White links */
   font-weight: bold;
-  padding: 12px 18px;
-  border-radius: 4px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 nav ul li a:hover {
-  background-color: rgba(255, 255, 255, 0.3); /* Subtle transparency effect */
-  transform: scale(1.05); /* Slight zoom on hover */
+  background-color: rgba(255, 255, 255, 0.2); /* Subtle transparency effect */
 }
 
-/* Main Content */
-main {
+/* Welcome Section */
+.welcome-section {
   text-align: center;
-  padding: 50px;
-  background-color: rgba(255, 255, 255, 0.97); /* Slightly transparent white */
-  max-width: 1200px;
-  margin: 40px auto;
-  border-radius: 12px;
-  box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.25); /* Stronger shadow for depth */
+  margin: 20px auto;
 }
 
-main h1 {
-  font-size: 2.8rem; /* Prominent heading size */
-  color: #111; /* Darker text for main heading */
-  margin-bottom: 25px;
+.welcome-section h1 {
+  font-size: 2.5rem; /* Large heading */
+  font-weight: bold;
+  color: #000; /* Black text */
 }
 
-/* Vehicle Detail Section */
-.vehicle-detail {
-  display: flex;
-  flex-wrap: wrap; /* Allow wrapping for small screens */
-  gap: 25px;
-  align-items: flex-start;
-  max-width: 1000px;
+/* Delorean Section */
+.delorean-section {
+  text-align: center;
   margin: 30px auto;
+  position: relative;
 }
 
-.vehicle-detail img {
-  width: 100%;
-  max-width: 650px; /* Larger size for vehicle images */
+.delorean-section img {
+  max-width: 100%;
   height: auto;
-  border-radius: 10px;
-  border: 2px solid #ccc;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
-.vehicle-info {
-  flex: 1;
-  min-width: 320px;
-  text-align: left;
+.delorean-section .features {
+  font-size: 1.2rem;
+  color: #333; /* Neutral gray for features text */
+  margin: 10px 0;
 }
 
-.vehicle-info p {
-  font-size: 1.2rem; /* Increased font size for readability */
-  line-height: 1.8;
-  margin: 15px 0;
+.delorean-section .own-today-button {
+  position: absolute;
+  bottom: 20px; /* Place near the bottom of the image */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #007bff; /* Blue button */
+  color: #fff; /* White text */
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delorean-section .own-today-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
 }
 
 /* Upgrades Section */
-.upgrade-container {
+.upgrades-section {
+  margin: 20px auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Responsive grid layout */
-  gap: 25px;
-  max-width: 900px;
-  margin: 30px auto;
-}
-
-.item {
-  background-color: #f9f9f9; /* Light gray background */
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive grid */
+  gap: 20px;
   text-align: center;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
-  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.item img {
-  max-width: 120px;
-  margin-bottom: 15px;
+.upgrades-section .upgrade-item {
+  background-color: #f9f9f9; /* Light background */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
-.item:hover {
-  background-color: #f0f0f0; /* Slight highlight on hover */
-  transform: scale(1.03); /* Slight zoom on hover */
+.upgrades-section img {
+  max-width: 100px;
+  margin-bottom: 10px;
+}
+
+.upgrades-section .upgrade-name {
+  font-size: 1rem;
+  color: #007bff; /* Blue text */
 }
 
 /* Reviews Section */
-.reviews ul {
+.reviews-section {
+  margin: 20px auto;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.reviews-section ul {
   list-style: none;
   padding: 0;
 }
 
-.reviews li {
-  font-size: 1.1rem; /* Larger text for reviews */
-  margin-bottom: 20px; /* Increased spacing for clarity */
-  color: #555; /* Neutral gray for readability */
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 10px;
+.reviews-section li {
+  font-size: 1rem;
+  color: #333; /* Neutral gray for reviews text */
+  margin-bottom: 10px;
 }
 
 /* Footer Styling */
 footer {
-  background-color: #111; /* Matching the darker header */
-  color: #bbb; /* Slightly brighter contrast */
-  padding: 25px;
+  background-color: #222; /* Dark footer background */
+  color: #fff; /* White text */
   text-align: center;
-  font-size: 1rem;
-  border-top: 2px solid #444;
+  padding: 15px;
+  font-size: 0.9rem;
 }
 
-/* Responsive Design (Media Queries) */
+footer a {
+  color: #007bff; /* Blue links in footer */
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* General Containers */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   header {
     flex-direction: column;
     align-items: center;
-    gap: 15px;
   }
 
-  nav ul {
-    flex-direction: column; /* Stack links vertically */
-    gap: 20px;
+  .delorean-section img {
+    max-width: 100%; /* Ensure responsiveness */
   }
 
-  .vehicle-detail {
-    flex-direction: column; /* Stack details vertically */
-    text-align: center;
-  }
-
-  .upgrade-container {
-    grid-template-columns: 1fr; /* Single column for smaller screens */
+  .upgrades-section {
+    grid-template-columns: 1fr; /* Single column for upgrades */
   }
 }
