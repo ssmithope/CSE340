@@ -1,17 +1,21 @@
 const express = require("express");
 const path = require("path");
 require("dotenv").config(); // Load environment variables
-
 const helmet = require("helmet");
 const morgan = require("morgan");
-
-const app = express();
 const expressLayouts = require("express-ejs-layouts");
 const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
 const errorController = require("./controllers/errorController"); // Import error controller
 
-// Use environment variables for configuration
+/* *******************************************
+ * Initialize Express Application
+ * ****************************************** */
+const app = express();
+
+/* *******************************************
+ * Use Environment Variables for Configuration
+ * ****************************************** */
 const PORT = process.env.PORT || 3000; // Default to port 3000 if not defined
 const HOST = process.env.HOST || "localhost";
 
@@ -28,6 +32,7 @@ console.log(`Server running at ${HOST}:${PORT}`);
  * ****************************************** */
 app.use(helmet()); // Secure HTTP headers
 app.use(morgan("dev")); // Log HTTP requests
+app.use(express.static(path.join(__dirname, "public"))); // Serve static files from public folder
 
 /* *******************************************
  * View Engine and Templates
@@ -36,27 +41,22 @@ app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.set("layout", "./views/layouts/layout");
 
-/* *******************************************
- * Serve Static Files
- * ****************************************** */
-app.use(express.static(path.join(__dirname, "public"))); // Serve static files from public folder
-
 /* ***********************
  * Define Routes
  * *********************** */
-app.get("/", baseController.buildHome);
-app.use("/inv", inventoryRoute);
-
-// Test route to trigger error (optional)
-app.get("/error", errorController.throwError);
+app.get("/", baseController.buildHome); // Render the home page
+app.use("/inv", inventoryRoute); // Inventory routes
+app.get("/error", errorController.throwError); // Test route to trigger errors
 
 /* *******************************************
- * Error Handling
+ * Error Handling Middleware
  * ****************************************** */
-app.use((req, res, next) => {
+// Handle 404 errors
+app.use((req, res) => {
   res.status(404).render("errors", { title: "404 Error", message: "Page not found" });
 });
 
+// Handle other errors
 app.use((err, req, res, next) => {
   console.error(err.message); // Log the error
   const status = err.status || 500;
@@ -75,5 +75,5 @@ process.on("SIGINT", () => {
  * Start the Server
  * ****************************************** */
 app.listen(PORT, () => {
-  console.log(`Trial app listening on ${HOST}:${PORT}`);
+  console.log(`App listening on ${HOST}:${PORT}`);
 });

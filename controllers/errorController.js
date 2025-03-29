@@ -8,4 +8,11 @@ errorController.throwError = (req, res, next) => {
     next(error); // Pass the error down the middleware chain
 };
 
+// Handles errors and renders the error page
+errorController.handleError = (err, req, res, next) => {
+    console.error(err.message); // Log the error message
+    res.status(err.status || 500).render("errors/error", { title: "Error", message: err.message });
+};
+
+// Export the errorController object with both methods
 module.exports = errorController;
