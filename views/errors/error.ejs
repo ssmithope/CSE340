@@ -4,32 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
-    <link rel="stylesheet" href="/styles.css"> <!-- Ensure this file exists in the public folder -->
+    <link rel="stylesheet" href="/styles.css"> <!-- Confirm this CSS file exists -->
 </head>
 <body>
     <header>
-        <% include ../partials/header.ejs %> <!-- Add a consistent header if available -->
+        <% include('../partials/header.ejs'); %> <!-- Ensure partials are correctly placed in the views directory -->
     </header>
+
     <main>
         <section class="error-container">
             <h1 class="error-title"><%= title %></h1>
-            <img src="/images/upgrades/flame.jpg" alt="Error Image" class="error-image"> <!-- Ensure the image path is correct -->
-            <p class="error-message"><%= message %></p> <!-- Display the dynamic error message -->
+            <img src="/images/upgrades/flame.jpg" alt="Error Image" class="error-image"> <!-- Confirm the image path -->
+            <p class="error-message">Error: <%= message %></p>
+            <p class="error-status">Status: <%= status %></p>
         </section>
 
-        <!-- Suggestions for the user based on error type -->
         <section class="error-suggestions">
             <% if (title.startsWith("404")) { %>
                 <p class="error-hint">Sorry, the page you're looking for was not found. Check the URL or <a href="/">return to the homepage</a>.</p>
             <% } else if (title.startsWith("500")) { %>
                 <p class="error-hint">We're experiencing technical issues. Please try again later or <a href="/contact">contact support</a>.</p>
             <% } else { %>
-                <p class="error-hint">An unexpected error occurred. Please go back or <a href="/">visit the homepage</a>.</p>
+                <p class="error-hint">An unexpected error occurred. Please <a href="/">go back to the homepage</a>.</p>
             <% } %>
         </section>
     </main>
+
     <footer>
-        <% include ../partials/footer.ejs %> <!-- Add a consistent footer if available -->
+        <% include('../partials/footer.ejs'); %> <!-- Ensure footer exists in the partials directory -->
     </footer>
 </body>
 </html>
