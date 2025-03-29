@@ -37,5 +37,3 @@ baseController.buildTruck = (req, res) => {
     details: "Built tough to handle any job, big or small." 
   });
 };
-
-module.exports = baseController;
