@@ -13,6 +13,21 @@ const errorController = require("./controllers/errorController"); // Import erro
  * ****************************************** */
 const app = express();
 
+// Setting the views directory and view engine
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+// Middleware or routes follow here
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', (req, res) => {
+  res.render('index'); // Example route
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
+
 /* *******************************************
  * Use Environment Variables for Configuration
  * ****************************************** */
