@@ -4,7 +4,6 @@ body {
   background-color: #f0f0f0; /* Light gray background */
   margin: 0;
   padding: 0;
-  text-align: center;
   color: #333; /* Dark gray text for readability */
 }
 
@@ -40,6 +39,10 @@ nav ul li a:hover {
   background-color: #ffcc00; /* Yellow background on hover */
   color: #333; /* Dark text for contrast on hover */
   border-radius: 5px;
+}
+
+nav ul li a:focus {
+  outline: 2px dashed #ffcc00; /* Accessibility for keyboard navigation */
 }
 
 /* Header Styling */
@@ -85,6 +88,58 @@ main h1, h2 {
   margin: 10px 0;
 }
 
+/* Reviews Styling */
+section.reviews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: flex-start;
+}
+
+section.reviews ul {
+  padding: 0;
+  margin: 0;
+}
+
+section.reviews ul li {
+  margin: 10px 0;
+  font-size: 16px;
+  color: #666; /* Slightly lighter gray */
+}
+
+/* Buttons */
+button {
+  background-color: #ffcc00; /* Bright yellow button */
+  color: #333; /* Dark text for contrast */
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #ffd633; /* Slightly lighter yellow */
+  transform: scale(1.05); /* Add a slight zoom effect on hover */
+}
+
+button:focus {
+  outline: 2px solid #ffcc00; /* Accessibility for focus */
+}
+
+/* Footer Styling */
+footer {
+  background-color: #2a2a2a; /* Same dark gray as nav */
+  color: #fff; /* White text for contrast */
+  padding: 10px 0;
+  font-size: 14px; /* Smaller footer font */
+}
+
+footer p {
+  margin: 0;
+}
 
 /* Sections Styling */
 section {
@@ -118,43 +173,14 @@ section ul li {
   text-align: left; /* Align list text to the left */
 }
 
-/* Buttons */
-button {
-  background-color: #ffcc00; /* Bright yellow button */
-  color: #333; /* Dark text for contrast */
-  font-weight: bold;
-  font-size: 16px;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: all 0.3s ease;
-}
+/* Responsive Design */
+@media (max-width: 768px) {
+  nav ul li {
+    margin: 0 10px;
+  }
 
-button:hover {
-  background-color: #ffd633; /* Slightly lighter yellow */
-  transform: scale(1.05); /* Add a slight zoom effect on hover */
-}
-
-/* Footer Styling */
-footer {
-  background-color: #2a2a2a; /* Same dark gray as nav */
-  color: #fff; /* White text for contrast */
-  padding: 10px 0;
-  font-size: 14px; /* Smaller footer font */
-}
-
-footer p {
-  margin: 0;
-}
-
-/* Reviews Styling */
-section.reviews ul {
-  text-align: left;
-}
-
-section.reviews ul li {
-  margin: 10px 0;
-  font-size: 16px;
-  color: #666; /* Slightly lighter gray */
+  .vehicle-detail {
+    flex-direction: column; /* Stack content on smaller screens */
+    text-align: center;
+  }
 }
