@@ -1,57 +1,33 @@
-/* General Styles */
+/* General Body Styling */
 body {
-  font-family: "Orbitron", sans-serif;
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-image: url('/images/site/small_check.jpg'); /* Checkered pattern */
-  background-repeat: repeat;
-  background-size: auto;
-  background-position: top left;
-  color: #333; /* Neutral gray */
+  background-color: #f7f7f7; /* Subtle light gray for background */
+  color: #333; /* Neutral dark gray for readability */
 }
 
-/* Header Styles */
+/* Header Styling */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 30px;
-  background-color: rgba(0, 0, 0, 0.85); /* Dark header background */
+  background-color: #222; /* Dark gray background for header */
   color: #fff; /* White text */
-  border-bottom: 2px solid #666; /* Subtle border */
+  border-bottom: 2px solid #444; /* Subtle separator */
 }
 
 header .logo {
-  font-size: 1.8rem; /* Larger text for the logo */
+  font-size: 1.5rem; /* Larger text for "CSE Motors" */
   font-weight: bold;
+  color: #fff; /* White for logo */
   text-decoration: none;
-  color: #fff;
-}
-
-header nav ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-  padding: 0;
-  margin: 0;
-}
-
-header nav ul li a {
-  text-decoration: none;
-  color: #fff; /* White text for navigation links */
-  font-weight: bold;
-  padding: 10px;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-header nav ul li a:hover {
-  background-color: rgba(255, 255, 255, 0.2); /* Subtle hover effect */
 }
 
 header .account {
   font-size: 1rem;
-  color: #fff;
+  color: #fff; /* White for "My Account" */
   text-decoration: none;
 }
 
@@ -59,161 +35,160 @@ header .account:hover {
   text-decoration: underline;
 }
 
-/* Welcome Section */
-.welcome-section {
-  text-align: center;
-  margin: 30px auto;
+/* Navigation Bar */
+nav {
+  margin-top: 15px;
+  background-color: #333; /* Dark gray for navigation bar */
 }
 
-.welcome-section h1 {
-  font-size: 2.5rem; /* Large bold welcome text */
-  font-weight: bold;
-  color: #000; /* Black color for emphasis */
-  margin-bottom: 20px;
-}
-
-/* DMC DeLorean Section */
-.delorean-section {
-  text-align: center;
-  position: relative;
-  margin: 40px auto;
-}
-
-.delorean-section img {
-  max-width: 90%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for image */
-}
-
-.delorean-section .own-today {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #007bff; /* Blue button */
-  color: #fff; /* White text */
-  padding: 12px 20px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  text-transform: uppercase;
-  transition: background-color 0.3s ease;
-}
-
-.delorean-section .own-today:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-}
-
-.delorean-section .features {
-  margin-top: 20px;
-  font-size: 1.2rem;
-  color: #444;
+nav ul {
   list-style: none;
-  padding: 0;
-}
-
-/* Upgrades Section */
-.upgrades-section {
-  margin: 40px auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive grid */
-  gap: 20px;
-  text-align: center;
-}
-
-.upgrades-section .upgrade-item {
-  background-color: rgba(255, 255, 255, 0.95); /* Light upgrade card background */
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
-}
-
-.upgrades-section img {
-  max-width: 100px;
-  margin-bottom: 15px;
-}
-
-.upgrades-section .upgrade-name {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #007bff; /* Blue text for names */
-}
-
-/* Reviews Section */
-.reviews-section {
-  margin: 40px auto;
-  padding: 20px;
-  max-width: 600px;
-  background-color: rgba(255, 255, 255, 0.9); /* Light review section background */
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Subtle shadow */
-}
-
-.reviews-section h2 {
-  font-size: 1.8rem;
-  color: #000;
-  margin-bottom: 15px;
-}
-
-.reviews-section ul {
-  list-style: none;
+  display: flex;
+  justify-content: center;
   padding: 0;
   margin: 0;
 }
 
-.reviews-section li {
-  font-size: 1rem;
-  color: #444;
-  margin-bottom: 15px;
-  line-height: 1.5;
+nav ul li {
+  margin: 0 15px;
 }
 
-/* Footer */
-footer {
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.85);
-  color: #fff;
-  padding: 20px;
-  font-size: 0.9rem;
-  border-top: 2px solid #666;
-}
-
-footer a {
-  color: #007bff; /* Blue links for the footer */
+nav ul li a {
   text-decoration: none;
-  margin: 0 10px;
+  color: #fff; /* White links */
+  font-weight: bold;
+  padding: 10px;
 }
 
-footer a:hover {
-  text-decoration: underline;
+nav ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Subtle hover effect */
 }
 
-/* General Responsive Design */
+/* Main Content Styling */
+main {
+  text-align: center;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 20px auto;
+  background-color: #fff; /* White background for content */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+main h1 {
+  font-size: 2rem;
+  color: #222; /* Dark gray for headings */
+  margin-bottom: 20px;
+}
+
+main .description p {
+  margin: 10px auto;
+}
+
+/* Vehicle Detail Section */
+.vehicle-detail {
+  display: flex;
+  flex-wrap: wrap; /* Wrap content on smaller screens */
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.vehicle-detail img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.vehicle-info {
+  flex: 1; /* Allow text to take up remaining space */
+  min-width: 300px;
+  text-align: left;
+}
+
+.vehicle-info p {
+  font-size: 1.1rem;
+  margin: 10px 0;
+  line-height: 1.8;
+}
+
+/* Upgrades Section */
+.upgrade-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+.item {
+  text-align: center;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.item img {
+  max-width: 80px;
+  margin-bottom: 10px;
+}
+
+.item p {
+  font-size: 0.9rem;
+}
+
+/* Reviews Section */
+.review-container {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.reviews ul {
+  padding-left: 20px;
+}
+
+.reviews li {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+/* Footer Styling */
+footer {
+  background-color: #222; /* Dark gray footer */
+  color: #ccc; /* Light gray text for footer */
+  text-align: center;
+  padding: 15px;
+  font-size: 0.9rem;
+  border-top: 2px solid #444; /* Footer separator */
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   header {
     flex-direction: column;
+    align-items: center;
+  }
+
+  .vehicle-detail {
+    flex-direction: column; /* Stack elements vertically */
     text-align: center;
   }
 
-  header nav ul {
+  .upgrade-container {
+    grid-template-columns: 1fr; /* Single column for upgrades */
+  }
+
+  nav ul {
     flex-direction: column;
     gap: 10px;
   }
 
-  .delorean-section img {
-    max-width: 100%; /* Fully responsive car image */
-  }
-
-  .upgrades-section {
-    grid-template-columns: 1fr; /* Single-column for smaller screens */
-  }
-
   footer {
     font-size: 0.8rem;
-    padding: 15px;
   }
 }
