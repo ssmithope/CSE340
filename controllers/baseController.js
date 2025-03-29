@@ -12,9 +12,14 @@ const upgrades = [
 // Reusable Function to Render Vehicle Pages
 baseController.buildVehiclePage = async (req, res, next, vehicle, title) => {
   try {
+    if (!vehicle) throw new Error("Vehicle data is missing.");
+    if (!Array.isArray(upgrades) || upgrades.length === 0) {
+      throw new Error("Upgrades data is missing or invalid.");
+    }
     const nav = await getNav();
     res.render("vehicle", { title, vehicle, upgrades, nav });
   } catch (error) {
+    console.error(error.message);
     next(error);
   }
 };
@@ -25,7 +30,8 @@ baseController.buildHome = async (req, res, next) => {
     const nav = await getNav();
     res.render("index", { title: "Home", nav });
   } catch (error) {
-    next(error);
+    console.error("Failed to fetch navigation data:", error.message);
+    res.render("index", { title: "Home", nav: [] });
   }
 };
 
@@ -35,8 +41,8 @@ baseController.buildCustom = async (req, res, next) => {
     make: "Custom",
     model: "Flame Decals Edition",
     inv_year: 2023,
-    inv_price: 25000,
-    inv_miles: 10000,
+    inv_price: Number(25000).toLocaleString("en-US"),
+    inv_miles: Number(10000).toLocaleString("en-US"),
     inv_image: "/images/vehicles/custom.jpg",
     inv_description: "Personalize your ride with bold flame decals.",
   };
@@ -49,10 +55,10 @@ baseController.buildSedan = async (req, res, next) => {
     make: "Sedan",
     model: "Flame Decals Edition",
     inv_year: 2021,
-    inv_price: 25000,
-    inv_miles: 10000,
+    inv_price: Number(25000).toLocaleString("en-US"),
+    inv_miles: Number(10000).toLocaleString("en-US"),
     inv_image: "/images/vehicles/sedan.jpg",
-    inv_description: "A stylish sedan enhanced with bold flame decals.",
+    inv_description: "Experience elegance with this stylish sedan featuring flame decals.",
   };
   baseController.buildVehiclePage(req, res, next, vehicle, `CSE Motors - ${vehicle.make} ${vehicle.model}`);
 };
@@ -63,10 +69,10 @@ baseController.buildSUV = async (req, res, next) => {
     make: "SUV",
     model: "Flame Decals Edition",
     inv_year: 2008,
-    inv_price: 25000,
-    inv_miles: 10000,
+    inv_price: Number(25000).toLocaleString("en-US"),
+    inv_miles: Number(10000).toLocaleString("en-US"),
     inv_image: "/images/vehicles/suv.jpg",
-    inv_description: "A powerful SUV with bold flame decals.",
+    inv_description: "Conquer every terrain with this robust SUV enhanced by bold flame decals.",
   };
   baseController.buildVehiclePage(req, res, next, vehicle, `CSE Motors - ${vehicle.make} ${vehicle.model}`);
 };
@@ -77,10 +83,10 @@ baseController.buildTruck = async (req, res, next) => {
     make: "Truck",
     model: "Flame Decals Edition",
     inv_year: 1985,
-    inv_price: 25000,
-    inv_miles: 10000,
+    inv_price: Number(25000).toLocaleString("en-US"),
+    inv_miles: Number(10000).toLocaleString("en-US"),
     inv_image: "/images/vehicles/truck.jpg",
-    inv_description: "This rugged truck is equipped with bold flame decals.",
+    inv_description: "Built tough for every challenge, now with bold flame decals to stand out.",
   };
   baseController.buildVehiclePage(req, res, next, vehicle, `CSE Motors - ${vehicle.make} ${vehicle.model}`);
 };

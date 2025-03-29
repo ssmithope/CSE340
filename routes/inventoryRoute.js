@@ -2,8 +2,6 @@
 const express = require("express");
 const router = express.Router();
 const invController = require("../controllers/invController");
-router.get("/:id", invController.getVehicleDetails); // Ensure this function exists and is defined
-
 
 // Validation middleware for classificationId
 function validateClassificationId(req, res, next) {
