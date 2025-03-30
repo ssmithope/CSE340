@@ -1,25 +1,23 @@
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("Page loaded!");
-  
-    // Toggle navigation menu
-    const menuToggle = document.querySelector("#menu-toggle");
-    const nav = document.querySelector("#nav");
-    if (menuToggle && nav) {
-      menuToggle.addEventListener("click", () => {
-        nav.classList.toggle("open");
+document.addEventListener('DOMContentLoaded', function () {
+  // Get the button element by ID (no need for the '#')
+  const pswdBtn = document.getElementById("pswdBtn");
+
+  // Check if the button exists before adding the event listener
+  if (pswdBtn) {
+      pswdBtn.addEventListener("click", function () {
+          const pswdInput = document.getElementById("pword");
+          const type = pswdInput.getAttribute("type");
+          
+          // Toggle the password visibility
+          if (type === "password") {
+              pswdInput.setAttribute("type", "text");
+              pswdBtn.innerHTML = "Hide Password";  // Change button text
+          } else {
+              pswdInput.setAttribute("type", "password");
+              pswdBtn.innerHTML = "Show Password";  // Change button text
+          }
       });
-    }
-  
-    // Form validation example
-    const form = document.querySelector("#form");
-    if (form) {
-      form.addEventListener("submit", (event) => {
-        const email = document.querySelector("#email").value;
-        if (!email.includes("@")) {
-          event.preventDefault();
-          alert("Please enter a valid email address.");
-        }
-      });
-    }
-  });
-  
+  } else {
+      console.log('Password button not found.');
+  }
+});

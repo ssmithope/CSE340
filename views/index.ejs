@@ -1,47 +1,65 @@
-<!DOCTYPE html>
-<html lang="en-US">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CSE Motors</title>
-  <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
-  <header>
-    <% include('partials/navigation.ejs'); %>
-  </header>  
-  <main>
-    <h1>Welcome to CSE Motors!</h1>
-    <section>
-      <h2>DMC Delorean</h2>
-      <p>3 Cup holders</p>
-      <p>Superman doors</p>
-      <p>Fuzzy dice!</p>
-      <button>Own Today</button>
-      <img src="/images/vehicles/delorean.jpg" alt="DMC Delorean">
-    </section>
-    <section>
-      <h2>Delorean Upgrades</h2>
-      <ul>
-        <li><img src="/images/upgrades/flux-capacitor.jpg" alt="Flux Capacitor"><br>Flux Capacitor</li>
-        <li><img src="/images/upgrades/flame-decals.jpg" alt="Flame Decals"><br>Flame Decals</li>
-        <li><img src="/images/upgrades/bumper-stickers.jpg" alt="Bumper Stickers"><br>Bumper Stickers</li>
-        <li><img src="/images/upgrades/hub-caps.jpg" alt="Hub Caps"><br>Hub Caps</li>
-      </ul>
-    </section>
-    <section>
-      <h2>DMC Delorean Reviews</h2>
-      <ul>
-        <li>"So fast it's almost like traveling in time." (4/5)</li>
-        <li>"Coolest ride on the road." (4/5)</li>
-        <li>"I'm feeling McFly!" (5/5)</li>
-        <li>"The most futuristic ride of our day." (4/5)</li>
-        <li>"80's livin and I love it!" (5/5)</li>
-      </ul>
-    </section>
-  </main>
-  <footer>
-    <p>&copy; 2023, CSE 340 App</p>
-  </footer>
-</body>
-</html>
+<h1>Welcome to CSE Motors!</h1>
+
+
+    <div class="overlay">
+        <div class="delorean-sale">
+            <img class="delorean-image-index" src="/images/vehicles/delorean-tn.jpg" alt="Delorean Car">
+        </div>
+        <div class="text-overlay">
+            <ul>
+                <li>DMC Delorean</li>
+                <li>3 Cup holders</li>
+                <li>Superman Doors</li>
+                <li>Fuzzy dice!</li>
+                <li><button class="own-delorean">Own Today</button></li>
+            </ul>
+        </div>
+    </div> 
+
+<div class="content-wrapper">
+
+
+    <div class="review-container">
+    <h2 id="delorean-reviews">DMC Delorean Reviews</h2>
+        <ul class="reviews">
+            <li>"So Fast it's almost like traveling in time." (4/5)</li>
+            <li>"Coolest ride on the road." (4/5)</li>
+            <li>"I'm feeling McFly!." (5/5)</li>
+            <li>"the most futuristic ride of our day." (4.5/5)</li>
+            <li>"80's livin and I love it!." (5/5)</li>
+        </ul>
+    </div>
+
+    <div class="upgrade-container">
+    <h2 class="upgrades">Delorean Upgrades</h2>    
+
+        <div class="item">
+            <div class="image-container">
+                <img src="/images/upgrades/flux-cap.png" alt="Flux Capacitor">
+            </div>
+            <a href="#"><p class="item-name">Flux Capacitor</p></a>
+        </div>    
+    
+        <div class="item">
+                <div class="image-container"> 
+                    <img src="/images/upgrades/flame.jpg" alt="Flames">
+                </div>
+                <a href="#"><p>Flame Decals</p></a>
+        </div>
+
+        <div class="item">
+            <div class="image-container"> 
+                <img src="/images/upgrades/bumper_sticker.jpg" alt="Bumper Sticker">
+            </div>
+            <a href="#"><p>Bumper Sticker</p></a>
+        </div>
+
+        <div class="item">
+            <div class="image-container"> 
+                <img src="/images/upgrades/hub-cap.jpg" alt="Hub Caps">
+            </div>
+            <a href="#"><p>Hub Caps</p></a>
+        </div>
+
+    </div>
+</div>

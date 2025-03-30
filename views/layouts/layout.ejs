@@ -1,31 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('../partials/head') %>
+<%- include('../partials/head', { title: title }) %>
 
 <body>
     <div id="wrapper">
-        <!-- Header Section -->
-        <header>
-            <%- include('../partials/header') %>
-        </header>
+        <%- include('../partials/header') %>
+        <%- include ('../partials/navigation') %>
 
-        <!-- Navigation Section -->
-        <nav>
-            <%- include('../partials/navigation') %>
-        </nav>
-
-        <!-- Main Content Area -->
         <main>
             <%- body %>
         </main>
 
-        <!-- Footer Section -->
-        <footer>
-            <%- include('../partials/footer') %>
-        </footer>
+        <%- include('../partials/footer') %>
     </div>
-
-    <!-- Load Client-Side JavaScript -->
-    <script src="/js/script.js"></script>
+    <script src="/js/script.js"></script>  
 </body>
 </html>

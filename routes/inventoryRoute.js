@@ -1,26 +1,23 @@
-// Needed Resources
-const express = require("express");
-const router = express.Router();
-const invController = require("../controllers/invController");
+// Needed Resources 
+const express = require("express")
+const router = new express.Router() 
+const invController = require("../controllers/invController")
+const errorController = require('../controllers/errorController');
 
-// Validation middleware for classificationId
-function validateClassificationId(req, res, next) {
-  const classificationId = parseInt(req.params.classificationId, 10);
-  if (isNaN(classificationId)) {
-    return res.status(400).send("Invalid classification ID");
-  }
-  next();
-}
 
-// Route for specific inventory item detail view
-router.get("/:id", invController.getVehicleDetails);
+
 
 // Route to build inventory by classification view
-router.get("/type/:classificationId", validateClassificationId, invController.buildByClassificationId);
+router.get("/type/:classificationId", invController.buildByClassificationId);
 
-// Default Inventory Home route
-router.get("/", (req, res) => {
-  res.render("inventory/home", { title: "Inventory Home" });
-});
+// Route to show vehicle details by inv_id
+router.get("/detail/:invId", invController.showVehicleDetail);
+
+router.get("/", invController.buildManagementView);
+router.get('/add-classification', invController.showAddClassification);
+router.post('/add-classification', invController.addClassification);
+router.get('/add-inventory', invController.addInventory);
+router.post('/add-inventory', invController.addInventory); 
+router.get('/trigger-error', errorController.throwError);
 
 module.exports = router;

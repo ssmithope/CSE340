@@ -1,41 +1,38 @@
-const { Pool } = require("pg");
-require("dotenv").config();
-
-const poolConfig = {
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
-};
-
-const pool = new Pool(poolConfig);
-
-// Test the database connection
-pool.query("SELECT NOW()", (err, res) => {
-  if (err) {
-    console.error("Database connection test failed:", err.message);
-  } else {
-    console.log("Database connected:", res.rows[0]);
-  }
+const { Pool } = require("pg")
+require("dotenv").config()
+/* ***************
+ * Connection Pool
+ * SSL Object needed for local testing of app
+ * But will cause problems in production environment
+ * If - else will make determination which to use
+ * *************** */
+let pool
+if (process.env.NODE_ENV == "development") {
+  pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false,
+    },
 });
 
-const db = {
+
+// Added for troubleshooting queries
+// during development
+module.exports = {
   async query(text, params) {
     try {
-      const res = await pool.query(text, params);
-      return res;
+      const res = await pool.query(text, params)
+      console.log("executed query", { text })
+      return res
     } catch (error) {
-      console.error("Database query error:", error.message, error.stack);
-      throw error;
+      console.error("error in query", { text })
+      throw error
     }
   },
-  async getClassifications() {
-    try {
-      const result = await pool.query("SELECT * FROM classification;");
-      return result.rows;
-    } catch (error) {
-      console.error("Error fetching classifications:", error.message, error.stack);
-      throw error;
-    }
-  },
-};
-
-module.exports = db;
+}
+} else {
+  pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+  })
+  module.exports = pool
+}
