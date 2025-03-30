@@ -22,8 +22,17 @@ Util.getNav = async function (req, res, next) {
     return list;
   } catch (error) {
     console.error("Error in getNav function:", error.message);
-    return '<ul><li><a href="/" title="Home page">Home</a></li></ul>'; // Fallback
+    return '<ul><li><a href="/" title="Home page">Home</a></li></ul>'; // Fallback navigation
   }
 };
 
+/* ****************************************
+ * Middleware For Handling Errors
+ * Wrap other functions in this for 
+ * General Error Handling
+ **************************************** */
+Util.handleErrors = (fn) => (req, res, next) =>
+  Promise.resolve(fn(req, res, next)).catch(next);
+
+// Export the Utilities module
 module.exports = Util;
