@@ -64,7 +64,8 @@ app.use(static);
 // Debugging Utilities Object
 console.log("Utilities object:", utilities); // Ensure 'handleErrors' exists in the utilities object
 
-//index route
+// Index route
+app.get("/", utilities.handleErrors(baseController.buildHome)); // This assumes handleErrors is properly exported
 
 // Inventory routes
 app.use("/inv", inventoryRoute);
