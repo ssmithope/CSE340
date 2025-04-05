@@ -1,5 +1,12 @@
 const invModel = require("../models/inventory-model");
+const utilities = require("../utilities");
 
+// Declare the controller object
+const invCont = {};
+
+/* ************************************
+ * Fetch inventory by classification name
+ * ************************************ */
 invCont.getByClassificationName = async (req, res, next) => {
   const classificationName = req.params.classificationName;
 
@@ -23,3 +30,31 @@ invCont.getByClassificationName = async (req, res, next) => {
     next(error);
   }
 };
+
+/* ************************************
+ * Fetch vehicle details by ID
+ * ************************************ */
+invCont.getVehicleDetails = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const vehicle = await invModel.getVehicleById(id);
+
+    if (!vehicle) {
+      return res.status(404).render("errors/error", {
+        title: "Vehicle Not Found",
+        message: "The requested vehicle does not exist.",
+        nav: await utilities.getNav(),
+      });
+    }
+
+    res.render("vehicle-detail", {
+      title: `${vehicle.inv_make} ${vehicle.inv_model}`,
+      vehicle,
+      nav: await utilities.getNav(),
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = invCont; // Export the controller object
