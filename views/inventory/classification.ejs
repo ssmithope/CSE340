@@ -1,13 +1,28 @@
-<h1><%= title %></h1>
-
-<!-- Message Block -->
-<% if (messages && messages.length > 0) { %>
-    <div class="messages">
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head') %>
+<body>
+  <header>
+    <%- include('partials/header') %>
+    <%- include('partials/navigation') %>
+  </header>
+  <main>
+    <h1><%= title %></h1>
+    <% if (Array.isArray(messages) && messages.length > 0) { %>
+      <div class="messages">
         <% messages.forEach(message => { %>
-            <p><%= message %></p>
+          <p><%= message %></p>
         <% }) %>
-    </div>
-<% } %>
-
-<!-- Inventory Items Display -->
-<%- grid %>
+      </div>
+    <% } %>
+    <% if (grid) { %>
+      <%- grid %>
+    <% } else { %>
+      <p>No vehicles available for this classification.</p>
+    <% } %>
+  </main>
+  <footer>
+    <%- include('partials/footer') %>
+  </footer>
+</body>
+</html>

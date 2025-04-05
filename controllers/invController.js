@@ -1,10 +1,12 @@
 const invModel = require("../models/inventory-model");
 const utilities = require("../utilities/");
 
-const inventoryController = {}; // Ensure controller object is initialized
+const invCont = {};
 
-// Function to build inventory by classification
-inventoryController.buildByClassificationId = async function (req, res, next) {
+/* ***************************
+ *  Build inventory by classification view
+ * ************************** */
+invCont.buildByClassificationId = async function (req, res, next) {
   const classification_id = req.params.classificationId;
 
   try {
@@ -12,7 +14,6 @@ inventoryController.buildByClassificationId = async function (req, res, next) {
     const nav = await utilities.getNav();
 
     if (!data || data.length === 0) {
-      console.error(`No inventory found for classification ID: ${classification_id}`);
       return res.status(404).render("errors/error", {
         title: "No Inventory Found",
         message: `No vehicles found for classification ID: ${classification_id}.`,
@@ -24,24 +25,25 @@ inventoryController.buildByClassificationId = async function (req, res, next) {
     const className = data[0]?.classification_name || "Unknown";
 
     res.render("inventory/classification", {
-      title: `${className} vehicles`,
+      title: `${className} Vehicles`,
       nav,
       grid,
     });
   } catch (error) {
     console.error(`Error building inventory for classification ID ${classification_id}:`, error);
-    next(error); 
+    next(error);
   }
 };
 
-// Function to build vehicle detail view
-inventoryController.getVehicleDetails = async (req, res, next) => {
+/* ***************************
+ *  Build vehicle detail view
+ * ************************** */
+invCont.getVehicleDetails = async (req, res, next) => {
   try {
     const id = req.params.id;
     const vehicle = await invModel.getVehicleById(id);
 
     if (!vehicle) {
-      console.error(`No vehicle found for ID: ${id}`);
       return res.status(404).render("errors/error", {
         title: "Vehicle Not Found",
         message: "The requested vehicle does not exist.",
@@ -60,4 +62,4 @@ inventoryController.getVehicleDetails = async (req, res, next) => {
   }
 };
 
-module.exports = inventoryController; // Ensure this exports the object correctly
+module.exports = invCont;
