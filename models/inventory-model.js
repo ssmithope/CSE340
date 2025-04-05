@@ -1,29 +1,24 @@
-const pool = require("../database/")
+const pool = require("../database");
 
-/* ***************************
- *  Get all classification data
- * ************************** */
-async function getClassifications(){
-  return await pool.query("SELECT * FROM public.classification ORDER BY classification_name")
-}
-
-
-/* ***************************
- *  Get all inventory items and classification_name by classification_id
- * ************************** */
-async function getInventoryByClassificationId(classification_id) {
+/* **************************************
+ * Fetch inventory by classification name
+ * ************************************ */
+async function getInventoryByClassificationName(classificationName) {
   try {
-    const data = await pool.query(
-      `SELECT * FROM public.inventory AS i 
-      JOIN public.classification AS c 
-      ON i.classification_id = c.classification_id 
-      WHERE i.classification_id = $1`,
-      [classification_id]
-    )
-    return data.rows
+    const sql = `
+      SELECT * 
+      FROM inventory
+      JOIN classification ON inventory.classification_id = classification.classification_id
+      WHERE classification_name = $1
+    `;
+    const result = await pool.query(sql, [classificationName]);
+    return result.rows; // Return an array of vehicles
   } catch (error) {
-    console.error("getclassificationsbyid error " + error)
+    console.error("Error fetching inventory by classification name:", error);
+    throw error;
   }
 }
 
-module.exports = {getClassifications, getInventoryByClassificationId};
+module.exports = {
+  getInventoryByClassificationName, // Export function
+};
