@@ -7,7 +7,7 @@ const Util = {};
  ************************ */
 Util.getNav = async function () {
   try {
-    const data = await invModel.getClassifications(); // This calls the function
+    const data = await invModel.getClassifications(); // Ensure the function exists
     let list = "<ul>";
     list += '<li><a href="/" title="Home page">Home</a></li>';
     data.forEach((row) => {
