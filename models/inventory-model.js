@@ -1,40 +1,86 @@
-const pool = require("../database"); // Ensure the database connection setup
+const pool = require("../database/")
 
-/* **************************************
- * Fetch all classifications
- * ************************************ */
-async function getClassifications() {
+/* ***************************
+ *  Get all classification data
+ * ************************** */
+async function getClassifications(){
+  return await pool.query("SELECT * FROM public.classification ORDER BY classification_name")
+}
+
+/* ***************************
+ *  Get all inventory items and classification_name by classification_id
+ * ************************** */
+async function getInventoryByClassificationId(classification_id) {
   try {
-    const sql = "SELECT * FROM classification ORDER BY classification_name";
-    const result = await pool.query(sql); // Run query to fetch classifications
-    return result.rows; // Return the classifications as an array
+    const data = await pool.query(
+      `SELECT * FROM public.inventory AS i 
+      JOIN public.classification AS c 
+      ON i.classification_id = c.classification_id 
+      WHERE i.classification_id = $1`,
+      [classification_id]
+    )
+
+    // Log the result for debugging purposes
+    console.log("Data fetched:", data.rows);
+    
+    return data.rows
   } catch (error) {
-    console.error("Error fetching classifications:", error);
-    throw error;
+    console.error("getclassificationsbyid error " + error)
   }
 }
 
-/* **************************************
- * Fetch inventory by classification name
- * ************************************ */
-async function getInventoryByClassificationName(classificationName) {
+
+async function getVehicleByInvId(inv_id) {
   try {
-    const sql = `
-      SELECT * 
-      FROM inventory
-      JOIN classification ON inventory.classification_id = classification.classification_id
-      WHERE classification_name = $1
-    `;
-    const result = await pool.query(sql, [classificationName]);
-    return result.rows;
+
+    console.log(`Querying database for inv_id: ${inv_id}`);
+    
+    const result = await pool.query(
+      `SELECT * FROM public.inventory AS i
+      JOIN public.classification AS c
+      ON i.classification_id = c.classification_id
+      WHERE i.inv_id = $1`,
+      [inv_id]
+    )
+
+    console.log("Vehicle data returned: ", result.rows)
+    
+    return result.rows[0]
   } catch (error) {
-    console.error(`Error fetching inventory for classification ${classificationName}:`, error);
-    throw error;
+    console.error("getVehicleById error: " + error)
+    
   }
 }
 
+
+// Function to insert a new classification
+async function insertClassification(classification_name) {
+  try {
+    const sql = "INSERT INTO public.classification (classification_name) VALUES ($1)"
+    console.log("Executing query:", sql, "with values:", classification_name)
+    const result = await pool.query(sql, [classification_name])
+    console.log("Insert result:", result)
+    return result
+  } catch (error) {
+    console.error("insertClassification error:", error)
+  }
+}
+
+const insertVehicle = async function(vehicle) {
+  const { classification_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color } = vehicle;
+  const sql = `
+    INSERT INTO public.inventory 
+    (classification_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color) 
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+  `;
+  const result = await pool.query(sql, [classification_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color]);
+  return result;
+};
 
 module.exports = {
-  getClassifications, // Properly define and export this function
-  getInventoryByClassificationName, // Export this too
+  getClassifications, 
+  getInventoryByClassificationId,
+  getVehicleByInvId,
+  insertClassification,
+  insertVehicle,
 };

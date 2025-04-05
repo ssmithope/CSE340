@@ -1,5 +1,5 @@
 
-/******* Change Box Model ***************/
+/* Change Box Model */
 *,
 *:before,
 *:after {
@@ -270,9 +270,6 @@ h1, h2 {
   }
 }
 
-/********************** EJS VIEWS ******************* ****************************************************/
-/*
-
 /* Classification View (classification.ejs) */
 #inv-display {
   list-style: none;
@@ -300,7 +297,6 @@ h1, h2 {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
-
 
 
 #inv-display img {
@@ -497,7 +493,7 @@ p.notice {
 @media (min-width: 1024px) {
   /* Classification View */
   #inv-display li {
-    width: calc(33.33% - 1rem); /* Three columns, accounting for gap */
+    width: calc(33.33% - 1rem); /* Accounting for gap */
   }
 
   #inv-display img {
@@ -518,7 +514,7 @@ p.notice {
   }
 }
 
-/* ************************Login Container & Register */
+/* Login Container & Register */
 
 .login-container {
   background: #f5f5f5;
@@ -567,9 +563,6 @@ p.notice {
 .login-container form select:hover {
   border-color: #005f5f;
 }
-
-
-
 
 /* Input Fields */
 

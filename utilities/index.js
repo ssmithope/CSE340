@@ -1,88 +1,139 @@
-const invModel = require("../models/inventory-model");
-
-const Util = {};
+const invModel = require("../models/inventory-model")
+const Util = {}
+const jwt = require("jsonwebtoken")
+require("dotenv").config() 
 
 /* ************************
  * Constructs the nav HTML unordered list
- ************************ */
-Util.getNav = async function () {
-  try {
-    const data = await invModel.getClassifications(); // Ensure the function exists
-    let list = "<ul>";
-    list += '<li><a href="/" title="Home page">Home</a></li>';
-    data.forEach((row) => {
-      list += `<li><a href="/inv/type/${row.classification_name}" title="See our ${row.classification_name} vehicles">${row.classification_name}</a></li>`;
-    });
-    list += "</ul>";
-    return list;
-  } catch (error) {
-    console.error("Error building navigation:", error);
-    throw error;
-  }
-};
+ ************************** */
+Util.getNav = async function (req, res, next) {
+  let data = await invModel.getClassifications()
+  let list = "<ul>"
+  list += '<li><a href="/" title="Home page">Home</a></li>'
+  data.rows.forEach((row) => {
+    list += "<li>"
+    list +=
+      '<a href="/inv/type/' +
+      row.classification_id +
+      '" title="See our inventory of ' +
+      row.classification_name +
+      ' vehicles">' +
+      row.classification_name +
+      "</a>"
+    list += "</li>"
+  })
+  list += "</ul>"
+  return list
+}
+
 
 /* **************************************
- * Build the classification view HTML
- * ************************************ */
-Util.buildClassificationGrid = async function (data) {
-  let grid = ""; // Initialize as an empty string
+* Build the classification view HTML
+* ************************************ */
+Util.buildClassificationGrid = async function(data) {
+  let grid;
   if (data.length > 0) {
     grid = '<ul id="inv-display">';
-    data.forEach((vehicle) => {
-      grid += "<li>";
-      grid +=
-        '<a href="../../inv/detail/' +
-        vehicle.inv_id +
-        '" title="View ' +
-        vehicle.inv_make +
-        " " +
-        vehicle.inv_model +
-        ' details"><img src="' +
-        vehicle.inv_thumbnail +
-        '" alt="Image of ' +
-        vehicle.inv_make +
-        " " +
-        vehicle.inv_model +
-        ' on CSE Motors" /></a>';
+    data.forEach(vehicle => {
+      console.log("Vehicle Data:", vehicle);  // Log full vehicle object
+      console.log("Image Path:", vehicle.inv_thumbnail);  // Log image path      
+      grid += '<li>';
+      
+      grid += '<a href="../../inv/detail/' + vehicle.inv_id 
+        + '" title="View ' + vehicle.inv_make + ' ' + vehicle.inv_model 
+        + ' details"><img src="' + vehicle.inv_thumbnail 
+        + '" alt="Image of ' + vehicle.inv_make + ' ' + vehicle.inv_model 
+        + ' on CSE Motors" /></a>';
+      
       grid += '<div class="namePrice">';
-      grid += "<hr />";
-      grid += "<h2>";
-      grid +=
-        '<a href="../../inv/detail/' +
-        vehicle.inv_id +
-        '" title="View ' +
-        vehicle.inv_make +
-        " " +
-        vehicle.inv_model +
-        ' details">' +
-        vehicle.inv_make +
-        " " +
-        vehicle.inv_model +
-        "</a>";
-      grid += "</h2>";
-      grid += "<span>$" + new Intl.NumberFormat("en-US").format(vehicle.inv_price) + "</span>";
-      grid += "</div>";
-      grid += "</li>";
+      grid += '<hr />';
+      grid += '<h2>';
+      grid += '<a href="../../inv/detail/' + vehicle.inv_id + '" title="View ' 
+        + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">' 
+        + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>';
+      grid += '</h2>';
+      grid += '<span>$' 
+        + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>';
+      grid += '</div>';
+      grid += '</li>';
     });
-    grid += "</ul>";
+    grid += '</ul>';
   } else {
-    grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>';
+    grid = '<p class="notice">Sorry, no matching vehicles could be found.</p>';
   }
   return grid;
 };
 
-/* **************************************
- * Error-handling wrapper for controller functions
- * ************************************ */
-Util.handleErrors = function (controllerFunction) {
-  return async function (req, res, next) {
-    try {
-      await controllerFunction(req, res, next);
-    } catch (error) {
-      console.error(`An error occurred at ${req.method} ${req.originalUrl}:`, error.message);
-      next(error); // Pass the error to the error-handling middleware
-    }
-  };
+Util.buildGetVehicleByIdGrid = async function(data) {
+  let grid;
+  if (data.length > 0) {
+    grid = '<ul id="inv-display">';
+    data.forEach(vehicle => {
+      console.log("Vehicle Data:", vehicle);  // Log full vehicle object
+      console.log("Image Path:", vehicle.inv_thumbnail);  // Log image path      
+      grid += '<li>';
+      grid += '<a href="../../inv/detail/' + vehicle.inv_id 
+        + '" title="View ' + vehicle.inv_make + ' ' + vehicle.inv_model 
+        + ' details"><img src="' + vehicle.inv_image 
+        + '" alt="Image of ' + vehicle.inv_make + ' ' + vehicle.inv_model 
+        + ' on CSE Motors" /></a>';
+      grid += '<div class="namePrice">';
+      grid += '<hr />';
+      grid += '<h2>';
+      grid += '<a href="../../inv/detail/' + vehicle.inv_id + '" title="View ' 
+        + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">' 
+        + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>';
+      grid += '</h2>';
+      grid += '<span>$' 
+        + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>';
+      grid += '</div>';
+      grid += '</li>';
+    });
+    grid += '</ul>';
+  } else {
+    grid = '<p class="notice">Sorry, no matching vehicles could be found.</p>';
+  }
+  return grid;
 };
 
-module.exports = Util;
+Util.buildClassificationList = async function(data) {
+  let list = '<select name="classification_id" id="classificationList" required>';
+  list += '<option value="">Choose a classification</option>';
+  data.forEach(classification => {
+    list += `<option value="${classification.classification_id}">${classification.classification_name}</option>`;
+  });
+  list += '</select>';
+  return list;
+};
+
+/* ****************************************
+* Middleware to check token validity
+**************************************** */
+Util.checkJWTToken = (req, res, next) => {
+  if (req.cookies.jwt) {
+    jwt.verify(
+    req.cookies.jwt,
+    process.env.ACCESS_TOKEN_SECRET,
+    function (err, accountData) {
+      if (err) {
+      req.flash("Please log in")
+      res.clearCookie("jwt")
+      return res.redirect("/account/login")
+    }
+      res.locals.accountData = accountData
+      res.locals.loggedin = 1
+      next()
+    })
+  } else {
+    next()
+  }
+}
+
+/* ****************************************
+ * Middleware For Handling Errors
+ * Wrap other function in this for 
+ * General Error Handling
+ **************************************** */
+Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
+module.exports = Util

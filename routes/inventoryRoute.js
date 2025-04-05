@@ -1,15 +1,31 @@
-const express = require("express");
-const router = new express.Router();
-const invController = require("../controllers/invController");
+/* ******************************
+* Needed Resources
+* ******************************* */
+const express = require("express")
+const router = new express.Router() 
+const invController = require("../controllers/invController")
+const errorController = require('../controllers/errorController')
+utilities = require('../utilities')
 
-router.get("/type/:classificationName", invController.getByClassificationName);
-router.get("/detail/:id", invController.getVehicleDetails);
+// Route to build inventory by classification view
+router.get("/type/:classificationId", invController.buildByClassificationId);
 
-// Intentional 500 Error Route
-router.get("/trigger-error", (req, res, next) => {
-  const error = new Error("This is a simulated server error.");
-  error.status = 500;
-  next(error);
-});
+// Route to show vehicle details by inv_id
+router.get("/detail/:invId", invController.showVehicleDetail);
+
+router.get("/", invController.buildManagementView);
+
+router.get('/add-classification', invController.showAddClassification);
+router.post('/add-classification', invController.addClassification);
+
+router.get(
+    "/getInventory/:classification_id",
+    utilities.handleErrors(invController.getInventoryJSON)
+  );
+  
+
+router.get('/add-inventory', invController.addInventory);
+router.post('/add-inventory', invController.addInventory); 
+router.get('/trigger-error', errorController.throwError);
 
 module.exports = router;
