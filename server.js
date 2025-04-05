@@ -12,7 +12,7 @@ const app = express();
 const static = require("./routes/static");
 const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
-const utilities = require("./utilities"); // Ensure the utilities import is correct
+const utilities = require("./utilities");
 const session = require("express-session");
 const pool = require("./database");
 const bodyParser = require("body-parser");
@@ -26,7 +26,7 @@ app.use(
       createTableIfMissing: true,
       pool,
     }),
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || "defaultSecret", // Added fallback for session secret
     resave: true,
     saveUninitialized: true,
     name: "sessionId",
@@ -60,6 +60,17 @@ app.use(express.static("public"));
  * Routes
  *************************/
 app.use(static);
+// Routes
+app.use(static);
+app.get("/", utilities.handleErrors(baseController.buildHome));
+app.use("/inv", inventoryRoute);
+app.use("/account", require("./routes/accountRoute"));
+app.get("/trigger-error", (req, res, next) => {
+  const error = new Error("Intentional 500 Error");
+  error.status = 500;
+  next(error);
+});
+app.use((req, res, next) => next({ status: 404, message: "Page not found." }));
 
 // Debugging Utilities Object
 console.log("Utilities object:", utilities); // Ensure 'handleErrors' exists in the utilities object
@@ -71,8 +82,12 @@ app.get("/", utilities.handleErrors(baseController.buildHome)); // This assumes 
 app.use("/inv", inventoryRoute);
 app.use("/account", require("./routes/accountRoute"));
 
-// Trigger error route (for testing)
-app.use("/inv/trigger-error", inventoryRoute);
+// Intentional error route
+app.get("/trigger-error", (req, res, next) => {
+  const error = new Error("Intentional 500 Error");
+  error.status = 500;
+  next(error);
+});
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
@@ -102,7 +117,7 @@ app.use(async (err, req, res, next) => {
   let message =
     status === 404
       ? err.message
-      : "Oh no! There was a crash. Maybe try a different route?";
+      : "Oh no! Something brokes. Maybe try a different route?";
 
   res.status(status).render("errors/error", {
     title: `${status} - Server Error`,
@@ -114,8 +129,8 @@ app.use(async (err, req, res, next) => {
 /* ***********************
  * Local Server Information
  *************************/
-const port = process.env.PORT;
-const host = process.env.HOST;
+const port = process.env.PORT || 3000; // Default port to 3000
+const host = process.env.HOST || "localhost"; // Default host to localhost
 
 /* ***********************
  * Log statement to confirm server operation
