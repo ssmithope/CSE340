@@ -1,19 +1,26 @@
 const pool = require("../database");
 
 /* **************************************
- * Get all classifications
+ * Fetch inventory by classification name
  * ************************************ */
-async function getClassifications() {
+async function getInventoryByClassificationName(classificationName) {
   try {
-    const sql = "SELECT * FROM classification ORDER BY classification_name";
-    const result = await pool.query(sql);
-    return result.rows; // Returns the classifications as an array
+    const sql = `
+      SELECT * 
+      FROM inventory
+      JOIN classification ON inventory.classification_id = classification.classification_id
+      WHERE classification_name = $1
+    `;
+    const result = await pool.query(sql, [classificationName]);
+    return result.rows; // Return the vehicles in this classification
   } catch (error) {
-    console.error("Error fetching classifications:", error);
+    console.error("Error fetching inventory by classification name:", error);
     throw error;
   }
 }
 
 module.exports = {
-  getClassifications, // Ensure this function is exported
+  getClassifications, // This is already in place
+  getInventoryByClassificationName, // Add this to the exported functions
 };
+
