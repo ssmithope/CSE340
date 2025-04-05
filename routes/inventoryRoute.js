@@ -1,12 +1,15 @@
-// Needed Resources 
 const express = require("express");
 const router = new express.Router();
-const invController = require("../controllers/invController"); // Ensure this matches your controller file name
+const invController = require("../controllers/invController");
 
-// Route to build inventory by classification view
-router.get("/type/:classificationId", invController.buildByClassificationId);
-
-// Route to build vehicle detail view
+router.get("/type/:classificationName", invController.getByClassificationName);
 router.get("/detail/:id", invController.getVehicleDetails);
+
+// Intentional 500 Error Route
+router.get("/trigger-error", (req, res, next) => {
+  const error = new Error("This is a simulated server error.");
+  error.status = 500;
+  next(error);
+});
 
 module.exports = router;

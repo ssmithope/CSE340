@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="en-US">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
-    <link rel="stylesheet" href="/styles.css">
-</head>
+<html lang="en">
+<%- include('partials/head') %>
 <body>
-    <div class="error-container">
-        <h1><%= title %></h1>
-        <p><%= message %></p>
-        <a href="/">Return to Homepage</a>
-    </div>
+  <header>
+    <%- include('partials/header') %>
+  </header>
+  <main class="error-page">
+    <h1><%= title %></h1>
+    <p><%= message %></p>
+    <a href="/">Return to Homepage</a>
+  </main>
+  <footer>
+    <%- include('partials/footer') %>
+  </footer>
 </body>
 </html>

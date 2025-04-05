@@ -10,16 +10,15 @@ const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const env = require("dotenv").config();
 const app = express();
-const staticRoutes = require("./routes/static");
-const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
+const baseController = require("./controllers/baseController");
 const utilities = require("./utilities");
 const session = require("express-session");
 const pool = require("./database");
 const bodyParser = require("body-parser");
 
 /* ***********************
- * Middleware
+ * Middleware Setup
  *************************/
 app.use(
   session({
@@ -44,34 +43,30 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 /* ***********************
- * View Engine and Templates
+ * View Engine and Static Files
  *************************/
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.set("layout", "./layouts/layout");
-
-/* ***********************
- * Serve Static Files
- *************************/
 app.use(express.static("public"));
 
 /* ***********************
  * Routes
  *************************/
-app.use(staticRoutes);
-app.use("/inv", inventoryRoute);
-app.use("/account", require("./routes/accountRoute"));
+app.use("/", require("./routes/static"));
 app.get("/", utilities.handleErrors(baseController.buildHome));
+app.use("/inv", inventoryRoute);
 app.get("/trigger-error", (req, res, next) => {
   const error = new Error("Intentional 500 Error");
   error.status = 500;
   next(error);
 });
-app.use((req, res, next) => next({ status: 404, message: "Page not found." }));
 
 /* ***********************
- * Express Error Handlers
+ * Error-Handling Middleware
  *************************/
+
+// 404 Error Handler
 app.use(async (req, res) => {
   const nav = await utilities.getNav();
   res.status(404).render("errors/error", {
@@ -81,28 +76,20 @@ app.use(async (req, res) => {
   });
 });
 
+// 500 Error Handler
 app.use(async (err, req, res, next) => {
   const nav = await utilities.getNav();
   const status = err.status || 500;
-  const message =
-    status === 404
-      ? err.message
-      : "Oh no! Something broke. Maybe try a different route?";
-
-  console.error(`Error at: "${req.originalUrl}": ${err.message}`);
+  console.error(`Error at "${req.originalUrl}":`, err.message);
   res.status(status).render("errors/error", {
     title: `${status} - Server Error`,
-    message,
+    message: status === 500 ? "Oh no! Something broke!" : err.message,
     nav,
   });
 });
 
 /* ***********************
- * Local Server Information
+ * Start Server
  *************************/
 const port = process.env.PORT || 3000;
-const host = process.env.HOST || "localhost";
-
-app.listen(port, () => {
-  console.log(`App listening on ${host}:${port}`);
-});
+app.listen(port, () => console.log(`App listening on http://localhost:${port}`));

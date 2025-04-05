@@ -1,29 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title><%= title %></title>
-  <link rel="stylesheet" href="/css/styles.css">
-</head>
+<%- include('partials/head') %>
 <body>
   <header>
+    <%- include('partials/header') %>
     <%- include('partials/navigation') %>
   </header>
   <main>
     <h1><%= title %></h1>
     <section>
-      <% if (vehicle) { %>
-        <img src="/<%= vehicle.inv_image %>" alt="Image of <%= vehicle.inv_make %> <%= vehicle.inv_model %>">
-        <p><strong>Description:</strong> <%= vehicle.inv_description %></p>
-        <p><strong>Price:</strong> $<%= new Intl.NumberFormat('en-US').format(vehicle.inv_price) %></p>
-        <p><strong>Mileage:</strong> <%= new Intl.NumberFormat('en-US').format(vehicle.inv_miles) %> miles</p>
-        <p><strong>Color:</strong> <%= vehicle.inv_color %></p>
-      <% } else { %>
-        <p>Vehicle details not available.</p>
-      <% } %>
+      <p>Details for Sedan classification go here...</p>
     </section>
   </main>
   <footer>
-    <p>&copy; 2025, CSE Motors</p>
+    <%- include('partials/footer') %>
   </footer>
 </body>
 </html>

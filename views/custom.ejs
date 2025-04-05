@@ -1,29 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title><%= title %></title>
-  <link rel="stylesheet" href="/css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-  <header>
-    <%- include('partials/navigation') %>
-  </header>
-  <main>
-    <h1><%= title %></h1>
-    <section>
-      <% if (vehicle) { %>
-        <img src="/<%= vehicle.inv_image %>" alt="Image of <%= vehicle.inv_make %> <%= vehicle.inv_model %>">
-        <p><strong>Description:</strong> <%= vehicle.inv_description %></p>
-        <p><strong>Price:</strong> $<%= new Intl.NumberFormat('en-US').format(vehicle.inv_price) %></p>
-        <p><strong>Mileage:</strong> <%= new Intl.NumberFormat('en-US').format(vehicle.inv_miles) %> miles</p>
-        <p><strong>Color:</strong> <%= vehicle.inv_color %></p>
-      <% } else { %>
-        <p>Vehicle details not available.</p>
-      <% } %>
-    </section>
-  </main>
-  <footer>
-    <p>&copy; 2025, CSE Motors</p>
-  </footer>
+    <header>
+        <h1>CSE Motors</h1>
+        <nav>
+            <%- nav %> <!-- Dynamically injects navigation links -->
+        </nav>
+    </header>
+    <main>
+        <h1><%= title %></h1>
+        <% if (data && data.length > 0) { %>
+            <section id="vehicle-grid">
+                <% data.forEach(vehicle => { %>
+                    <article class="vehicle-card">
+                        <img src="/<%= vehicle.inv_thumbnail %>" alt="Image of <%= vehicle.inv_make %> <%= vehicle.inv_model %>">
+                        <h2><%= vehicle.inv_make %> <%= vehicle.inv_model %></h2>
+                        <p><strong>Year:</strong> <%= vehicle.inv_year %></p>
+                        <p><strong>Price:</strong> $<%= new Intl.NumberFormat('en-US').format(vehicle.inv_price) %></p>
+                        <a href="/inv/detail/<%= vehicle.inv_id %>" class="btn">View Details</a>
+                    </article>
+                <% }) %>
+            </section>
+        <% } else { %>
+            <p>No vehicles found in this classification.</p>
+        <% } %>
+    </main>
+    <footer>
+        <p>&copy; 2025, CSE Motors</p>
+        <a href="/inv/trigger-error">Trigger a 500 Error</a> <!-- Link for testing 500 errors -->
+    </footer>
 </body>
 </html>
