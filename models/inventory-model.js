@@ -26,12 +26,13 @@ async function getInventoryByClassificationName(classificationName) {
       WHERE classification_name = $1
     `;
     const result = await pool.query(sql, [classificationName]);
-    return result.rows; // Return the vehicles in the specified classification
+    return result.rows;
   } catch (error) {
-    console.error("Error fetching inventory by classification name:", error);
+    console.error(`Error fetching inventory for classification ${classificationName}:`, error);
     throw error;
   }
 }
+
 
 module.exports = {
   getClassifications, // Properly define and export this function

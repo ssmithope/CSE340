@@ -5,6 +5,8 @@ const accountController = require("../controllers/accountController")
 const utilities = require("../utilities")
 const regValidate = require('../utilities/account-validation')
 
+router.get("/", accountController.renderAccountPage); // Handles account page rendering
+
 /* ********************************************
 * Deliver Login View
 * ********************************************* */

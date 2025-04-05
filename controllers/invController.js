@@ -27,9 +27,11 @@ invCont.getByClassificationName = async (req, res, next) => {
       data,
     });
   } catch (error) {
+    console.error(`Error fetching inventory for ${classificationName}:`, error);
     next(error);
   }
 };
+
 
 /* ************************************
  * Fetch vehicle details by ID
