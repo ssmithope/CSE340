@@ -11,7 +11,7 @@ Util.getNav = async function () {
     let list = "<ul>";
     list += '<li><a href="/" title="Home page">Home</a></li>';
     data.forEach((row) => {
-      list += `<li><a href="/inv/type/${row.classification_id}" title="See our ${row.classification_name} vehicles">${row.classification_name}</a></li>`;
+      list += `<li><a href="/inv/type/${row.classification_name}" title="See our ${row.classification_name} vehicles">${row.classification_name}</a></li>`;
     });
     list += "</ul>";
     return list;
@@ -21,12 +21,11 @@ Util.getNav = async function () {
   }
 };
 
-
 /* **************************************
  * Build the classification view HTML
  * ************************************ */
 Util.buildClassificationGrid = async function (data) {
-  let grid;
+  let grid = ""; // Initialize as an empty string
   if (data.length > 0) {
     grid = '<ul id="inv-display">';
     data.forEach((vehicle) => {
@@ -80,7 +79,7 @@ Util.handleErrors = function (controllerFunction) {
     try {
       await controllerFunction(req, res, next);
     } catch (error) {
-      console.error("An error occurred:", error);
+      console.error(`An error occurred at ${req.method} ${req.originalUrl}:`, error.message);
       next(error); // Pass the error to the error-handling middleware
     }
   };
