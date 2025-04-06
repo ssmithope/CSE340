@@ -1,10 +1,9 @@
-const pool = require("../database/")
+const db = require('../database'); // This will import the connection from index.js
 
-/* ***************************
- *  Get all classification data
- * ************************** */
-async function getClassifications(){
-  return await pool.query("SELECT * FROM public.classification ORDER BY classification_name")
+async function getVehicleById(id) {
+    const query = 'SELECT * FROM inventory WHERE id = $1'; // Adjust syntax for MySQL if needed
+    const result = await db.query(query, [id]); // PostgreSQL syntax
+    return result.rows[0]; // Return the first row
 }
 
-module.exports = {getClassifications}
+module.exports = { getVehicleById };

@@ -29,3 +29,13 @@ app.listen(PORT, () => {
 console.log(`trial app listening on ${HOST}:${PORT}`)
 })
 
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(err.status || 500).render('error', { error: err });
+});
+
+
+app.get('/trigger-error', (req, res, next) => {
+    next(new Error('Intentional Error!'));
+});
+
