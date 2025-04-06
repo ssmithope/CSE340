@@ -3,6 +3,11 @@ const invModel = require("../models/inventory-model");
 const utilities = require("../utilities/");
 const invCont = {};
 
+console.log("Fetching inventory for classification:", classificationName);
+const data = await invModel.getInventoryByClassificationName(classificationName);
+console.log("Data fetched for classification:", data);
+
+
 /* ***************************
  *  Build inventory by classification view
  * ************************** */
@@ -151,14 +156,6 @@ invCont.addClassification = async function(req, res, next) {
     }
   }
 };
-
-
-/* ***************************
- *  Return Inventory by Classification As JSON
- * ************************** */
-/* ***************************
- *  Return Inventory by Classification As JSON
- * ************************** */
 
 
 // Handle request to fetch inventory by classification ID

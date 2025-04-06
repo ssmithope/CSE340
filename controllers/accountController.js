@@ -10,14 +10,19 @@ require("dotenv").config()
 * ***************************************** */
 
 async function buildLogin(req, res, next) {
-    let nav = await utilities.getNav()
-    
-    res.render("account/login", {
-        title: "Login",
-        nav,
-        errors: null,
-    })
+    try {
+        let nav = await utilities.getNav(); // Always wrapped
+        res.render("account/login", {
+            title: "Login",
+            nav,
+            errors: null,
+        });
+    } catch (error) {
+        console.error("Error fetching navigation for login:", error.message);
+        next(error); // Forward the error for centralized handling
+    }
 }
+
 
 /* ****************************************
 * Deliver  registration view
@@ -34,56 +39,63 @@ async function buildRegister(req, res, next) {
 }
 
 /* ****************************************
-*  Process Registration
-* *************************************** */
+ *  Process Registration
+ * *************************************** */
 async function registerAccount(req, res) {
-    let nav = await utilities.getNav()
-    const 
-    { account_firstname, 
-    account_lastname, 
-    account_email, 
-    account_password,
-    } = req.body
-
-    let hashedPassword
+    let nav;
     try {
-        hashedPassword = await bcrypt.hashSync(account_password, 10)
+        nav = await utilities.getNav();
     } catch (error) {
-        req.flash("notice", "Sorry, there was an error processing the registration. ")
-        res.render(500).render("account/register", {
-            title: "Registration",
-            nav,
-            errors: null,
-        })
+        console.error("Error fetching navigation:", error.message);
+        return res.status(500).render("errors/error", { title: "Error", message: "Could not load registration page" });
     }
 
+    const { account_firstname, account_lastname, account_email, account_password } = req.body;
 
-    const regResult = await accountModel.registerAccount(
-        account_firstname,
-        account_lastname,
-        account_email,
-        hashedPassword
-    )
-    console.log(req.flash('notice')); 
-
-    if (regResult) {
-        req.flash(
-            "notice",
-            `Congratulations, you are registered ${account_firstname}. Please log in.`)
-        res.status(201).render("account/login", {
-            title: "Login",
-            nav,
-            errors: null,
-            
-        })
-    } else {
-        req.flash("notice", "Sorry, the registration failed.")
-        res.status(501).render("account/register", {
+    let hashedPassword;
+    try {
+        hashedPassword = bcrypt.hashSync(account_password, 10);
+    } catch (error) {
+        console.error("Error hashing password:", error.message);
+        req.flash("notice", "Sorry, there was an error processing the registration.");
+        return res.render("account/register", {
             title: "Registration",
             nav,
             errors: null,
-            
-        })
+        });
+    }
+
+    try {
+        const regResult = await accountModel.registerAccount(
+            account_firstname,
+            account_lastname,
+            account_email,
+            hashedPassword
+        );
+
+        if (regResult) {
+            req.flash("notice", `Congratulations, you are registered ${account_firstname}. Please log in.`);
+            return res.status(201).render("account/login", {
+                title: "Login",
+                nav,
+                errors: null,
+            });
+        } else {
+            req.flash("notice", "Sorry, the registration failed.");
+            return res.status(501).render("account/register", {
+                title: "Registration",
+                nav,
+                errors: null,
+            });
+        }
+    } catch (error) {
+        console.error("Error during registration:", error.message);
+        req.flash("notice", "Registration failed due to a system error.");
+        return res.status(500).render("account/register", {
+            title: "Registration",
+            nav,
+            errors: null,
+        });
     }
 }
 
