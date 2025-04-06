@@ -1,18 +1,31 @@
-const inventoryModel = require('../models/inventoryModel');
-const utilities = require('../utilities');
+const inventoryModel = require("../models/inventory-model");
+const utilities = require("../utilities");
 
-async function getVehicleDetail(req, res, next) {
-    try {
-        const id = req.params.id;
-        const vehicle = await inventoryModel.getVehicleById(id);
-        if (!vehicle) {
-            return res.status(404).render('error', { message: 'Vehicle not found' });
-        }
-        const htmlContent = utilities.wrapVehicleDetail(vehicle);
-        res.status(200).send(htmlContent);
-    } catch (err) {
-        next(err); // Passes error to middleware
+const invController = {};
+
+// Classification view
+invController.classificationView = async (req, res, next) => {
+  try {
+    const classification = req.params.classification;
+    const vehicles = await inventoryModel.getVehiclesByClassification(classification);
+    res.render("inventory/classification", { title: classification, vehicles });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Vehicle detail view
+invController.getVehicleDetail = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const vehicle = await inventoryModel.getVehicleById(id);
+    if (!vehicle) {
+      return res.status(404).render("errors/error", { message: "Vehicle not found" });
     }
-}
+    res.render("inventory/vehicle-detail", { title: `${vehicle.make} ${vehicle.model}`, vehicle });
+  } catch (err) {
+    next(err);
+  }
+};
 
-module.exports = { getVehicleDetail };
+module.exports = invController;
