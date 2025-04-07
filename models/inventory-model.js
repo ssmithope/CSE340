@@ -16,9 +16,10 @@ async function getVehicleById(id) {
 
 // Function to fetch all classifications
 async function getClassifications() {
-  const query = "SELECT DISTINCT classification FROM inventory"; // Query to fetch unique classifications
+  const query = "SELECT DISTINCT classification_id FROM inventory"; // Replace 'classification_id' with the correct column name
   const result = await db.query(query);
-  return result.rows; // Return classifications
+  return result.rows; // Return the rows containing classification IDs
 }
+
 
 module.exports = { getVehiclesByClassification, getVehicleById, getClassifications };

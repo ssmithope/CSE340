@@ -4,26 +4,20 @@ const Util = {}
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
-Util.getNav = async function (req, res, next) {
-  let data = await invModel.getClassifications()
-  let list = "<ul>"
-  list += '<li><a href="/" title="Home page">Home</a></li>'
-  data.rows.forEach((row) => {
-    list += "<li>"
-    list +=
-      '<a href="/inv/type/' +
-      row.classification_id +
-      '" title="See our inventory of ' +
-      row.classification_name +
-      ' vehicles">' +
-      row.classification_name +
-      "</a>"
-    list += "</li>"
-  })
-  list += "</ul>"
-  return list
-}
-
+Util.getNav = async function () {
+    try {
+      let data = await invModel.getClassifications();
+      let nav = "<ul>";
+      data.forEach((row) => {
+        nav += `<li><a href="/inventory/classification/${row.classification_id}">${row.classification_id}</a></li>`;
+      });
+      nav += "</ul>";
+      return nav;
+    } catch (err) {
+      throw new Error("Failed to build navigation: " + err.message);
+    }
+  };
+  
 
 function wrapVehicleDetail(vehicle) {
     return `
