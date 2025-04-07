@@ -1,6 +1,6 @@
 const pool = require("../database/")
 
-/* ***************************
+/* *****************************
  *  Get all classification data
  * ************************** */
 async function getClassifications(){
@@ -9,9 +9,9 @@ async function getClassifications(){
 
 
 
-/* ***************************
+/* **************************************************************************
  *  Get all inventory items and classification_name by classification_id
- * ************************** */
+ * ************************************************************************* */
 async function getInventoryByClassificationId(classification_id) {
   try {
     const data = await pool.query(
@@ -80,7 +80,6 @@ async function getVehiclesByClassification(classificationId) {
 }
 
 
-
 const insertVehicle = async function(vehicle) {
   const { classification_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color } = vehicle;
   const sql = `
@@ -91,8 +90,6 @@ const insertVehicle = async function(vehicle) {
   const result = await pool.query(sql, [classification_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color]);
   return result;
 };
-
-
 
 
 module.exports = {

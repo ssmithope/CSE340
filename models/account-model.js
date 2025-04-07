@@ -66,7 +66,4 @@ async function deleteAccount(accountId) {
     }
 }
 
-
-
-
 module.exports = { registerAccount, checkExistingEmail, getAccountByEmail, getAllAccounts, updatePassword, deleteAccount }

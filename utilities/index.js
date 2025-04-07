@@ -97,9 +97,6 @@ Util.buildGetVehicleByIdGrid = async function(data) {
 };
 
 
-
-
-
 Util.buildClassificationList = async function(data) {
   let list = '<select name="classification_id" id="classificationList" required>';
   list += '<option value="">Choose a classification</option>';
@@ -111,15 +108,6 @@ Util.buildClassificationList = async function(data) {
 };
 
 
-
-
-
-
-
-
-/* ****************************************
-* Middleware to check token validity
-**************************************** */
 /* ****************************************
 * Middleware to check token validity
 **************************************** */
@@ -144,10 +132,6 @@ Util.checkJWTToken = (req, res, next) => {
     next();
   }
 };
-
-
-
-
 
 
 /* ****************************************

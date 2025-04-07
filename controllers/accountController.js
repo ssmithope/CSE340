@@ -6,7 +6,6 @@ require("dotenv").config()
 
 /* ****************************************
 * Deliver login view
-*
 * ***************************************** */
 
 async function buildLogin(req, res, next) {
@@ -20,8 +19,7 @@ async function buildLogin(req, res, next) {
 }
 
 /* ****************************************
-* Deliver  registration view
-*
+*Deliver  registration view
 * ***************************************** */
 
 async function buildRegister(req, res, next) {
@@ -141,20 +139,20 @@ async function buildAccountManagement(req, res, next) {
     let nav = await utilities.getNav(); // Gets nav links
 
     try {
-      const accounts = await accountModel.getAllAccounts(); // ✅ Tries to get all accounts
+      const accounts = await accountModel.getAllAccounts(); // Tries to get all accounts
 
         req.flash('notice', "You are logged in.");
         res.render("account/accountManagement", {
         title: "Account Management",
         nav,
         errors: null,
-        accounts, // ✅ Passes accounts array to your EJS file
-        loggedIn: req.session.loggedin,       // ✅ Add this
-        account_type: req.session.account_type    // ✅ And this
+        accounts, //  Passes accounts array to your EJS file
+        loggedIn: req.session.loggedin,       //  Add this
+        account_type: req.session.account_type    // And this
 
     });
     } catch (error) {
-      next(error); // ✅ If something goes wrong, sends it to the error-handling middleware
+      next(error); //  If something goes wrong, sends it to the error-handling middleware
     }
 } 
 
@@ -198,11 +196,6 @@ async function deleteAccount(req, res, next) {
 }
 
 
-
-
-
-
-
 // Render the password reset form (GET route)
 async function showResetPasswordForm(req, res, next) {
     try {
@@ -234,7 +227,5 @@ async function showResetPasswordPage(req, res, next) {
         res.status(500).send("Internal Server Error");
     }
 }
-
-
 
 module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagement, resetPassword, showResetPasswordForm, showResetPasswordPage, deleteAccount }

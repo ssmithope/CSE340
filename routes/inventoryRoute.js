@@ -6,8 +6,6 @@ const errorController = require('../controllers/errorController')
 utilities = require('../utilities')
 
 
-
-
 // Route to build inventory by classification view
 router.get("/type/:classificationId", invController.buildByClassificationId);
 
