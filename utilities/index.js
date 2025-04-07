@@ -1,57 +1,167 @@
 const invModel = require("../models/inventory-model")
 const Util = {}
+const jwt = require("jsonwebtoken")
+require("dotenv").config() 
 
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
-Util.getNav = async function () {
-    try {
-      let data = await invModel.getClassifications();
-      let nav = "<ul>";
-      data.forEach((row) => {
-        nav += `<li><a href="/inventory/classification/${row.classification_id}">${row.classification_id}</a></li>`;
-      });
-      nav += "</ul>";
-      return nav;
-    } catch (err) {
-      throw new Error("Failed to build navigation: " + err.message);
-    }
-  };
-  
-
-function wrapVehicleDetail(vehicle) {
-    return `
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <title>${vehicle.make} ${vehicle.model}</title>
-            <style>
-                body { font-family: Arial, sans-serif; margin: 20px; }
-                .vehicle-container { display: flex; flex-wrap: wrap; }
-                .vehicle-image { flex: 1; max-width: 50%; }
-                .vehicle-details { flex: 1; max-width: 50%; padding: 20px; }
-                @media (max-width: 768px) {
-                    .vehicle-container { flex-direction: column; }
-                    .vehicle-image, .vehicle-details { max-width: 100%; }
-                }
-            </style>
-        </head>
-        <body>
-            <div class="vehicle-container">
-                <img class="vehicle-image" src="${vehicle.image}" alt="${vehicle.make} ${vehicle.model}" />
-                <div class="vehicle-details">
-                    <h1>${vehicle.year} ${vehicle.make} ${vehicle.model}</h1>
-                    <p><strong>Price:</strong> $${vehicle.price.toLocaleString()}</p>
-                    <p><strong>Mileage:</strong> ${vehicle.mileage.toLocaleString()} miles</p>
-                    <p>${vehicle.description}</p>
-                </div>
-            </div>
-        </body>
-        </html>
-    `;
+Util.getNav = async function (req, res, next) {
+  let data = await invModel.getClassifications()
+  let list = "<ul>"
+  list += '<li><a href="/" title="Home page">Home</a></li>'
+  data.rows.forEach((row) => {
+    list += "<li>"
+    list +=
+      '<a href="/inv/type/' +
+      row.classification_id +
+      '" title="See our inventory of ' +
+      row.classification_name +
+      ' vehicles">' +
+      row.classification_name +
+      "</a>"
+    list += "</li>"
+  })
+  list += "</ul>"
+  return list
 }
 
-module.exports = { wrapVehicleDetail };
+
+/* **************************************
+* Build the classification view HTML
+* ************************************ */
+Util.buildClassificationGrid = async function(data) {
+  let grid;
+  if (data.length > 0) {
+    grid = '<ul id="inv-display">';
+    data.forEach(vehicle => {
+      console.log("Vehicle Data:", vehicle);  // Log full vehicle object
+      console.log("Image Path:", vehicle.inv_thumbnail);  // Log image path      
+      grid += '<li>';
+      
+      grid += '<a href="../../inv/detail/' + vehicle.inv_id 
+        + '" title="View ' + vehicle.inv_make + ' ' + vehicle.inv_model 
+        + ' details"><img src="' + vehicle.inv_thumbnail 
+        + '" alt="Image of ' + vehicle.inv_make + ' ' + vehicle.inv_model 
+        + ' on CSE Motors" /></a>';
+      
+      grid += '<div class="namePrice">';
+      grid += '<hr />';
+      grid += '<h2>';
+      grid += '<a href="../../inv/detail/' + vehicle.inv_id + '" title="View ' 
+        + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">' 
+        + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>';
+      grid += '</h2>';
+      grid += '<span>$' 
+        + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>';
+      grid += '</div>';
+      grid += '</li>';
+    });
+    grid += '</ul>';
+  } else {
+    grid = '<p class="notice">Sorry, no matching vehicles could be found.</p>';
+  }
+  return grid;
+};
+
+Util.buildGetVehicleByIdGrid = async function(data) {
+  let grid;
+  if (data.length > 0) {
+    grid = '<ul id="inv-display">';
+    data.forEach(vehicle => {
+      console.log("Vehicle Data:", vehicle);  // Log full vehicle object
+      console.log("Image Path:", vehicle.inv_thumbnail);  // Log image path      
+      grid += '<li>';
+      grid += '<a href="../../inv/detail/' + vehicle.inv_id 
+        + '" title="View ' + vehicle.inv_make + ' ' + vehicle.inv_model 
+        + ' details"><img src="' + vehicle.inv_image 
+        + '" alt="Image of ' + vehicle.inv_make + ' ' + vehicle.inv_model 
+        + ' on CSE Motors" /></a>';
+      grid += '<div class="namePrice">';
+      grid += '<hr />';
+      grid += '<h2>';
+      grid += '<a href="../../inv/detail/' + vehicle.inv_id + '" title="View ' 
+        + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">' 
+        + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>';
+      grid += '</h2>';
+      grid += '<span>$' 
+        + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>';
+      grid += '</div>';
+      grid += '</li>';
+    });
+    grid += '</ul>';
+  } else {
+    grid = '<p class="notice">Sorry, no matching vehicles could be found.</p>';
+  }
+  return grid;
+};
+
+
+
+
+
+Util.buildClassificationList = async function(data) {
+  let list = '<select name="classification_id" id="classificationList" required>';
+  list += '<option value="">Choose a classification</option>';
+  data.forEach(classification => {
+    list += `<option value="${classification.classification_id}">${classification.classification_name}</option>`;
+  });
+  list += '</select>';
+  return list;
+};
+
+
+
+
+
+
+
+
+/* ****************************************
+* Middleware to check token validity
+**************************************** */
+/* ****************************************
+* Middleware to check token validity
+**************************************** */
+Util.checkJWTToken = (req, res, next) => {
+  if (req.cookies.jwt) {
+    jwt.verify(
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET,
+      function (err, accountData) {
+        if (err) {
+          req.flash("error", "Please log in");  // Specify message type
+          res.clearCookie("jwt");
+          return res.redirect("/account/login");
+        }
+        res.locals.accountData = accountData;
+        res.locals.loggedin = 1;  // Set loggedin flag if token is valid
+        next();
+      }
+    );
+  } else {
+    res.locals.loggedin = 0;  // Explicitly set loggedin to 0 if no JWT cookie
+    next();
+  }
+};
+
+
+
+
+
+
+/* ****************************************
+ * Middleware For Handling Errors
+ * Wrap other function in this for 
+ * General Error Handling
+ **************************************** */
+Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
+
+
+
+
+
 
 
 module.exports = Util

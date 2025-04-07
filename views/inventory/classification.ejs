@@ -1,15 +1,9 @@
-<%- include('../layouts/layout') %>
-<main>
-  <h1>Vehicles: <%= title %></h1>
-  <ul>
-    <% vehicles.forEach(vehicle => { %>
-      <li>
-        <a href="/inventory/<%= vehicle.id %>">
-          <img src="<%= vehicle.thumbnail %>" alt="<%= vehicle.make %> <%= vehicle.model %>" />
-          <p><%= vehicle.make %> <%= vehicle.model %></p>
-        </a>
-      </li>
-    <% }) %>
-  </ul>
-</main>
-<%- include('../partials/footer') %>
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } %>
+
+<!-- Inventory Items Display -->
+<%- grid %>
+
+<!-- Optional: Message Block for feedback (if you want to display messages dynamically) -->
+<%# messages() %>
