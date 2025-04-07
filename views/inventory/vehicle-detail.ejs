@@ -1,13 +1,33 @@
-<%- include('../layouts/layout') %>
-<main>
-  <div class="vehicle-container">
-    <img src="<%= vehicle.image %>" alt="<%= vehicle.make %> <%= vehicle.model %>" />
-    <div class="vehicle-details">
-      <h1><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></h1>
-      <p><strong>Price:</strong> $<%= vehicle.price.toLocaleString() %></p>
-      <p><strong>Mileage:</strong> <%= vehicle.mileage.toLocaleString() %> miles</p>
-      <p><%= vehicle.description %></p>
-    </div>
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<!-- Vehicle Details -->
+<div class="vehicle-detail">
+<% if (vehicle && vehicle.inv_image && vehicle.inv_make && vehicle.inv_model) { %>
+  <img src="/<%= vehicle.inv_image %>" alt="Image of <%= vehicle.inv_make %> <%= vehicle.inv_model %> on CSE Motors">
+  <div class="vehicle-info"> 
+    <p class="info-header"><%= vehicle.inv_make %> <%= vehicle.inv_model %> Details </p>
+    <% if (vehicle.inv_description) { %>
+      <p><strong>Description:</strong> <%= vehicle.inv_description %></p>
+    <% } %>
+    <% if (vehicle.inv_price) { %>
+      <p><strong>Price:</strong> $<%= new Intl.NumberFormat('en-US').format(vehicle.inv_price) %></p>
+    <% } %>
+    <% if (vehicle.inv_color) { %>
+      <p><strong>Color:</strong> <%= vehicle.inv_color %></p>
+    <% } %>
+    <% if (vehicle.inv_miles) { %>
+      <p><strong>Miles:</strong> <%= new Intl.NumberFormat('en-US').format(vehicle.inv_miles) %> miles</p>
+    <% } %>
   </div>
-</main>
-<%- include('../partials/footer') %>
+<% } else { %>
+  <p>Vehicle details not available.</p>
+<% } %>
+</div>
+
+<%# messages() %>
+
+<!--Inventory Items Display-->
