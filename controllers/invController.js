@@ -1,31 +1,30 @@
 const inventoryModel = require("../models/inventory-model");
-const utilities = require("../utilities");
 
 const invController = {};
 
-// Classification view
+// Function to handle classification views
 invController.classificationView = async (req, res, next) => {
-  try {
-    const classification = req.params.classification;
-    const vehicles = await inventoryModel.getVehiclesByClassification(classification);
-    res.render("inventory/classification", { title: classification, vehicles });
-  } catch (err) {
-    next(err);
-  }
+    try {
+        const classification = req.params.classification;
+        const vehicles = await inventoryModel.getVehiclesByClassification(classification);
+        res.render("inventory/classification", { title: classification, vehicles });
+    } catch (err) {
+        next(err);
+    }
 };
 
-// Vehicle detail view
+// Function to handle vehicle detail views
 invController.getVehicleDetail = async (req, res, next) => {
-  try {
-    const id = req.params.id;
-    const vehicle = await inventoryModel.getVehicleById(id);
-    if (!vehicle) {
-      return res.status(404).render("errors/error", { message: "Vehicle not found" });
+    try {
+        const id = req.params.id;
+        const vehicle = await inventoryModel.getVehicleById(id);
+        if (!vehicle) {
+            return res.status(404).render("errors/error", { message: "Vehicle not found" });
+        }
+        res.render("inventory/vehicle-detail", { title: `${vehicle.make} ${vehicle.model}`, vehicle });
+    } catch (err) {
+        next(err);
     }
-    res.render("inventory/vehicle-detail", { title: `${vehicle.make} ${vehicle.model}`, vehicle });
-  } catch (err) {
-    next(err);
-  }
 };
 
 module.exports = invController;
