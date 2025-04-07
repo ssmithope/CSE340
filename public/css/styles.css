@@ -1,20 +1,21 @@
 /* General Styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: #f4f4f9; /* Light background for better readability */
+  background-color: #f8f8f8; /* Light gray background */
   color: #333; /* Standard font color */
 }
 
-h1, h2, h3, h4 {
-  color: #222; /* Darker headings for emphasis */
+h1, h2, h3 {
+  color: #222; /* Dark headings for emphasis */
+  margin-bottom: 10px;
 }
 
 a {
   text-decoration: none;
-  color: #007BFF; /* Link color */
+  color: #007BFF; /* Blue links */
 }
 
 ul {
@@ -32,22 +33,23 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #333;
+  background-color: #333; /* Dark gray background */
   color: white;
   padding: 10px 20px;
 }
 
 nav ul {
   display: flex;
-  gap: 15px;
+  gap: 20px;
+  align-items: center;
 }
 
 nav li {
-  padding: 5px;
+  padding: 5px 10px;
 }
 
 nav a {
-  color: white;
+  color: white; /* White text for links */
   font-weight: bold;
   padding: 5px 10px;
   border-radius: 5px;
@@ -55,85 +57,126 @@ nav a {
 }
 
 nav a:hover {
-  background-color: #007BFF;
+  background-color: #007BFF; /* Blue hover effect */
 }
 
 /* Main Content */
 main {
   padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto; /* Center the content */
 }
 
-.vehicle-container {
+/* Featured Section */
+.featured {
   display: flex;
   gap: 20px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
+  align-items: center;
+  margin-bottom: 30px;
+  background: white; /* White background */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow effect */
 }
 
-.vehicle-details {
+.featured img {
+  max-width: 50%; /* Limit the image width */
+  border-radius: 5px;
+}
+
+.featured .details {
   flex: 1;
 }
 
-.vehicle-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: white;
-  border: 1px solid #ddd;
+.featured h1 {
+  font-size: 24px; /* Large heading for the featured section */
+  margin-bottom: 10px;
+}
+
+.featured ul {
+  margin-bottom: 20px; /* Space between list and button */
+}
+
+button {
+  background-color: #007BFF; /* Blue background */
+  color: white;
+  border: none;
+  padding: 10px 20px;
   border-radius: 5px;
-  padding: 15px;
-  transition: box-shadow 0.3s;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
 }
 
-.vehicle-card:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+button:hover {
+  background-color: #0056b3; /* Darker blue hover effect */
 }
 
-.vehicle-card img {
+/* Upgrades Section */
+.upgrades, .reviews {
+  flex: 1;
+  background: white; /* White background */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow effect */
+  margin-bottom: 20px;
+}
+
+.upgrades h3, .reviews h3 {
+  margin-bottom: 15px;
+  text-align: center; /* Center align section titles */
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+}
+
+.item {
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.item img {
   border-radius: 5px;
   margin-bottom: 10px;
 }
 
-/* Classification Page */
-.classification-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
+.item:hover {
+  transform: scale(1.05); /* Enlarge slightly on hover */
 }
 
-.classification-item {
-  text-align: center;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 15px;
-  transition: transform 0.3s;
+/* Reviews Section */
+.reviews ul {
+  padding-left: 20px;
 }
 
-.classification-item:hover {
-  transform: scale(1.05);
-}
-
-.classification-item img {
-  border-radius: 5px;
+.reviews li {
   margin-bottom: 10px;
 }
 
 /* Footer */
 footer {
-  background-color: #333;
+  background-color: #333; /* Dark gray background */
   color: white;
   text-align: center;
   padding: 10px;
+  font-size: 14px;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .vehicle-container {
+  .featured {
       flex-direction: column;
+      text-align: center;
   }
 
-  .classification-grid {
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  .featured img {
+      max-width: 100%;
+  }
+
+  .upgrades, .reviews {
+      margin-top: 20px;
   }
 }
