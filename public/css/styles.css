@@ -9,7 +9,8 @@
   --border-radius: 8px;
 }
 
-/* General Styles */
+
+/******* Change Box Model ***************/
 *,
 *:before,
 *:after {
@@ -17,215 +18,905 @@
 }
 
 body {
-  font-family: "Orbitron", sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: var(--background-color);
-  color: var(--text-color);
+  font-family: "Orbitron", sans-serif; 
+  
 }
 
-h1, h2, h3 {
-  margin-bottom: 10px;
-}
-
-a {
-  text-decoration: none;
-  color: var(--primary-color);
-  transition: color 0.3s ease-in-out;
-}
-
-a:hover {
-  color: var(--secondary-color);
-}
-
-/* Navigation Bar */
-nav {
+header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: black;
-  color: white;
   padding: 15px 20px;
+  width: 100%;
+  box-sizing: border-box;
+  color: black;
+  margin-bottom: 15px;
+}
+header a {
+  text-decoration: none;
+  color: inherit;
+}
+.siteName {
+  font-size: 1.5rem;
+}
+.logIn {
+  font-variant: small-caps;
 }
 
-nav ul {
+nav {
+  color: white;
+  background-color: black;
   display: flex;
-  gap: 10px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0px 40px; 
+  margin-bottom: 15px; 
 }
 
 nav a {
+  font-family: "Orbitron", sans-serif; /* Add this line to apply the font */
+  color: white; /* Maintain white color */
+  text-decoration: none; /* remove underline if needed */
+ 
+}
+
+nav a:active {
   color: white;
-  font-family: "Orbitron", sans-serif;
-  padding: 5px 10px;
-  border-radius: var(--border-radius);
-  transition: background-color 0.3s ease-in-out;
+  outline:none;
 }
-
-nav a:hover {
-  background-color: var(--primary-color);
-}
-
-/* Welcome Section */
-.welcome {
-  text-align: center;
-  margin: 20px auto;
-}
-
-.welcome h1 {
-  font-size: 2rem;
-}
-
-/* Featured Vehicle Section */
-.featured {
+nav ul {
   display: flex;
-  gap: 20px;
-  align-items: center;
-  margin: 30px auto;
-  background: white;
-  padding: 20px;
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  gap: 10px; 
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  justify-content: space-between;
 }
-
-.featured img {
-  max-width: 50%;
-  border-radius: var(--border-radius);
+nav ul li {
+  display: inline-block;
 }
-
-.featured .details {
-  flex: 1;
-}
-
-.featured ul {
-  margin-bottom: 20px;
-}
-
-button {
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-button:hover {
-  background: var(--secondary-color);
+nav ul li:hover {
   transform: scale(1.05);
 }
 
-/* Upgrades Section */
-.upgrades {
-  margin-top: 30px;
+h1, h2 {
+  font-size: 1.25rem;
+  font-weight: bold;
 }
 
-.upgrades h3 {
-  text-align: center;
-  margin-bottom: 20px;
+/* Mobile-Specific Adjustments */
+@media (max-width: 767px) {
+  nav {
+    padding: 0 5px; /* Reduce padding for mobile */
+    flex-direction: column;
+    align-items: center;
+  }
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 2px; /* Larger gap for touch targets */
+    justify-content: space-around;
+    width: 100%; /* Remove forced 100% width */
+  }
+  nav ul li {
+    display: block;
+    font-size: 0.75rem; /* Smaller font size for mobile */
+    padding: 3px; /* Minimal padding for touch targets */
+    width: auto;
+  }
+  .siteName {
+    font-size: 1.1rem; /* Slightly smaller for mobile */
+  }
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 20px;
+/* Rest of your existing CSS remains unchanged */
+.overlay  {
+  display: flex;
+  position: relative;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
 }
-
-.item {
-  text-align: center;
+.delorean-sale {
+  position: relative;
+  width: 100%;
+}
+.delorean-image-index {
+  width: 90%;
+  height: auto;
+  display: block;
+}
+.delorean-image-index:hover {
+  transform: scale(1.1);
   transition: transform 0.3s ease-in-out;
 }
-
-.item img {
-  border-radius: var(--border-radius);
-  margin-bottom: 10px;
+.text-overlay {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: #00b7eb;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 10px;
+  border-radius: 5px;
 }
-
-.item:hover {
+.text-overlay ul {
+  list-style: none; 
+  padding: 0;
+  margin: 0;
+  color: black; 
+  text-align: left;
+}
+.text-overlay li {
+  font-size: 18px;
+  margin-bottom: 5px;
+  color: black; 
+  text-shadow: 2px 2px 4px black;
+}
+.delorean-promo {
+  font-size: 20px;
+  font-weight: bold;
+}
+.own-delorean {
+  background-color: lightblue;
+  color: black;
+  padding: 7px 7px;
+  border: none;
+  cursor: pointer;
+  font-family: Orbitron;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease; 
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3); 
+}
+.own-delorean:hover {
+  background-color: lightblue;
+  border: 2px solid #000;
   transform: scale(1.05);
 }
+.own-delorean:active {
+  transform: scale(0.95); 
+}
 
-/* Reviews Section */
+.review-container {
+  max-width: 400px;
+  padding: 15px;
+}
+#delorean-reviews {
+  font-size: 20px;
+  font-weight: bold;
+}
 .reviews {
-  margin-top: 30px;
-  padding: 20px;
-  background: white;
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.reviews h3 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.reviews ul {
+  font-size: 14px;
   padding-left: 20px;
+  list-style-type: disc;
 }
-
 .reviews li {
+  margin-left: 0px;
   margin-bottom: 10px;
 }
 
-/* Footer */
-footer {
-  background-color: black;
-  color: white;
+.upgrades {
+  grid-column: 1/-1;
+  justify-self: start;
+}
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: -10px;
+}
+.item p {
+  margin-top: 5px;
+  margin-left: 15px;
+}
+.upgrade-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto auto;
+  gap: 10px;
+  justify-content: start;
+  text-align: left;
+}
+.image-container {
+  background-color: #00b7eb; 
+  border: 2px solid #008cba;
+  padding: 20px;
+  width: 140px;
+  height: 80px;
   text-align: center;
-  padding: 10px;
+}
+.image-container img {
+  width: 50px;
+  height: auto;
+}
+.image-container img:hover {
+  box-shadow: 0 0 15px #00ffcc, 0 0 30px #00ffcc;
+  transition: box-shadow 0.3s ease-in-out;
 }
 
-/* Form Styles */
-input,
-select {
+@media (min-width: 768px) { 
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    background-image: url('/images/site/small_check.jpg');
+  }
+  #wrapper {
+    border: 5px solid rgb(98, 177, 203);
+    padding: 10px; 
+    border-radius: 8px;       
+    width: 80%;
+    height: 80%;
+    justify-content: center;
+    background-color: white;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    z-index: 10;
+    margin: 0 auto;
+    margin-top: 15px;
+  }
+  .content-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .review-container {
+    order: 2;
+  }
+  .upgrade-container {
+    order: 1;
+  }
+  .reviews li {
+    padding-bottom: 15px;
+  }
+  #delorean-reviews {
+    margin-top: 0px;
+  }
+  .upgrades {
+    margin-bottom: 5px;
+  }
+}
+
+/********************** EJS VIEWS ******************* ****************************************************/
+/*
+
+/* Classification View (classification.ejs) */
+#inv-display {
+  list-style: none;
+  padding: 1rem;
+}
+
+#inv-display li {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  background-color: #fff; /* White background for each item */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth hover effect */
+}
+
+#inv-display li:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+}
+
+#inv-display .image-wrapper {
+  width: 100%;
+  aspect-ratio: 3 / 2; /* Enforce a consistent aspect ratio (e.g., 3:2) */
+  overflow: hidden; /* Hide overflow if image doesn’t fit */
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+
+
+#inv-display img {
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 4 / 3; /* Changed to 4:3, a common thumbnail ratio—adjust as needed */
+  height: auto;
+  object-fit: contain; /* Show the full image, no cropping */
+  background-color: #f5f5f5; /* Light gray background for letterboxing */
+  display: block;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+#inv-display .namePrice {
+  margin-top: 0.5rem;
+  padding: 0.75rem; /* Add padding for content */
+}
+
+#inv-display hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 0.5rem 0;
+}
+
+#inv-display h2 {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+#inv-display a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+#inv-display a:hover {
+  text-decoration: underline;
+}
+
+#inv-display span {
+  display: block;
+  font-size: 1rem;
+  color: #000;
+  font-weight: 500;
+}
+
+/* No Results Notice */
+p.notice {
+  text-align: center;
+  padding: 1rem;
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Vehicle Detail View (vehicle-detail.ejs) */
+.vehicle-detail {
+  padding: 1rem;
+  text-align: center;
+}
+
+.vehicle-detail img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  margin-bottom: 1rem;
+  border-radius: 8px; /* Soften the image edges */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+
+.vehicle-info .info-header {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  /* Additional styling to make it stand out */
+  border-bottom: 2px solid #007bff; /* Blue underline matching your app's theme */
+  padding-bottom: 0.25rem; /* Space between text and underline */
+  letter-spacing: 0.5px; /* Slight letter spacing for emphasis */
+}
+
+.info-header {
+  font-weight: bold;
+}
+
+.vehicle-detail p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+.vehicle-detail strong {
+  color: #000;
+}
+
+
+/* Media Queries for Larger Screens */
+@media (min-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  /* Classification View */
+  #inv-display {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    gap: 1.5rem; /* Space between items */
+  }
+
+  #inv-display li {
+    width: calc(50% - 0.75rem); /* Two columns, accounting for gap */
+    margin-bottom: 0; /* Gap handles spacing */
+  }
+
+  #inv-display img {
+    max-width: 350px;
+    aspect-ratio: 4 / 3; /* Maintain aspect ratio */
+  }
+
+  #inv-display h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Vehicle Detail View */
+  .vehicle-detail {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    background-color: #f9f9f9; /* Light background for contrast */
+    border-radius: 10px; /* Rounded corners for the container */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+
+  .vehicle-detail img {
+    width: 50%;
+    max-width: 400px;
+    margin-right: 2rem;
+    margin-bottom: 0;
+  }
+
+  .vehicle-detail {
+    flex-wrap: nowrap;
+  }
+
+  .vehicle-detail p {
+    font-size: 1.1rem;
+    margin: 0.75rem 0; /* Slightly more spacing for list-like stacking */
+  }
+
+  .vehicle-detail img {
+    width: 60%; /* Slightly larger image on desktop */
+    max-width: 600px;
+  }
+
+  .vehicle-detail p {
+    font-size: 1.2rem;
+  }
+
+  .vehicle-info .info-header {
+    font-size: 1.5rem;
+    border-bottom-width: 3px; /* Thicker underline on larger screens */
+  }
+
+
+  .vehicle-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .vehicle-info p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  .vehicle-info p:first-child {
+    font-size: 1.5rem; /* Slightly larger for the "Details" heading */
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+  .vehicle-info strong {
+    color: #000;
+    font-weight: 600;
+  }
+
+}
+
+
+@media (min-width: 1024px) {
+  /* Classification View */
+  #inv-display li {
+    width: calc(33.33% - 1rem); /* Three columns, accounting for gap */
+  }
+
+  #inv-display img {
+    max-width: 400px;
+  }
+
+  #inv-display h2 {
+    font-size: 1.75rem;
+  }
+
+  /* Vehicle Detail View */
+  .vehicle-detail {
+    max-width: 1000px;
+  }
+
+  .vehicle-detail img {
+    max-width: 60%;
+  }
+}
+
+/* ************************Login Container & Register */
+
+.login-container {
+  background: #f5f5f5;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 350px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Headings */
+.login-container h1 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.form-comment {
+  color: red;
+  align-items: left;
+}
+
+
+.login-container form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  max-width: 400px;
+  margin: auto;
+}
+
+.login-container form select {
+  appearance: none; /* Removes default browser styles */
+  background-color: #f5f5f5; /* Light gray background */
+  border: 2px solid teal; /* Matches your theme */
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  outline: none;
+
+}
+
+.login-container form select:hover {
+  border-color: #005f5f;
+}
+
+
+
+
+/* Input Fields */
+
+input {
   width: 100%;
   padding: 12px;
   border: 1px solid #ddd;
-  border-radius: var(--border-radius);
+  border-radius: 8px;
   font-size: 1rem;
+  color: #333;
   background-color: #fff;
-  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border 0.3s ease, box-shadow 0.3s ease;
 }
 
-input:focus,
-select:focus {
-  border-color: var(--primary-color);
+input:focus {
+  border-color: #007bff;
   box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
   outline: none;
 }
 
-input:required:invalid {
-  border-color: var(--error-color);
+.input-group {
+  text-align: left;
+  margin-bottom: 1.2rem;
+  
 }
 
+.input-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #0056b3;
+  box-shadow: 0 0 8px rgba(0, 86, 179, 0.4);
+}
+
+/* Invalid input */
+input:required:invalid, input:focus:invalid {
+  background-image: url(/images/invalid.png);
+  background-position: right top;
+  background-repeat: no-repeat;
+  border: 2px solid #e74c3c; /* Red border for invalid input */
+  color: #e74c3c; /* Optional: red text for invalid inputs */
+}
+
+/* Valid input */
 input:required:valid {
-  border-color: var(--success-color);
+  background-image: url(/images/valid.png);
+  background-position: right top;
+  background-repeat: no-repeat;
+  border: 2px solid #2ecc71; /* Green border for valid input */
+  color: black; /* Optional: green text for valid inputs */
 }
 
-/* Media Queries */
+
+/* Password Instructions */
+.password-instructions {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 5px;
+}
+
+/* Show Password Checkbox */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* Submit Button */
+.btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #007bff, #0056b3);;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s;
+}
+
+.btn:hover {
+  background: linear-gradient(135deg, #0056b3, #004094);
+  transform: scale(1.02);
+}
+
+
+#pswdBtn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #f0f0f0; /* Light gray background for subtle contrast */
+  color: #333; /* Dark gray text for readability */
+  border: 1px solid black; /* Soft border */
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  transition: background 0.3s, transform 0.2s, border-color 0.3s;
+}
+
+#pswdBtn:hover {
+  background: #ddd; /* Slightly darker on hover */
+  border-color: #aaa;
+  transform: scale(1.05);
+}
+
+#pswdBtn:active {
+  background: #ccc;
+  transform: scale(0.98);
+}
+
+
+/* Signup/Login Text */
+.signup-text {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.signup-text a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.signup-text a:hover {
+  text-decoration: underline;
+}
+
+/* Password Input Group */
+.password-group {
+  position: relative;
+}
+
+/* Wrapper for Password Field & Button */
+.password-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.password-wrapper input {
+  flex: 1;
+  padding-right: 75px; /* Prevent text from being covered by button */
+}
+
+/* Show Password Button */
+#toggle-password {
+  position: absolute;
+  right: 10px;
+  border: none;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  transition: background 0.3s, transform 0.2s;
+}
+
+#toggle-password:hover {
+  background: linear-gradient(135deg, #0056b3, #004094);
+  transform: scale(1.05);
+}
+
+.error-message {
+  color: #d9534f; /* Bootstrap danger red */
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    width: 90%; /* Adjust width for smaller screens */
+    padding: 1.5rem;
+  }
+}
+
+
+/* Styles for New features added to accountManagement.ejs */
+
+.account-management {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+
+
+.management-view {
+  font-size: 1.2rem;  /* Increase font size for better readability */
+  line-height: 1.6;   /* Add more space between lines for clarity */
+  color: #333;        /* Dark gray color for text for better contrast */
+  background-color: #f4f4f4;  /* Light background to highlight the paragraph */
+  padding: 15px;      /* Add padding around the paragraph */
+  border-radius: 8px; /* Slightly rounded corners for a modern look */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  margin-bottom: 20px; /* Space below the paragraph */
+}
+
+.management-view strong {
+  font-weight: bold; /* Make text inside <strong> bold */
+  color: #007BFF;    /* Add a color for strong emphasis */
+}
+
+.management-view a {
+  text-decoration: none;  /* Remove underline from links */
+  color: #007BFF;         /* Link color */
+}
+
+.management-view a:hover {
+  text-decoration: underline; /* Add underline on hover for links */
+  color: #0056b3;            /* Darker color on hover */
+}
+
+
+.account-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.account-table th, .account-table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.account-table th {
+  background-color: #f4f4f4;
+}
+
+.action-btn {
+  padding: 12px 20px; /* Increased vertical padding and more horizontal space */
+  margin: 10px 10px;
+  background-color: #007BFF; /* Primary button color */
+  color: white;
+  border: 1px solid #007BFF; /* Border to match the button's color */
+  border-radius: 8px; /* Subtle rounded corners */
+  font-size: 16px; /* Adjusted font size for readability */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transition for hover */
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Soft shadow for depth */
+}
+
+.action-btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: translateY(-2px); /* Slight raise effect on hover */
+}
+
+.action-btn:focus {
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Focus ring for accessibility */
+}
+
+.action-btn:active {
+  background-color: #004085; /* Even darker blue when pressed */
+  transform: translateY(0); /* Button "press" effect */
+}
+
+/* Media Queries for 768px screens */
 @media (max-width: 768px) {
-  .featured {
-    flex-direction: column;
-    text-align: center;
+  /* Table container should allow horizontal scrolling */
+  .table-container {
+    overflow-x: auto; /* Add horizontal scroll */
+    -webkit-overflow-scrolling: touch; /* Improve scroll experience on iOS */
   }
 
-  .featured img {
-    max-width: 100%;
+  /* Style the table for smaller screens */
+  table {
+    width: 100%;
+    min-width: 600px; /* Ensure the table is large enough to display content */
   }
 
-  nav ul {
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
+  th, td {
+    padding: 8px 10px; /* Reduce padding for smaller screens */
   }
-}
 
-@media (min-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
+  th {
+    font-size: 1rem; /* Smaller font size for table headers */
   }
+
+  td {
+    font-size: 0.9rem; /* Smaller font size for table data */
+  }
+
+  /* Adjusting the table layout for mobile screens */
+  table, th, td {
+    display: block; /* Turn table into block-level elements */
+  }
+
+  th {
+    display: none; /* Hide table headers for smaller screens */
+  }
+
+  tr {
+    margin-bottom: 10px; /* Space between rows */
+  }
+
+  td {
+    display: block;
+    text-align: right; /* Right-align the text for better readability */
+    padding-left: 50%; /* Add space before data for labels */
+    position: relative;
+  }
+
+  td::before {
+    /* Add "labels" for each table row item on smaller screens */
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    font-weight: bold;
+  }
+
+  /* For each table row, we use the data-label attribute to provide label text */
+  td[data-label="Name"]::before { content: "Name"; }
+  td[data-label="Email"]::before { content: "Email"; }
+  td[data-label="Actions"]::before { content: "Actions"; }
 }
