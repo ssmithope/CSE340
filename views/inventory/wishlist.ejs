@@ -1,0 +1,15 @@
+<h1>Your Wishlist</h1>
+
+<% if (wishlist && wishlist.length) { %>
+  <ul>
+    <% wishlist.forEach(vehicle => { %>
+      <li>
+        <h2><%= vehicle.inv_make %> <%= vehicle.inv_model %></h2>
+        <p>Price: $<%= parseFloat(vehicle.inv_price).toLocaleString() %></p>
+        <p><%= vehicle.inv_description %></p>
+      </li>
+    <% }) %>
+  </ul>
+<% } else { %>
+  <p>Your wishlist is empty.</p>
+<% } %>

@@ -56,6 +56,22 @@ CREATE TABLE IF NOT EXISTS public.account
 	CONSTRAINT account_pkey PRIMARY KEY (account_id)
 );
 
+
+
+-- Create wishlists table
+CREATE TABLE IF NOT EXISTS public.wishlists (
+    wishlist_id SERIAL PRIMARY KEY, -- Auto-incrementing unique identifier
+    inv_id INT NOT NULL, -- Foreign key referencing inventory table
+    user_id INT NOT NULL, -- Foreign key referencing account table
+    created_at TIMESTAMP DEFAULT NOW(), -- Timestamp of when the wishlist item was added
+    CONSTRAINT fk_inventory FOREIGN KEY (inv_id) REFERENCES public.inventory (inv_id)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_account FOREIGN KEY (user_id) REFERENCES public.account (account_id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+
 --Data for table `classification`
 INSERT INTO public.classification (classification_name)
 VALUES ('Custom'),
