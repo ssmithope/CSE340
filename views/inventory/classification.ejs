@@ -5,5 +5,20 @@
 <!-- Inventory Items Display -->
 <%- grid %>
 
+<ul id="inv-display">
+  <% vehicles.forEach(vehicle => { %>
+    <li>
+      <div class="image-wrapper">
+        <img src="<%= vehicle.inv_thumbnail || '/images/default-thumbnail.jpg' %>" alt="<%= vehicle.inv_make %> <%= vehicle.inv_model %>">
+      </div>
+      <div class="namePrice">
+        <h2><%= vehicle.inv_make %> <%= vehicle.inv_model %></h2>
+        <p>$<%= parseFloat(vehicle.inv_price).toLocaleString() %></p>
+      </div>
+    </li>
+  <% }) %>
+</ul>
+
+
 <!-- Optional: Message Block for feedback (if you want to display messages dynamically) -->
 <%# messages() %>

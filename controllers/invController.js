@@ -21,9 +21,6 @@ invCont.buildByClassificationId = async function (req, res, next) {
 };
 
 
-
-
-
 invCont.showVehicleDetail = async function(req, res, next) {
   try {
     const inv_id = req.params.invId;
@@ -185,10 +182,5 @@ invCont.getInventoryJSON = async (req, res, next) => {
     next(error); // Pass the error to the error handler
   }
 };
-
-
-
-
-
 
 module.exports = invCont;

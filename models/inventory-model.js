@@ -68,6 +68,17 @@ async function insertClassification(classification_name) {
   }
 }
 
+async function getVehiclesByClassification(classificationId) {
+  const query = "SELECT * FROM inventory WHERE classification_id = $1";
+  try {
+    const result = await pool.query(query, [classificationId]);
+    return result.rows;
+  } catch (err) {
+    console.error(`Error fetching vehicles for classification ${classificationId}: ${err.message}`);
+    throw err;
+  }
+}
+
 
 
 const insertVehicle = async function(vehicle) {
