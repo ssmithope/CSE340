@@ -1,17 +1,5 @@
 <%- include('../partials/header') %> <!-- Include the header partial -->
 
-<h1>Vehicle Classifications</h1>
-
-<nav>
-  <ul id="classification-nav">
-    <li><a href="/inv/type/1">Custom</a></li>
-    <li><a href="/inv/type/5">Sedan</a></li>
-    <li><a href="/inv/type/2">Sport</a></li>
-    <li><a href="/inv/type/3">SUV</a></li>
-    <li><a href="/inv/type/4">Truck</a></li>
-  </ul>
-</nav>
-
 <main>
   <!-- Display vehicles within the selected classification -->
   <% if (grid && grid.trim().length > 0) { %>
