@@ -1,25 +1,26 @@
-<% if (title) { %>
-  <h1><%= title %></h1>
-<% } %>
+<%- include('../partials/header') %> <!-- Include the header partial -->
 
-<!-- Optional: Message Block for feedback (if you want to display messages dynamically) -->
-<% if (vehicles && vehicles.length) { %>
-  <ul id="inv-display">
-    <% vehicles.forEach(vehicle => { %>
-      <li>
-        <div class="image-wrapper">
-          <img src="<%= vehicle.inv_thumbnail || '/images/default-thumbnail.jpg' %>" alt="<%= vehicle.inv_make %> <%= vehicle.inv_model %>">
-        </div>
-        <div class="namePrice">
-          <h2><%= vehicle.inv_make %> <%= vehicle.inv_model %></h2>
-          <p>$<%= parseFloat(vehicle.inv_price).toLocaleString() %></p>
-        </div>
-      </li>
-    <% }) %>
+<h1>Vehicle Classifications</h1>
+
+<nav>
+  <ul id="classification-nav">
+    <li><a href="/inv/type/1">Custom</a></li>
+    <li><a href="/inv/type/5">Sedan</a></li>
+    <li><a href="/inv/type/2">Sport</a></li>
+    <li><a href="/inv/type/3">SUV</a></li>
+    <li><a href="/inv/type/4">Truck</a></li>
   </ul>
-<% } else { %>
-  <p>No vehicles found for this classification.</p>
-<% } %>
+</nav>
 
-<!-- Display the grid if it is passed -->
-<%- grid %>
+<main>
+  <!-- Display vehicles within the selected classification -->
+  <% if (grid && grid.trim().length > 0) { %>
+    <section id="vehicle-grid">
+      <%- grid %>
+    </section>
+  <% } else { %>
+    <p>No vehicles found for this classification.</p>
+  <% } %>
+</main>
+
+<%- include('../partials/footer') %> <!-- Include the footer partial -->

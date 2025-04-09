@@ -13,23 +13,15 @@ async function getClassifications(){
  *  Get all inventory items and classification_name by classification_id
  * ************************************************************************* */
 async function getInventoryByClassificationId(classification_id) {
-  try {
-    const data = await pool.query(
-      `SELECT * FROM public.inventory AS i 
-      JOIN public.classification AS c 
-      ON i.classification_id = c.classification_id 
-      WHERE i.classification_id = $1`,
-      [classification_id]
-    )
-
-    // Log the result for debugging purposes
-    console.log("Data fetched:", data.rows);
-    
-    return data.rows
-  } catch (error) {
-    console.error("getclassificationsbyid error " + error)
-  }
+  const sql = `
+    SELECT *
+    FROM inventory
+    WHERE classification_id = $1;
+  `;
+  const result = await pool.query(sql, [classification_id]);
+  return result.rows;
 }
+
 
 
 async function getVehicleByInvId(inv_id) {

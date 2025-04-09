@@ -1,50 +1,40 @@
 const router = require('express').Router()
 const invModel = require("../models/inventory-model");
 const utilities = require("../utilities/");
-const invCont = {};
+const invController = require("../controllers/invController");
 
 /* ***************************
  *  Build inventory by classification view
  * ************************** */
-invCont.buildByClassificationId = async function (req, res, next) {
-  const classification_id = req.params.classificationId;
-  const data = await invModel.getInventoryByClassificationId(classification_id);
-  const grid = await utilities.buildClassificationGrid(data);
-  let nav = await utilities.getNav();
-  const className = data[0].classification_name;
-  res.render("./inventory/classification", {
-    title: className + " vehicles",
-    nav,
-    grid,
-    errors: null,
-  });
-};
-
-
-invCont.showVehicleDetail = async function(req, res, next) {
+invController.buildByClassificationId = async function (req, res, next) {
   try {
-    const inv_id = req.params.invId;
-    const vehicle = await invModel.getVehicleByInvId(inv_id);
-    console.log("Vehicle Data in Controller:", vehicle);
-    if (!vehicle) throw new Error('Vehicle not found');
-    
-    const grid = await utilities.buildGetVehicleByIdGrid([vehicle]);
+    const classification_id = req.params.classificationId;
+    const data = await invModel.getInventoryByClassificationId(classification_id);
+
+    if (!data.length) {
+      let nav = await utilities.getNav();
+      return res.status(404).render("./errors/error", {
+        title: "Classification Not Found",
+        message: "No vehicles found for this classification.",
+        nav,
+      });
+    }
+
+    const grid = await utilities.buildClassificationGrid(data);
     let nav = await utilities.getNav();
-    
-    res.render("inventory/vehicle-detail", {
-      title: `${vehicle.inv_year} ${vehicle.inv_model} ${vehicle.inv_make}`,
-      vehicle,
+    const className = data[0].classification_name;
+
+    res.render("./inventory/classification", {
+      title: `${className} Vehicles`,
       nav,
       grid,
-      errors: null,
     });
   } catch (error) {
-    console.error('Error in showVehicleDetail:', error);
-    res.redirect('/');
+    next(error); // Pass error to the error handler
   }
 };
 
-invCont.buildManagementView = async function(req, res, next) {
+invController.buildManagementView = async function(req, res, next) {
   console.log("Building management view");
   let nav = await utilities.getNav();
   const classifications = await invModel.getClassifications();
@@ -59,7 +49,7 @@ invCont.buildManagementView = async function(req, res, next) {
 
 
 
-invCont.showAddClassification = async function(req, res, next) {
+invController.showAddClassification = async function(req, res, next) {
   let nav = await utilities.getNav();
   res.render("inventory/addClassification", {
     title: "Add Vehicle Classification",
@@ -69,7 +59,7 @@ invCont.showAddClassification = async function(req, res, next) {
   });
 };
 
-invCont.addInventory = async function(req, res, next) {
+invController.addInventory = async function(req, res, next) {
   let nav = await utilities.getNav();
   const { classification_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color } = req.body;
   const errors = [];
@@ -120,7 +110,7 @@ invCont.addInventory = async function(req, res, next) {
 };
 
 // Add a function to handle form submission and insertion into the database
-invCont.addClassification = async function(req, res, next) {
+invController.addClassification = async function(req, res, next) {
   let nav = await utilities.getNav();
   const { classification_name } = req.body;
   const errors = [];
@@ -160,13 +150,9 @@ invCont.addClassification = async function(req, res, next) {
 /* ***************************
  *  Return Inventory by Classification As JSON
  * ************************** */
-/* ***************************
- *  Return Inventory by Classification As JSON
- * ************************** */
-
 
 // Handle request to fetch inventory by classification ID
-invCont.getInventoryJSON = async (req, res, next) => {
+invController.getInventoryJSON = async (req, res, next) => {
   const classification_id = parseInt(req.params.classification_id, 10);
   if (isNaN(classification_id)) {
     return res.status(400).json({ error: "Invalid classification_id" });
@@ -183,4 +169,4 @@ invCont.getInventoryJSON = async (req, res, next) => {
   }
 };
 
-module.exports = invCont;
+module.exports = invController;

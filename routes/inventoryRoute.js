@@ -1,30 +1,31 @@
-// Needed Resources 
-const express = require("express")
-const router = new express.Router() 
-const invController = require("../controllers/invController")
-const errorController = require('../controllers/errorController')
-utilities = require('../utilities')
-
+// Needed Resources
+const express = require("express");
+const router = new express.Router();
+const invController = require("../controllers/invController");
+const errorController = require("../controllers/errorController");
+const utilities = require("../utilities");
 
 // Route to build inventory by classification view
-router.get("/type/:classificationId", invController.buildByClassificationId);
+router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 
 // Route to show vehicle details by inv_id
-router.get("/detail/:invId", invController.showVehicleDetail);
+router.get("/vehicle/:invId", utilities.handleErrors(invController.showVehicleDetail));
 
-router.get("/", invController.buildManagementView);
+// Route to display the management view
+router.get("/", utilities.handleErrors(invController.buildManagementView));
 
-router.get('/add-classification', invController.showAddClassification);
-router.post('/add-classification', invController.addClassification);
+// Routes for adding a new classification
+router.get("/add-classification", utilities.handleErrors(invController.showAddClassification));
+router.post("/add-classification", utilities.handleErrors(invController.addClassification));
 
-router.get(
-    "/getInventory/:classification_id",
-    utilities.handleErrors(invController.getInventoryJSON)
-  );
-  
+// Route to get inventory JSON by classification_id
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON));
 
-router.get('/add-inventory', invController.addInventory);
-router.post('/add-inventory', invController.addInventory); 
-router.get('/trigger-error', errorController.throwError);
+// Routes for adding a new vehicle to the inventory
+router.get("/add-inventory", utilities.handleErrors(invController.showAddInventoryForm));
+router.post("/add-inventory", utilities.handleErrors(invController.addInventory));
+
+// Route to trigger an error for testing purposes
+router.get("/trigger-error", utilities.handleErrors(errorController.throwError));
 
 module.exports = router;
