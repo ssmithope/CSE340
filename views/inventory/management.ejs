@@ -1,26 +1,66 @@
-<div>
-    <% if (title) { %>
-        <h1><%= title %></h1>
-    <% } else { %>
-        <h1>Vehicle Management</h1>
-    <% } %>
-    <p>Welcome to the Vehicle Management dashboard.</p>
-    <section>
-        <p>Options:</p>
-        <ul>
-            <li><a href="/inv/add-classification">Add New Classification</a></li>
-            <li><a href="/inv/add-inventory">Add New Vehicle</a></li>        
-        </ul>
-    </section>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title || "Vehicle Management" %></title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <!-- Dynamic navigation bar passed from the controller -->
+        <%- nav %>
+    </header>
 
-<h2>Manage Inventory</h2>
-<p>Choose a classification to see those inventory items</p>
-<p>This has been the most difficult task so far !!! </p>
-<%- classificationSelect %>
+    <main>
+        <!-- Page Title -->
+        <div>
+            <% if (title) { %>
+                <h1><%= title %></h1>
+            <% } else { %>
+                <h1>Vehicle Management</h1>
+            <% } %>
+            <p>Welcome to the Vehicle Management dashboard.</p>
+        </div>
 
-<table id="inventoryDisplay"></table>
+        <!-- Flash Message for User Feedback -->
+        <% if (flash) { %>
+            <div class="flash-message">
+                <%= flash %>
+            </div>
+        <% } %>
 
-<noscript>Javascript must be enabled to use this page.</noscript>
+        <!-- Options for Adding Classification and Inventory -->
+        <section>
+            <h2>Options</h2>
+            <ul>
+                <li><a href="/inv/add-classification">Add New Classification</a></li>
+                <li><a href="/inv/add-inventory">Add New Vehicle</a></li>
+            </ul>
+        </section>
 
-<script src="/js/inventory.js"></script>
+        <!-- Manage Inventory Section -->
+        <section>
+            <h2>Manage Inventory</h2>
+            <p>Choose a classification to view inventory items:</p>
+            <!-- Dropdown dynamically populated with classifications -->
+            <%- classificationSelect %>
+
+            <!-- Inventory Display Table -->
+            <table id="inventoryDisplay">
+                <!-- JavaScript will dynamically fill this table -->
+            </table>
+
+            <noscript>Javascript must be enabled to use this page.</noscript>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 Vehicle Management System</p>
+    </footer>
+
+    <!-- JavaScript for Inventory Management -->
+    <script src="/js/inventory.js"></script>
+</body>
+</html>

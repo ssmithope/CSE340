@@ -1,22 +1,53 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title || "Add Vehicle Classification" %></title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <!-- Dynamic navigation bar -->
+        <%- nav %>
+    </header>
 
-<h1>Add Vehicle Classification</h1>
-<% if (flash) { %>
-    <div class="flash-message"><%= flash %></div>
-<% } %>
-<% if (errors) { %>
-    <div class="error-messages">
-        <% errors.forEach(function(error) { %>
-            <p><%= error.msg %></p>
-        <% }); %>
-    </div>
-<% } %>
+    <main>
+        <!-- Page Title -->
+        <h1><%= title || "Add Vehicle Classification" %></h1>
 
-<div class="login-container"> 
-    <div class="form-comment"><p>FIELD IS REQUIRED</p></div>
-    <form name="addClassificationForm" action="/inv/add-classification" method="POST" onsubmit="return validateForm()">
-        <p>NAME MUST BE ALPHABETIC CHARACTERS ONLY</p>
-        <label for="classification">Classification Name:</label>
-        <input type="text" id="classification" name="classification_name" required pattern="[A-Za-z\s]+" required value="<%= locals.classification_name %>">
-        <button class="btn" type="submit">Add Classification</button>
-    </form>
-</div>
+        <!-- Flash Message -->
+        <% if (flash) { %>
+            <div class="flash-message"><%= flash %></div>
+        <% } %>
+
+        <!-- Error Messages -->
+        <% if (errors) { %>
+            <div class="error-messages">
+                <% errors.forEach(function(error) { %>
+                    <p><%= error.msg %></p>
+                <% }); %>
+            </div>
+        <% } %>
+
+        <!-- Form Section -->
+        <div class="form-container">
+            <form name="addClassificationForm" action="/inv/add-classification" method="POST">
+                <p class="instructions">* Name must contain only alphabetic characters (letters).</p>
+                
+                <label for="classification_name">Classification Name:</label>
+                <input type="text" id="classification_name" name="classification_name" 
+                       required pattern="[A-Za-z\s]+" 
+                       title="Name must only contain alphabetic characters and spaces."
+                       value="<%= typeof locals !== 'undefined' && locals.classification_name ? locals.classification_name : '' %>">
+                
+                <button class="btn" type="submit">Add Classification</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Vehicle Management System</p>
+    </footer>
+</body>
+</html>
