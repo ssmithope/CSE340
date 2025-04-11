@@ -10,9 +10,15 @@ const utilities = {};
 utilities.getNav = async function () {
   try {
     const data = await invModel.getClassifications();
+
+    // Check if data.rows exists and is not empty
+    if (!data || !data.length) {
+      throw new Error("No classifications found to build navigation.");
+    }
+
     let list = "<ul>";
     list += '<li><a href="/" title="Home page">Home</a></li>';
-    data.rows.forEach((row) => {
+    data.forEach((row) => {
       list += "<li>";
       list += `<a href="/inv/type/${row.classification_id}" title="See our inventory of ${row.classification_name} vehicles">${row.classification_name}</a>`;
       list += "</li>";
@@ -56,6 +62,10 @@ utilities.buildClassificationGrid = function (data) {
  * Build the classification dropdown list
  **************************************** */
 utilities.buildClassificationList = function (data) {
+  if (!data || !data.length) {
+    return '<p class="notice">No classifications available.</p>';
+  }
+
   let list = '<select name="classification_id" id="classificationList" required>';
   list += '<option value="">Choose a classification</option>';
   data.forEach((classification) => {
