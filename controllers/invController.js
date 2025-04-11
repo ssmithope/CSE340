@@ -21,9 +21,9 @@ invController.buildByClassificationId = async function (req, res, next) {
     }
 
     const grid = await utilities.buildClassificationGrid(data);
-    let nav = await utilities.getNav();
+    const nav = await utilities.getNav();
     const className = data[0].classification_name;
-
+    
     res.render("./inventory/classification", {
       title: `${className} Vehicles`,
       nav,
@@ -116,7 +116,7 @@ invController.addClassification = async function(req, res, next) {
   const errors = [];
 
   // Server-side validation
-  const regex = /^[a-zA-Z0-9]+$/;
+  const regex = /^[a-zA-Z0-9\s-]+$/;
   if (!regex.test(classification_name)) {
     errors.push({ msg: "Classification name cannot contain spaces or special characters." });
   }

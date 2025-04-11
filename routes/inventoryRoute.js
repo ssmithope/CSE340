@@ -6,6 +6,9 @@ const errorController = require("../controllers/errorController");
 const utilities = require("../utilities");
 
 // Route to build inventory by classification view
+router.get("/type/:classificationId", invController.buildByClassificationId);
+
+// Route to build inventory by classification view
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 
 // Route to show vehicle details by inv_id
