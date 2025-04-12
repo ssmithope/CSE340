@@ -199,6 +199,40 @@ invController.addInventory = async function (req, res, next) {
 };
 
 /* ***************************
+ * Show vehicle details by inv_id
+ * ************************** */
+invController.showVehicleDetail = async function (req, res, next) {
+  const inv_id = parseInt(req.params.invId, 10); // Ensure invId is an integer
+  if (isNaN(inv_id)) {
+    return res.status(400).render("./errors/error", {
+      title: "Invalid Vehicle",
+      message: "The provided vehicle ID is invalid.",
+    });
+  }
+
+  try {
+    const vehicle = await invModel.getVehicleByInvId(inv_id);
+    const nav = await utilities.getNav();
+    if (!vehicle) {
+      return res.status(404).render("./errors/error", {
+        title: "Vehicle Not Found",
+        message: "No details available for this vehicle.",
+        nav,
+      });
+    }
+
+    res.render("inventory/vehicle-detail", {
+      title: `${vehicle.inv_make} ${vehicle.inv_model}`,
+      nav,
+      vehicle,
+    });
+  } catch (error) {
+    console.error("Error in showVehicleDetail:", error.message);
+    next(error);
+  }
+};
+
+/* ***************************
  * Return inventory by classification as JSON
  * ************************** */
 invController.getInventoryJSON = async function (req, res, next) {
@@ -216,7 +250,7 @@ invController.getInventoryJSON = async function (req, res, next) {
     }
   } catch (error) {
     console.error("Error in getInventoryJSON:", error.message);
-    next(error); // Pass the error to the error handler
+    next(error);
   }
 };
 
