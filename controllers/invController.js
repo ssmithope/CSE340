@@ -41,6 +41,7 @@ invController.buildByClassificationId = async function (req, res, next) {
       otherData: {}, // Add this or remove any reference to it in your template
     });
     
+    
   } catch (error) {
     console.error("Error in buildByClassificationId:", error.message);
     next(error); // Pass the error to the error handler
