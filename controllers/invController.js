@@ -211,8 +211,8 @@ invController.showVehicleDetail = async function (req, res, next) {
   }
 
   try {
-    const vehicle = await invModel.getVehicleByInvId(inv_id);
-    const nav = await utilities.getNav();
+    const vehicle = await invModel.getVehicleByInvId(inv_id); // Fetch vehicle details
+    const nav = await utilities.getNav(); // Generate navigation menu
     if (!vehicle) {
       return res.status(404).render("./errors/error", {
         title: "Vehicle Not Found",
@@ -228,9 +228,10 @@ invController.showVehicleDetail = async function (req, res, next) {
     });
   } catch (error) {
     console.error("Error in showVehicleDetail:", error.message);
-    next(error);
+    next(error); // Pass the error to the error handler
   }
 };
+
 
 /* ***************************
  * Return inventory by classification as JSON
