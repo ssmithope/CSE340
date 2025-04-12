@@ -10,26 +10,24 @@ const utilities = {};
 utilities.getNav = async function () {
   try {
     const data = await invModel.getClassifications();
-
-    // Check if data is valid and not empty
     if (!data || !data.length) {
-      throw new Error("No classifications found to build navigation.");
+      console.warn("No classifications found. Returning default navigation.");
+      return "<ul><li><a href='/' title='Home page'>Home</a></li></ul>";
     }
 
     let list = "<ul>";
     list += '<li><a href="/" title="Home page">Home</a></li>';
     data.forEach((row) => {
-      list += "<li>";
-      list += `<a href="/inv/type/${row.classification_id}" title="See our inventory of ${row.classification_name} vehicles">${row.classification_name}</a>`;
-      list += "</li>";
+      list += `<li><a href="/inv/type/${row.classification_id}" title="See our inventory of ${row.classification_name} vehicles">${row.classification_name}</a></li>`;
     });
     list += "</ul>";
     return list;
   } catch (error) {
     console.error("Error in getNav:", error.message);
-    throw new Error("Failed to build navigation menu.");
+    return "<ul><li><a href='/' title='Home page'>Home</a></li></ul>"; // Fallback
   }
 };
+
 
 /* **************************************
  * Build the classification view HTML

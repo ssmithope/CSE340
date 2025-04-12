@@ -1,3 +1,7 @@
 <nav>
-  <%- nav %>
+  <% if (nav) { %>
+    <%- nav %>
+  <% } else { %>
+    <ul><li><a href="/">Home</a></li></ul>
+  <% } %>
 </nav>
