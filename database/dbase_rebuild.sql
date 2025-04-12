@@ -1,3 +1,17 @@
+-- Clean Slate: Drop Tables if They Exist
+DROP TABLE IF EXISTS public.wishlists CASCADE;
+DROP TABLE IF EXISTS public.inventory CASCADE;
+DROP TABLE IF EXISTS public.classification CASCADE;
+DROP TABLE IF EXISTS public.account CASCADE;
+
+-- Drop Enum if It Exists
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM pg_type WHERE typname = 'account_type') THEN
+    DROP TYPE public.account_type;
+  END IF;
+END $$;
+
 -- Create ENUM for account type
 CREATE TYPE public.account_type AS ENUM ('active', 'inactive', 'suspended');
 
@@ -52,6 +66,7 @@ VALUES
 
 -- Add vehicles for Sport
 ('Chevy', 'Camaro', '2018', 'If you want to look cool...', '/images/vehicles/camaro.jpg', '/images/vehicles/camaro-tn.jpg', 25000.00, 101222, 'Silver', 2),
+
 -- Add vehicles for Trucks
 ('GM', 'Hummer', '2016', 'Do you have 6 kids and like to go offroading?', '/images/vehicles/hummer.jpg', '/images/vehicles/hummer-tn.jpg', 58800.00, 56564, 'Yellow', 4)
 ON CONFLICT DO NOTHING;
@@ -66,6 +81,14 @@ CREATE TABLE IF NOT EXISTS public.account (
     account_type public.account_type NOT NULL DEFAULT 'active' -- Status of the account (default: active)
 );
 
+-- Populate account table
+INSERT INTO public.account (
+    account_firstname, account_lastname, account_email, account_password, account_type
+)
+VALUES 
+('Bruce', 'Wayne', 'bruce@wayneent.com', 'IamBatm@n', 'active')
+ON CONFLICT DO NOTHING;
+
 -- WISHLISTS TABLE --
 CREATE TABLE IF NOT EXISTS public.wishlists (
     wishlist_id SERIAL PRIMARY KEY, -- Auto-incrementing unique identifier
@@ -77,14 +100,6 @@ CREATE TABLE IF NOT EXISTS public.wishlists (
     CONSTRAINT fk_account FOREIGN KEY (user_id) REFERENCES public.account (account_id)
         ON UPDATE CASCADE ON DELETE CASCADE
 );
-
--- Populate account table
-INSERT INTO public.account (
-    account_firstname, account_lastname, account_email, account_password, account_type
-)
-VALUES 
-('Bruce', 'Wayne', 'bruce@wayneent.com', 'IamBatm@n', 'active')
-ON CONFLICT DO NOTHING;
 
 -- Update GM Hummer description
 UPDATE public.inventory

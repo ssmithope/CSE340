@@ -1,5 +1,10 @@
 -- Create ENUM for account type
-CREATE TYPE public.account_type AS ENUM ('active', 'inactive', 'suspended');
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'account_type') THEN
+    CREATE TYPE public.account_type AS ENUM ('active', 'inactive', 'suspended');
+  END IF;
+END $$;
 
 -- CLASSIFICATION TABLE --
 CREATE TABLE IF NOT EXISTS public.classification (
@@ -52,6 +57,7 @@ VALUES
 
 -- Add vehicles for Sport
 ('Chevy', 'Camaro', '2018', 'If you want to look cool...', '/images/vehicles/camaro.jpg', '/images/vehicles/camaro-tn.jpg', 25000.00, 101222, 'Silver', 2),
+
 -- Add vehicles for Trucks
 ('GM', 'Hummer', '2016', 'Do you have 6 kids and like to go offroading?', '/images/vehicles/hummer.jpg', '/images/vehicles/hummer-tn.jpg', 58800.00, 56564, 'Yellow', 4)
 ON CONFLICT DO NOTHING;
