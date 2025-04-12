@@ -18,9 +18,6 @@ invController.buildByClassificationId = async function (req, res, next) {
 
     const data = await invModel.getInventoryByClassificationId(classification_id);
     const nav = await utilities.getNav();
-    console.log("Navigation Menu:", nav); // Debugging
-    res.render("template-name", { nav, ...otherData });
-
 
     if (!data.length) {
       return res.status(404).render("./errors/error", {
@@ -29,7 +26,6 @@ invController.buildByClassificationId = async function (req, res, next) {
         nav,
       });
     }
-    
 
     const grid = await utilities.buildClassificationGrid(data);
     const className = data[0].classification_name;
@@ -37,11 +33,8 @@ invController.buildByClassificationId = async function (req, res, next) {
     res.render("inventory/classification", {
       nav, 
       grid, 
-      title: `${className} Vehicles`,
-      otherData: {}, // Add this or remove any reference to it in your template
+      title: `${className} Vehicles`
     });
-    
-    
   } catch (error) {
     console.error("Error in buildByClassificationId:", error.message);
     next(error); // Pass the error to the error handler
@@ -238,7 +231,6 @@ invController.showVehicleDetail = async function (req, res, next) {
     next(error); // Pass the error to the error handler
   }
 };
-
 
 /* ***************************
  * Return inventory by classification as JSON
