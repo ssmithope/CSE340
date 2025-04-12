@@ -1,33 +1,42 @@
-<% if (title) { %>
-  <h1><%= title %></h1>
-<% } else {
-  res.redirect('/')
-} %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title || "Vehicle Details" %></title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header>
+    <!-- Navigation bar -->
+    <%- nav %>
+  </header>
 
-<!-- Vehicle Details -->
-<div class="vehicle-detail">
-<% if (vehicle && vehicle.inv_image && vehicle.inv_make && vehicle.inv_model) { %>
-  <img src="/<%= vehicle.inv_image %>" alt="Image of <%= vehicle.inv_make %> <%= vehicle.inv_model %> on CSE Motors">
-  <div class="vehicle-info"> 
-    <p class="info-header"><%= vehicle.inv_make %> <%= vehicle.inv_model %> Details </p>
-    <% if (vehicle.inv_description) { %>
-      <p><strong>Description:</strong> <%= vehicle.inv_description %></p>
-    <% } %>
-    <% if (vehicle.inv_price) { %>
-      <p><strong>Price:</strong> $<%= new Intl.NumberFormat('en-US').format(vehicle.inv_price) %></p>
-    <% } %>
-    <% if (vehicle.inv_color) { %>
-      <p><strong>Color:</strong> <%= vehicle.inv_color %></p>
-    <% } %>
-    <% if (vehicle.inv_miles) { %>
-      <p><strong>Miles:</strong> <%= new Intl.NumberFormat('en-US').format(vehicle.inv_miles) %> miles</p>
-    <% } %>
-  </div>
-<% } else { %>
-  <p>Vehicle details not available.</p>
-<% } %>
-</div>
+  <main>
+    <!-- Vehicle Details Section -->
+    <section id="vehicle-detail" class="responsive-layout">
+      <% if (vehicle && vehicle.inv_image && vehicle.inv_make && vehicle.inv_model) { %>
+        <div class="image-container">
+          <img src="/<%= vehicle.inv_image %>" alt="<%= vehicle.inv_make %> <%= vehicle.inv_model %>">
+        </div>
+        <div class="details-container">
+          <h1><%= vehicle.inv_make %> <%= vehicle.inv_model %></h1>
+          <h2>Price: $<%= new Intl.NumberFormat('en-US').format(vehicle.inv_price) %></h2>
+          <ul>
+            <li><strong>Year:</strong> <%= vehicle.inv_year %></li>
+            <li><strong>Mileage:</strong> <%= new Intl.NumberFormat('en-US').format(vehicle.inv_miles) %> miles</li>
+            <li><strong>Color:</strong> <%= vehicle.inv_color %></li>
+            <li><strong>Description:</strong> <%= vehicle.inv_description %></li>
+          </ul>
+        </div>
+      <% } else { %>
+        <p>Sorry, vehicle details are not available.</p>
+      <% } %>
+    </section>
+  </main>
 
-<%# messages() %>
-
-<!--Inventory Items Display-->
+  <footer>
+    <p>&copy; <%= new Date().getFullYear() %> Vehicle Management System</p>
+  </footer>
+</body>
+</html>
