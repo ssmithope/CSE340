@@ -1,13 +1,15 @@
 <%- include('../partials/header') %> <!-- Include the header partial -->
 
 <main>
+  <h1><%= title || "Vehicles" %></h1> <!-- Display dynamic title -->
+
   <!-- Display vehicles within the selected classification -->
   <% if (grid && grid.trim().length > 0) { %>
     <section id="vehicle-grid">
       <%- grid %>
     </section>
   <% } else { %>
-    <p>No vehicles found for this classification.</p>
+    <p class="notice">No vehicles found for this classification.</p>
   <% } %>
 </main>
 

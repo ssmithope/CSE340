@@ -15,49 +15,55 @@
     <main>
         <!-- Page Title -->
         <div>
-            <% if (title) { %>
-                <h1><%= title %></h1>
-            <% } else { %>
-                <h1>Vehicle Management</h1>
-            <% } %>
-            <p>Welcome to the Vehicle Management dashboard.</p>
+            <h1><%= title || "Vehicle Management" %></h1>
+            <p>Welcome to the Vehicle Management dashboard. Use the options below to manage classifications and inventory.</p>
         </div>
 
         <!-- Flash Message for User Feedback -->
         <% if (flash) { %>
             <div class="flash-message">
-                <%= flash %>
+                <p><%= flash %></p>
             </div>
         <% } %>
 
         <!-- Options for Adding Classification and Inventory -->
-        <section>
+        <section id="management-options">
             <h2>Options</h2>
             <ul>
-                <li><a href="/inv/add-classification">Add New Classification</a></li>
-                <li><a href="/inv/add-inventory">Add New Vehicle</a></li>
+                <li><a href="/inv/add-classification" title="Add a new vehicle classification">Add New Classification</a></li>
+                <li><a href="/inv/add-inventory" title="Add a new vehicle to the inventory">Add New Vehicle</a></li>
             </ul>
         </section>
 
         <!-- Manage Inventory Section -->
-        <section>
+        <section id="inventory-management">
             <h2>Manage Inventory</h2>
-            <p>Choose a classification to view inventory items:</p>
+            <p>Select a classification to view or manage inventory items:</p>
             <!-- Dropdown dynamically populated with classifications -->
-            <%- classificationSelect %>
+            <% if (classificationSelect && classificationSelect.trim().length > 0) { %>
+                <form action="/inv/getInventory" method="GET">
+                    <label for="classificationList">Choose Classification:</label>
+                    <%- classificationSelect %>
+                    <button type="submit">View Inventory</button>
+                </form>
+            <% } else { %>
+                <p class="notice">No classifications available to manage inventory.</p>
+            <% } %>
 
             <!-- Inventory Display Table -->
-            <table id="inventoryDisplay">
+            <table id="inventoryDisplay" class="inventory-table">
                 <!-- JavaScript will dynamically fill this table -->
             </table>
 
-            <noscript>Javascript must be enabled to use this page.</noscript>
+            <noscript>
+                <p class="error">Javascript must be enabled to use this page.</p>
+            </noscript>
         </section>
     </main>
 
     <!-- Footer Section -->
     <footer>
-        <p>&copy; 2025 Vehicle Management System</p>
+        <p>&copy; <%= new Date().getFullYear() %> Vehicle Management System</p>
     </footer>
 
     <!-- JavaScript for Inventory Management -->

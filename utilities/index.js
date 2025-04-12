@@ -11,7 +11,7 @@ utilities.getNav = async function () {
   try {
     const data = await invModel.getClassifications();
 
-    // Check if data.rows exists and is not empty
+    // Check if data is valid and not empty
     if (!data || !data.length) {
       throw new Error("No classifications found to build navigation.");
     }
@@ -35,68 +35,84 @@ utilities.getNav = async function () {
  * Build the classification view HTML
  ************************************** */
 utilities.buildClassificationGrid = function (data) {
-  let grid;
-  if (data.length > 0) {
-    grid = '<ul id="inv-display">';
-    data.forEach((vehicle) => {
-      grid += `<li>
-        <a href="../../inv/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
-          <img src="${vehicle.inv_thumbnail}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model} on CSE Motors">
-        </a>
-        <div class="namePrice">
-          <hr>
-          <h2><a href="../../inv/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
-          ${vehicle.inv_make} ${vehicle.inv_model}</a></h2>
-          <span>$${new Intl.NumberFormat("en-US").format(vehicle.inv_price)}</span>
-        </div>
-      </li>`;
-    });
-    grid += "</ul>";
-  } else {
-    grid = '<p class="notice">Sorry, no matching vehicles could be found.</p>';
+  try {
+    let grid;
+    if (data.length > 0) {
+      grid = '<ul id="inv-display">';
+      data.forEach((vehicle) => {
+        grid += `<li>
+          <a href="../../inv/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
+            <img src="${vehicle.inv_thumbnail}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model} on CSE Motors">
+          </a>
+          <div class="namePrice">
+            <hr>
+            <h2><a href="../../inv/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
+            ${vehicle.inv_make} ${vehicle.inv_model}</a></h2>
+            <span>$${new Intl.NumberFormat("en-US").format(vehicle.inv_price)}</span>
+          </div>
+        </li>`;
+      });
+      grid += "</ul>";
+    } else {
+      grid = '<p class="notice">Sorry, no matching vehicles could be found.</p>';
+    }
+    return grid;
+  } catch (error) {
+    console.error("Error in buildClassificationGrid:", error.message);
+    throw new Error("Failed to build classification grid.");
   }
-  return grid;
 };
 
 /* ****************************************
  * Build the classification dropdown list
  **************************************** */
 utilities.buildClassificationList = function (data) {
-  if (!data || !data.length) {
-    return '<p class="notice">No classifications available.</p>';
-  }
+  try {
+    if (!data || !data.length) {
+      return '<p class="notice">No classifications available.</p>';
+    }
 
-  let list = '<select name="classification_id" id="classificationList" required>';
-  list += '<option value="">Choose a classification</option>';
-  data.forEach((classification) => {
-    list += `<option value="${classification.classification_id}">${classification.classification_name}</option>`;
-  });
-  list += "</select>";
-  return list;
+    let list = '<select name="classification_id" id="classificationList" required>';
+    list += '<option value="">Choose a classification</option>';
+    data.forEach((classification) => {
+      list += `<option value="${classification.classification_id}">${classification.classification_name}</option>`;
+    });
+    list += "</select>";
+    return list;
+  } catch (error) {
+    console.error("Error in buildClassificationList:", error.message);
+    throw new Error("Failed to build classification dropdown.");
+  }
 };
 
 /* ****************************************
  * Middleware to check token validity
  **************************************** */
 utilities.checkJWTToken = (req, res, next) => {
-  if (req.cookies.jwt) {
-    jwt.verify(
-      req.cookies.jwt,
-      process.env.ACCESS_TOKEN_SECRET,
-      function (err, accountData) {
-        if (err) {
-          req.flash("error", "Please log in");
-          res.clearCookie("jwt");
-          return res.redirect("/account/login");
+  try {
+    if (req.cookies.jwt) {
+      jwt.verify(
+        req.cookies.jwt,
+        process.env.ACCESS_TOKEN_SECRET,
+        function (err, accountData) {
+          if (err) {
+            req.flash("error", "Please log in");
+            res.clearCookie("jwt");
+            return res.redirect("/account/login");
+          }
+          res.locals.accountData = accountData;
+          res.locals.loggedin = 1;
+          next();
         }
-        res.locals.accountData = accountData;
-        res.locals.loggedin = 1;
-        next();
-      }
-    );
-  } else {
+      );
+    } else {
+      res.locals.loggedin = 0;
+      next();
+    }
+  } catch (error) {
+    console.error("Error in checkJWTToken:", error.message);
     res.locals.loggedin = 0;
-    next();
+    next(); // Proceed without logged-in session
   }
 };
 
@@ -105,7 +121,10 @@ utilities.checkJWTToken = (req, res, next) => {
  **************************************** */
 utilities.handleErrors = function (fn) {
   return function (req, res, next) {
-    Promise.resolve(fn(req, res, next)).catch(next);
+    Promise.resolve(fn(req, res, next)).catch((error) => {
+      console.error("Error caught in middleware:", error.message);
+      next(error); // Pass error to the default error handler
+    });
   };
 };
 

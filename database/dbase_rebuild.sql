@@ -2,7 +2,6 @@
 CREATE TYPE public.account_type AS ENUM ('active', 'inactive', 'suspended');
 
 -- CLASSIFICATION TABLE --
--- Table structure for table 'classification'
 CREATE TABLE IF NOT EXISTS public.classification (
     classification_id SERIAL PRIMARY KEY, -- Auto-incrementing unique identifier
     classification_name VARCHAR(100) NOT NULL UNIQUE -- Unique classification name
@@ -19,7 +18,6 @@ VALUES
 ON CONFLICT DO NOTHING;
 
 -- INVENTORY TABLE --
--- Table structure for table 'inventory'
 CREATE TABLE IF NOT EXISTS public.inventory (
     inv_id SERIAL PRIMARY KEY, -- Auto-incrementing unique identifier
     inv_make VARCHAR(100) NOT NULL, -- Manufacturer of the vehicle
@@ -52,8 +50,9 @@ VALUES
 ('Toyota', 'Camry', '2022', 'A comfortable and reliable sedan.', '/images/vehicles/camry.jpg', '/images/vehicles/camry-tn.jpg', 24000.00, 5000, 'Blue', 5),
 ('Honda', 'Accord', '2021', 'An efficient sedan with advanced technology.', '/images/vehicles/accord.jpg', '/images/vehicles/accord-tn.jpg', 26000.00, 12000, 'White', 5),
 
--- Add existing inventory data
+-- Add vehicles for Sport
 ('Chevy', 'Camaro', '2018', 'If you want to look cool...', '/images/vehicles/camaro.jpg', '/images/vehicles/camaro-tn.jpg', 25000.00, 101222, 'Silver', 2),
+-- Add vehicles for Trucks
 ('GM', 'Hummer', '2016', 'Do you have 6 kids and like to go offroading?', '/images/vehicles/hummer.jpg', '/images/vehicles/hummer-tn.jpg', 58800.00, 56564, 'Yellow', 4)
 ON CONFLICT DO NOTHING;
 

@@ -1,5 +1,5 @@
 const invModel = require("../models/inventory-model");
-const utilities = require("./utilities");
+const utilities = require("../utilities");
 
 const invController = {};
 
@@ -8,7 +8,7 @@ const invController = {};
  * ************************** */
 invController.buildByClassificationId = async function (req, res, next) {
   try {
-    const classification_id = parseInt(req.params.classificationId, 10); // Ensure classificationId is an integer
+    const classification_id = parseInt(req.params.classificationId, 10);
     if (isNaN(classification_id)) {
       return res.status(400).render("./errors/error", {
         title: "Invalid Classification",
@@ -36,6 +36,7 @@ invController.buildByClassificationId = async function (req, res, next) {
       grid,
     });
   } catch (error) {
+    console.error("Error in buildByClassificationId:", error.message);
     next(error); // Pass the error to the error handler
   }
 };
@@ -47,15 +48,16 @@ invController.buildManagementView = async function (req, res, next) {
   try {
     const nav = await utilities.getNav();
     const classifications = await invModel.getClassifications();
-    const classificationSelect = await utilities.buildClassificationList(classifications.rows);
+    const classificationSelect = await utilities.buildClassificationList(classifications);
 
     res.render("inventory/management", {
       title: "Vehicle Management",
       nav,
       classificationSelect,
-      flash: req.flash("info"), // Display flash messages
+      flash: req.flash("info"),
     });
   } catch (error) {
+    console.error("Error in buildManagementView:", error.message);
     next(error); // Pass the error to the error handler
   }
 };
@@ -64,22 +66,27 @@ invController.buildManagementView = async function (req, res, next) {
  * Show add classification view
  * ************************** */
 invController.showAddClassification = async function (req, res, next) {
-  const nav = await utilities.getNav();
-  res.render("inventory/addClassification", {
-    title: "Add Vehicle Classification",
-    nav,
-    flash: req.flash("info"), // Display flash messages
-    errors: null,
-  });
+  try {
+    const nav = await utilities.getNav();
+    res.render("inventory/addClassification", {
+      title: "Add Vehicle Classification",
+      nav,
+      flash: req.flash("info"),
+      errors: null,
+    });
+  } catch (error) {
+    console.error("Error in showAddClassification:", error.message);
+    next(error); // Pass the error to the error handler
+  }
 };
 
 /* ***************************
  * Add classification process
  * ************************** */
 invController.addClassification = async function (req, res, next) {
-  const nav = await utilities.getNav();
   const { classification_name } = req.body;
   const errors = [];
+  const nav = await utilities.getNav();
 
   // Server-side validation
   const regex = /^[a-zA-Z0-9\s-]+$/;
@@ -101,6 +108,7 @@ invController.addClassification = async function (req, res, next) {
     req.flash("info", "Classification added successfully.");
     res.redirect("/inv");
   } catch (error) {
+    console.error("Error in addClassification:", error.message);
     errors.push({ msg: "Error adding classification. Please try again later." });
     res.render("inventory/addClassification", {
       title: "Add Vehicle Classification",
@@ -118,7 +126,7 @@ invController.showAddInventory = async function (req, res, next) {
   try {
     const nav = await utilities.getNav();
     const classifications = await invModel.getClassifications();
-    const classificationSelect = await utilities.buildClassificationList();
+    const classificationSelect = await utilities.buildClassificationList(classifications);
 
     res.render("inventory/addInventory", {
       title: "Add New Vehicle",
@@ -128,6 +136,7 @@ invController.showAddInventory = async function (req, res, next) {
       errors: null,
     });
   } catch (error) {
+    console.error("Error in showAddInventory:", error.message);
     next(error); // Pass the error to the error handler
   }
 };
@@ -137,8 +146,8 @@ invController.showAddInventory = async function (req, res, next) {
  * ************************** */
 invController.addInventory = async function (req, res, next) {
   const { classification_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color } = req.body;
-  const nav = await utilities.getNav();
   const errors = [];
+  const nav = await utilities.getNav();
 
   // Server-side validation
   if (!classification_id || !inv_make || !inv_model || !inv_year || !inv_description || !inv_image || !inv_thumbnail || !inv_price || !inv_miles || !inv_color) {
@@ -147,7 +156,7 @@ invController.addInventory = async function (req, res, next) {
 
   if (errors.length > 0) {
     const classifications = await invModel.getClassifications();
-    const classificationSelect = await utilities.buildClassificationList(classification_id);
+    const classificationSelect = await utilities.buildClassificationList(classifications);
 
     return res.render("inventory/addInventory", {
       title: "Add New Vehicle",
@@ -174,9 +183,10 @@ invController.addInventory = async function (req, res, next) {
     req.flash("info", "Vehicle added successfully.");
     res.redirect("/inv");
   } catch (error) {
+    console.error("Error in addInventory:", error.message);
     errors.push({ msg: "Error adding vehicle. Please try again later." });
     const classifications = await invModel.getClassifications();
-    const classificationSelect = await utilities.buildClassificationList(classification_id);
+    const classificationSelect = await utilities.buildClassificationList(classifications);
 
     res.render("inventory/addInventory", {
       title: "Add New Vehicle",
@@ -205,6 +215,7 @@ invController.getInventoryJSON = async function (req, res, next) {
       return res.status(404).json({ error: "No inventory found for this classification." });
     }
   } catch (error) {
+    console.error("Error in getInventoryJSON:", error.message);
     next(error); // Pass the error to the error handler
   }
 };

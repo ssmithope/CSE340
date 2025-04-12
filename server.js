@@ -12,7 +12,10 @@ const app = express();
 const static = require("./routes/static");
 const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
+console.log("Utilities module loading...");
 const utilities = require("./utilities");
+console.log("Utilities loaded:", utilities);
+
 const session = require("express-session");
 const pool = require("./database");
 const bodyParser = require("body-parser");
