@@ -17,6 +17,9 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
  * ************************** */
 router.get("/vehicle/:invId", utilities.handleErrors(invController.showVehicleDetail));
 
+router.get("/detail/:id", utilities.handleErrors(invController.showVehicleDetail));
+
+
 /* ***************************
  * Display the management view
  * ************************** */
