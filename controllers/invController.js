@@ -24,20 +24,23 @@ invController.buildByClassificationId = async function (req, res, next) {
 
     if (!data.length) {
       return res.status(404).render("./errors/error", {
-        title: "Classification Not Found",
-        message: "No vehicles found for this classification.",
+        title: "No Inventory Found",
+        message: "There are currently no inventory items in this classification.",
         nav,
       });
     }
+    
 
     const grid = await utilities.buildClassificationGrid(data);
     const className = data[0].classification_name;
 
-    res.render("./inventory/classification", {
+    res.render("inventory/classification", {
+      nav, 
+      grid, 
       title: `${className} Vehicles`,
-      nav,
-      grid,
+      otherData: {}, // Add this or remove any reference to it in your template
     });
+    
   } catch (error) {
     console.error("Error in buildByClassificationId:", error.message);
     next(error); // Pass the error to the error handler
