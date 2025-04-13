@@ -23,7 +23,7 @@ const cookieParser = require("cookie-parser");
 
 /* ***********************
  * Middleware
- * ************************/
+ ************************/
 app.use(
   session({
     store: new (require("connect-pg-simple")(session))({
@@ -47,6 +47,7 @@ app.use(function (req, res, next) {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
+
 // Unit 5, Login activity
 app.use(cookieParser());
 
@@ -68,25 +69,21 @@ app.use(express.static("public"));
  * Routes
  *************************/
 app.use(static);
+
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome));
+
 // Inventory routes
 app.use("/inv", inventoryRoute);
 app.use("/account", require("./routes/accountRoute"));
+
 // Trigger error route (for testing)
 app.use("/inv/trigger-error", inventoryRoute);
 
 // File Not Found Route - must be last route in list
-app.use((req, res, next) => {
-  next({ status: 404, message: "Sorry, we appear to have lost that page." });
-});
-
-/* ***********************
- * Express Error Handler for 404
- *************************/
 app.use(async (req, res, next) => {
   try {
-    const nav = await utilities.getNav();
+    const nav = await utilities.getNav(); // Ensure navigation menu is generated
     res.status(404).render("errors/error", {
       title: "404 - Page Not Found",
       message: "The page you are looking for doesn't exist.",

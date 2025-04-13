@@ -16,8 +16,8 @@ invController.buildByClassificationId = async function (req, res, next) {
       });
     }
 
-    const data = await invModel.getInventoryByClassificationId(classification_id);
     const nav = await utilities.getNav();
+    const data = await invModel.getInventoryByClassificationId(classification_id);
 
     if (!data.length) {
       return res.status(404).render("./errors/error", {
@@ -33,7 +33,7 @@ invController.buildByClassificationId = async function (req, res, next) {
     res.render("inventory/classification", {
       nav, 
       grid, 
-      title: `${className} Vehicles`
+      title: `${className} Vehicles`,
     });
   } catch (error) {
     console.error("Error in buildByClassificationId:", error.message);
