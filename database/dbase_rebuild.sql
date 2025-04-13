@@ -58,17 +58,17 @@ INSERT INTO public.inventory (
 VALUES 
 -- Add vehicles for SUVs
 ('Ford', 'Explorer', '2023', 'A powerful SUV for family adventures.', '/images/vehicles/explorer.jpg', '/images/vehicles/explorer-tn.jpg', 40000.00, 1000, 'Black', 3),
-('Jeep', 'Grand Cherokee', '2022', 'A luxurious SUV with off-road capability.', '/images/vehicles/cherokee.jpg', '/images/vehicles/cherokee-tn.jpg', 45000.00, 8000, 'Red', 3),
+('Jeep', 'Grand Cherokee', '2022', 'A luxurious SUV with off-road capability.', '/images/vehicles/cherokee.jpg', '/images/vehicles/cherokee-tn.jpg', 45000.00, 8000, 'Black', 3),
 
 -- Add vehicles for Sedans
 ('Toyota', 'Camry', '2022', 'A comfortable and reliable sedan.', '/images/vehicles/camry.jpg', '/images/vehicles/camry-tn.jpg', 24000.00, 5000, 'Blue', 5),
-('Honda', 'Accord', '2021', 'An efficient sedan with advanced technology.', '/images/vehicles/accord.jpg', '/images/vehicles/accord-tn.jpg', 26000.00, 12000, 'White', 5),
+('Honda', 'Accord', '2021', 'An efficient sedan with advanced technology.', '/images/vehicles/accord.jpg', '/images/vehicles/accord-tn.jpg', 26000.00, 12000, 'Red', 5),
 
 -- Add vehicles for Sport
-('Chevy', 'Camaro', '2018', 'If you want to look cool...', '/images/vehicles/camaro.jpg', '/images/vehicles/camaro-tn.jpg', 25000.00, 101222, 'Silver', 2),
+('Chevy', 'Camaro', '2018', 'If you want to look cool...', '/images/vehicles/camaro.jpg', '/images/vehicles/camaro-tn.jpg', 25000.00, 101222, 'Black', 2),
 
 -- Add vehicles for Trucks
-('GM', 'Hummer', '2016', 'Do you have 6 kids and like to go offroading?', '/images/vehicles/hummer.jpg', '/images/vehicles/hummer-tn.jpg', 58800.00, 56564, 'Yellow', 4)
+('GM', 'Hummer', '2016', 'Do you have 6 kids and like to go offroading?', '/images/vehicles/hummer.jpg', '/images/vehicles/hummer-tn.jpg', 58800.00, 56564, 'Silver', 4)
 ON CONFLICT DO NOTHING;
 
 -- ACCOUNT TABLE --
