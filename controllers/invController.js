@@ -17,8 +17,6 @@ invController.buildByClassificationId = async function (req, res, next) {
     }
 
     const nav = await utilities.getNav();
-    res.render("template-name", { nav, ...otherData });
-    
     const data = await invModel.getInventoryByClassificationId(classification_id);
 
     if (!data.length) {
