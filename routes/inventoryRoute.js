@@ -8,17 +8,16 @@ const utilities = require("../utilities");
 // Routes for inventory management
 
 /* ***************************
- * Build inventory by classification view
+ * Build inventory with integrated view (Classification + Vehicle Details)
  * ************************** */
-router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
+router.get("/type/:classificationId", utilities.handleErrors(invController.buildIntegratedView));
 
 /* ***************************
- * Show vehicle details by inv_id
+ * Show vehicle details by inv_id (Standalone)
  * ************************** */
 router.get("/vehicle/:invId", utilities.handleErrors(invController.showVehicleDetail));
 
 router.get("/detail/:id", utilities.handleErrors(invController.showVehicleDetail));
-
 
 /* ***************************
  * Display the management view

@@ -28,7 +28,6 @@ utilities.getNav = async function () {
   }
 };
 
-
 /* **************************************
  * Build the classification view HTML
  ************************************** */
@@ -39,12 +38,12 @@ utilities.buildClassificationGrid = function (data) {
       grid = '<ul id="inv-display">';
       data.forEach((vehicle) => {
         grid += `<li>
-          <a href="../../inv/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
+          <a href="/inv/type/${vehicle.classification_id}?vehicle=${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
             <img src="${vehicle.inv_thumbnail}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model} on CSE Motors">
           </a>
           <div class="namePrice">
             <hr>
-            <h2><a href="../../inv/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
+            <h2><a href="/inv/type/${vehicle.classification_id}?vehicle=${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
             ${vehicle.inv_make} ${vehicle.inv_model}</a></h2>
             <span>$${new Intl.NumberFormat("en-US").format(vehicle.inv_price)}</span>
           </div>
@@ -58,6 +57,30 @@ utilities.buildClassificationGrid = function (data) {
   } catch (error) {
     console.error("Error in buildClassificationGrid:", error.message);
     throw new Error("Failed to build classification grid.");
+  }
+};
+
+/* ****************************************
+ * Build the vehicle detail view HTML
+ **************************************** */
+utilities.buildVehicleDetail = function (vehicle) {
+  try {
+    if (!vehicle) {
+      return '<p class="notice">Vehicle details are not available.</p>';
+    }
+
+    let detail = `<section id="vehicle-details">`;
+    detail += `<h2>${vehicle.inv_make} ${vehicle.inv_model} - ${vehicle.inv_year}</h2>`;
+    detail += `<img src="${vehicle.inv_image}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model}">`;
+    detail += `<p><strong>Price:</strong> $${new Intl.NumberFormat("en-US").format(vehicle.inv_price)}</p>`;
+    detail += `<p><strong>Mileage:</strong> ${new Intl.NumberFormat("en-US").format(vehicle.inv_miles)} miles</p>`;
+    detail += `<p><strong>Description:</strong> ${vehicle.inv_description}</p>`;
+    detail += `<p><strong>Color:</strong> ${vehicle.inv_color}</p>`;
+    detail += `</section>`;
+    return detail;
+  } catch (error) {
+    console.error("Error in buildVehicleDetail:", error.message);
+    throw new Error("Failed to build vehicle detail view.");
   }
 };
 

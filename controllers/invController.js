@@ -6,7 +6,7 @@ const invController = {};
 /* ***************************
  * Build inventory by classification view
  * ************************** */
-invController.buildByClassificationId = async function (req, res, next) {
+invController.buildIntegratedView = async function (req, res, next) {
   try {
     const classification_id = parseInt(req.params.classificationId, 10);
     if (isNaN(classification_id)) {
@@ -27,16 +27,20 @@ invController.buildByClassificationId = async function (req, res, next) {
       });
     }
 
-    const grid = await utilities.buildClassificationGrid(data);
-    const className = data[0].classification_name;
+    // Get vehicle details (default to the first vehicle)
+    const vehicleId = parseInt(req.query.vehicle, 10) || data[0].inv_id;
+    const vehicle = data.find(v => v.inv_id === vehicleId);
 
-    res.render("inventory/classification", {
-      nav, 
-      grid, 
-      title: `${className} Vehicles`,
+    const grid = await utilities.buildClassificationGrid(data);
+
+    res.render("inventory/integratedView", {
+      nav,
+      grid,
+      vehicle,
+      title: `${data[0].classification_name} Vehicles`,
     });
   } catch (error) {
-    console.error("Error in buildByClassificationId:", error.message);
+    console.error("Error in buildIntegratedView:", error.message);
     next(error); // Pass the error to the error handler
   }
 };
@@ -58,24 +62,6 @@ invController.buildManagementView = async function (req, res, next) {
     });
   } catch (error) {
     console.error("Error in buildManagementView:", error.message);
-    next(error); // Pass the error to the error handler
-  }
-};
-
-/* ***************************
- * Show add classification view
- * ************************** */
-invController.showAddClassification = async function (req, res, next) {
-  try {
-    const nav = await utilities.getNav();
-    res.render("inventory/addClassification", {
-      title: "Add Vehicle Classification",
-      nav,
-      flash: req.flash("info"),
-      errors: null,
-    });
-  } catch (error) {
-    console.error("Error in showAddClassification:", error.message);
     next(error); // Pass the error to the error handler
   }
 };
@@ -115,85 +101,6 @@ invController.addClassification = async function (req, res, next) {
       nav,
       errors,
       flash: null,
-    });
-  }
-};
-
-/* ***************************
- * Show add inventory view
- * ************************** */
-invController.showAddInventory = async function (req, res, next) {
-  try {
-    const nav = await utilities.getNav();
-    const classifications = await invModel.getClassifications();
-    const classificationSelect = await utilities.buildClassificationList(classifications);
-
-    res.render("inventory/addInventory", {
-      title: "Add New Vehicle",
-      nav,
-      flash: req.flash("info"),
-      classificationSelect,
-      errors: null,
-    });
-  } catch (error) {
-    console.error("Error in showAddInventory:", error.message);
-    next(error); // Pass the error to the error handler
-  }
-};
-
-/* ***************************
- * Add inventory process
- * ************************** */
-invController.addInventory = async function (req, res, next) {
-  const { classification_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color } = req.body;
-  const errors = [];
-  const nav = await utilities.getNav();
-
-  // Server-side validation
-  if (!classification_id || !inv_make || !inv_model || !inv_year || !inv_description || !inv_image || !inv_thumbnail || !inv_price || !inv_miles || !inv_color) {
-    errors.push({ msg: "All fields are required." });
-  }
-
-  if (errors.length > 0) {
-    const classifications = await invModel.getClassifications();
-    const classificationSelect = await utilities.buildClassificationList(classifications);
-
-    return res.render("inventory/addInventory", {
-      title: "Add New Vehicle",
-      nav,
-      flash: null,
-      errors,
-      classificationSelect,
-    });
-  }
-
-  try {
-    await invModel.insertVehicle({
-      classification_id,
-      inv_make,
-      inv_model,
-      inv_year,
-      inv_description,
-      inv_image,
-      inv_thumbnail,
-      inv_price,
-      inv_miles,
-      inv_color,
-    });
-    req.flash("info", "Vehicle added successfully.");
-    res.redirect("/inv");
-  } catch (error) {
-    console.error("Error in addInventory:", error.message);
-    errors.push({ msg: "Error adding vehicle. Please try again later." });
-    const classifications = await invModel.getClassifications();
-    const classificationSelect = await utilities.buildClassificationList(classifications);
-
-    res.render("inventory/addInventory", {
-      title: "Add New Vehicle",
-      nav,
-      flash: null,
-      errors,
-      classificationSelect,
     });
   }
 };
