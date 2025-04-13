@@ -16,10 +16,10 @@ CREATE TABLE IF NOT EXISTS public.classification (
 INSERT INTO public.classification (classification_name)
 VALUES 
 ('Custom'), 
+('Sedan'), 
 ('Sport'), 
-('SUV'), 
-('Truck'), 
-('Sedan')
+('Suv'), 
+('Truck')
 ON CONFLICT DO NOTHING;
 
 -- INVENTORY TABLE --
