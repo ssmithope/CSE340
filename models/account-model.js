@@ -1,4 +1,6 @@
 const pool = require("../database/")
+const user = await db.query("SELECT * FROM account WHERE account_email = $1", [email]);
+
 
 /* *****************************
 *   Register new account
