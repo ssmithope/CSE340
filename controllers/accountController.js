@@ -9,7 +9,6 @@ require("dotenv").config();
  ****************************************** */
 async function buildLogin(req, res) {
     let nav = await utilities.getNav();
-
     res.render("account/login", {
         title: "Login",
         nav,
@@ -22,7 +21,6 @@ async function buildLogin(req, res) {
  ****************************************** */
 async function buildRegister(req, res) {
     let nav = await utilities.getNav();
-
     res.render("account/register", {
         title: "Register",
         nav,
@@ -46,6 +44,16 @@ async function registerAccount(req, res) {
                 title: "Register",
                 nav,
                 errors: [{ msg: "Email already exists." }],
+            });
+        }
+
+        // Ensure passwords meet security requirements
+        if (account_password.length < 12 || !/\d/.test(account_password) || !/[A-Z]/.test(account_password) || !/[!@#$%^&*]/.test(account_password)) {
+            req.flash("notice", "Password must be at least 12 characters, include a capital letter, a number, and a special character.");
+            return res.status(400).render("account/register", {
+                title: "Register",
+                nav,
+                errors: [{ msg: "Weak password." }],
             });
         }
 
@@ -106,8 +114,14 @@ async function accountLogin(req, res) {
             });
         }
 
+        // Log stored hashed password for debugging
+        console.log("Stored password hash:", accountData.account_password);
+        console.log("User-entered password:", account_password);
+
         // Validate password
         const passwordMatch = await bcrypt.compare(account_password, accountData.account_password);
+        console.log("Password match result:", passwordMatch);
+
         if (!passwordMatch) {
             req.flash("notice", "Incorrect password. Try again.");
             return res.status(400).render("account/login", {

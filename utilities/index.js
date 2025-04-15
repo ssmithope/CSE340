@@ -15,18 +15,19 @@ utilities.getNav = async function () {
       return "<ul><li><a href='/' title='Home page'>Home</a></li></ul>";
     }
 
-    let list = "<ul>";
-    list += '<li><a href="/" title="Home page">Home</a></li>';
+    let list = "<ul><li><a href='/' title='Home page'>Home</a></li>";
     data.forEach((row) => {
       list += `<li><a href="/inv/type/${row.classification_id}" title="See our inventory of ${row.classification_name} vehicles">${row.classification_name}</a></li>`;
     });
     list += "</ul>";
+    console.log("Generated Navigation List:", list);
     return list;
   } catch (error) {
     console.error("Error in getNav:", error.message);
     return "<ul><li><a href='/' title='Home page'>Home</a></li></ul>"; // Fallback
   }
 };
+
 
 /* **************************************
  * Build the classification view HTML
@@ -112,30 +113,32 @@ utilities.buildClassificationList = function (data) {
 utilities.checkJWTToken = (req, res, next) => {
   try {
     if (req.cookies.jwt) {
-      jwt.verify(
-        req.cookies.jwt,
-        process.env.ACCESS_TOKEN_SECRET,
-        function (err, accountData) {
-          if (err) {
-            req.flash("error", "Please log in");
-            res.clearCookie("jwt");
-            return res.redirect("/account/login");
-          }
-          res.locals.accountData = accountData;
-          res.locals.loggedin = 1;
-          next();
+      console.log("JWT Token Found:", req.cookies.jwt);
+
+      jwt.verify(req.cookies.jwt, process.env.ACCESS_TOKEN_SECRET, function (err, accountData) {
+        if (err) {
+          console.error("JWT Verification Failed:", err.message);
+          req.flash("error", "Invalid session. Please log in again.");
+          res.clearCookie("jwt");
+          return res.redirect("/account/login");
         }
-      );
+        console.log("Verified Account Data:", accountData);
+        res.locals.accountData = accountData;
+        res.locals.loggedin = 1;
+        next();
+      });
     } else {
+      console.warn("No JWT Token Found, proceeding as guest.");
       res.locals.loggedin = 0;
       next();
     }
   } catch (error) {
     console.error("Error in checkJWTToken:", error.message);
     res.locals.loggedin = 0;
-    next(); // Proceed without logged-in session
+    next();
   }
 };
+
 
 /* ****************************************
  * Middleware for Handling Errors

@@ -3,7 +3,11 @@ const bcrypt = require("bcryptjs");
 
 async function registerAccount(account_firstname, account_lastname, account_email, account_password) {
     try {
-        // Hash password before storing
+        if (!account_password || account_password.length < 12) {
+            throw new Error("Password must be at least 12 characters and contain a number, capital letter, and special character.");
+        }
+        
+        // Ensure passwords are securely hashed
         const hashedPassword = await bcrypt.hash(account_password, 10);
 
         const sql = "INSERT INTO public.account (account_firstname, account_lastname, account_email, account_password, account_type) VALUES ($1, $2, $3, $4, 'active') RETURNING *";
@@ -14,20 +18,25 @@ async function registerAccount(account_firstname, account_lastname, account_emai
     }
 }
 
-
 async function findByEmail(email) {
   try {
     const result = await pool.query(
       "SELECT * FROM account WHERE account_email = $1",
       [email]
     );
-    return result.rows[0] || null;
+    
+    if (!result.rows.length) {
+        console.error("Email not found in database:", email);
+        return null;
+    }
+
+    console.log("Retrieved user data:", result.rows[0]);
+    return result.rows[0];
   } catch (error) {
     console.error("Error finding user by email:", error.message);
     return null;
   }
 }
-
 
 async function checkExistingEmail(account_email) {
   try {
@@ -46,7 +55,14 @@ async function getAccountByEmail(account_email) {
       "SELECT account_id, account_firstname, account_lastname, account_email, account_type, account_password FROM account WHERE account_email = $1",
       [account_email]
     );
-    return result.rows[0] || null;
+
+    if (!result.rows.length) {
+        console.error("Email not found in database:", account_email);
+        return null;
+    }
+
+    console.log("Retrieved user data:", result.rows[0]);
+    return result.rows[0];
   } catch (error) {
     console.error("Database error in getAccountByEmail:", error.message);
     return null;

@@ -17,8 +17,8 @@ CREATE TYPE public.account_type AS ENUM ('active', 'inactive', 'suspended');
 
 -- CLASSIFICATION TABLE --
 CREATE TABLE IF NOT EXISTS public.classification (
-    classification_id SERIAL PRIMARY KEY, -- Auto-incrementing unique identifier
-    classification_name VARCHAR(100) NOT NULL UNIQUE -- Unique classification name
+    classification_id SERIAL PRIMARY KEY,
+    classification_name VARCHAR(100) NOT NULL UNIQUE
 );
 
 -- Populate classification table
@@ -27,27 +27,37 @@ VALUES
 ('Custom'), 
 ('Sedan'), 
 ('Sport'), 
-('Suv'), 
+('SUV'), 
 ('Truck')
 ON CONFLICT DO NOTHING;
 
 -- INVENTORY TABLE --
 CREATE TABLE IF NOT EXISTS public.inventory (
-    inv_id SERIAL PRIMARY KEY, -- Auto-incrementing unique identifier
-    inv_make VARCHAR(100) NOT NULL, -- Manufacturer of the vehicle
-    inv_model VARCHAR(100) NOT NULL, -- Model of the vehicle
-    inv_year CHAR(4) NOT NULL, -- Year of manufacture (fixed-length)
-    inv_description TEXT NOT NULL, -- Description of the vehicle
-    inv_image VARCHAR(255) NOT NULL, -- Path to the vehicle image
-    inv_thumbnail VARCHAR(255) NOT NULL, -- Path to the vehicle thumbnail
-    inv_price NUMERIC(10, 2) NOT NULL, -- Price with precision and scale
-    inv_miles INTEGER NOT NULL, -- Vehicle mileage
-    inv_color VARCHAR(50) NOT NULL, -- Vehicle color
-    classification_id INTEGER NOT NULL, -- Foreign key to classification
+    inv_id SERIAL PRIMARY KEY,
+    inv_make VARCHAR(100) NOT NULL,
+    inv_model VARCHAR(100) NOT NULL,
+    inv_year CHAR(4) NOT NULL,
+    inv_description TEXT NOT NULL,
+    inv_image VARCHAR(255) NOT NULL,
+    inv_thumbnail VARCHAR(255) NOT NULL,
+    inv_price NUMERIC(10, 2) NOT NULL,
+    inv_miles INTEGER NOT NULL,
+    inv_color VARCHAR(50) NOT NULL,
+    classification_id INTEGER NOT NULL,
     CONSTRAINT fk_classification FOREIGN KEY (classification_id)
         REFERENCES public.classification (classification_id)
         ON UPDATE CASCADE
         ON DELETE CASCADE
+);
+
+-- ACCOUNT TABLE (Ensures Hashed Passwords) --
+CREATE TABLE IF NOT EXISTS public.account (
+    account_id SERIAL PRIMARY KEY,
+    account_firstname VARCHAR(100) NOT NULL,
+    account_lastname VARCHAR(100) NOT NULL,
+    account_email VARCHAR(255) NOT NULL UNIQUE,
+    account_password TEXT NOT NULL, -- Store hashed passwords securely
+    account_type public.account_type NOT NULL DEFAULT 'active'
 );
 
 -- Populate inventory table
@@ -71,35 +81,28 @@ VALUES
 ('GM', 'Hummer', '2016', 'Do you have 6 kids and like to go offroading?', '/images/vehicles/hummer.jpg', '/images/vehicles/hummer-tn.jpg', 58800.00, 56564, 'Silver', 4)
 ON CONFLICT DO NOTHING;
 
--- ACCOUNT TABLE --
-CREATE TABLE IF NOT EXISTS public.account (
-    account_id SERIAL PRIMARY KEY, -- Auto-incrementing unique identifier
-    account_firstname VARCHAR(100) NOT NULL, -- First name of the account holder
-    account_lastname VARCHAR(100) NOT NULL, -- Last name of the account holder
-    account_email VARCHAR(255) NOT NULL UNIQUE, -- Unique email address
-    account_password TEXT NOT NULL, -- Store hashed passwords securely
-    account_type public.account_type NOT NULL DEFAULT 'active' -- Status of the account (default: active)
-);
-
--- Populate account table
-INSERT INTO public.account (
-    account_firstname, account_lastname, account_email, account_password, account_type
-)
-VALUES 
-('Bruce', 'Wayne', 'bruce@wayneent.com', 'IamBatm@n', 'active')
-ON CONFLICT DO NOTHING;
-
 -- WISHLISTS TABLE --
 CREATE TABLE IF NOT EXISTS public.wishlists (
-    wishlist_id SERIAL PRIMARY KEY, -- Auto-incrementing unique identifier
-    inv_id INT NOT NULL, -- Foreign key referencing inventory table
-    user_id INT NOT NULL, -- Foreign key referencing account table
-    created_at TIMESTAMP DEFAULT NOW(), -- Timestamp of when the wishlist item was added
+    wishlist_id SERIAL PRIMARY KEY,
+    inv_id INT NOT NULL,
+    user_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
     CONSTRAINT fk_inventory FOREIGN KEY (inv_id) REFERENCES public.inventory (inv_id)
         ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT fk_account FOREIGN KEY (user_id) REFERENCES public.account (account_id)
         ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+-- Ensure passwords are stored hashed
+ALTER TABLE public.account ALTER COLUMN account_password TYPE TEXT;
+
+-- Populate account table with **hashed password**
+INSERT INTO public.account (
+    account_firstname, account_lastname, account_email, account_password, account_type
+)
+VALUES 
+('Bruce', 'Wayne', 'bruce@wayneent.com', '$2a$10$7r7HJGPo28pIl.kpR6WZTu9UZiEHc4FJqA9GOCZKogMSoT7/YxQi.', 'active')
+ON CONFLICT DO NOTHING;
 
 -- Update GM Hummer description
 UPDATE public.inventory
