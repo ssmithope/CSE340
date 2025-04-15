@@ -1,72 +1,27 @@
-<!DOCTYPE html>
-<html lang="en-US">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title || "Vehicle Management" %></title>
-    <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
-    <header>
-        <!-- Dynamic navigation bar passed from the controller -->
-        <%- nav %>
-    </header>
+<div class="management-container">
+    <% if (title) { %>
+        <h1><%= title %></h1>
+    <% } else { %>
+        <h1>Vehicle Management</h1>
+    <% } %>
+    <p>Welcome to the Vehicle Management dashboard.</p>
 
-    <main>
-        <!-- Page Title -->
-        <div>
-            <h1><%= title || "Vehicle Management" %></h1>
-            <p>Welcome to the Vehicle Management dashboard. Use the options below to manage classifications and inventory.</p>
-        </div>
+    <section>
+        <h2>Options:</h2>
+        <ul>
+            <li><a href="/inv/add-classification">Add New Classification</a></li>
+            <li><a href="/inv/add-inventory">Add New Vehicle</a></li>        
+        </ul>
+    </section>
 
-        <!-- Flash Message for User Feedback -->
-        <% if (flash) { %>
-            <div class="flash-message">
-                <p><%= flash %></p>
-            </div>
-        <% } %>
 
-        <!-- Options for Adding Classification and Inventory -->
-        <section id="management-options">
-            <h2>Options</h2>
-            <ul>
-                <li><a href="/inv/add-classification" title="Add a new vehicle classification">Add New Classification</a></li>
-                <li><a href="/inv/add-inventory" title="Add a new vehicle to the inventory">Add New Vehicle</a></li>
-            </ul>
-        </section>
+<h2>Manage Inventory</h2>
+<p>Choose a classification to see those inventory items</p>
 
-        <!-- Manage Inventory Section -->
-        <section id="inventory-management">
-            <h2>Manage Inventory</h2>
-            <p>Select a classification to view or manage inventory items:</p>
-            <!-- Dropdown dynamically populated with classifications -->
-            <% if (classificationSelect && classificationSelect.trim().length > 0) { %>
-                <form action="/inv/getInventory" method="GET">
-                    <label for="classificationList">Choose Classification:</label>
-                    <%- classificationSelect %>
-                    <button type="submit">View Inventory</button>
-                </form>
-            <% } else { %>
-                <p class="notice">No classifications available to manage inventory.</p>
-            <% } %>
+<%- classificationSelect %>
 
-            <!-- Inventory Display Table -->
-            <table id="inventoryDisplay" class="inventory-table">
-                <!-- JavaScript will dynamically fill this table -->
-            </table>
+<table id="inventoryDisplay"></table>
 
-            <noscript>
-                <p class="error">Javascript must be enabled to use this page.</p>
-            </noscript>
-        </section>
-    </main>
+<noscript>Javascript must be enabled to use this page.</noscript>
 
-    <!-- Footer Section -->
-    <footer>
-        <p>&copy; <%= new Date().getFullYear() %> Vehicle Management System</p>
-    </footer>
-
-    <!-- JavaScript for Inventory Management -->
-    <script src="/js/inventory.js"></script>
-</body>
-</html>
+</div>
