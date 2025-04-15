@@ -104,18 +104,19 @@ validate.checkRegData = async (req, res, next) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        let nav = await utilities.getNav();
-        req.flash("notice", "Registration failed. Please fix the errors below.");
-        return res.status(400).render("account/register", {
-            errors: errors.array().map(err => err.msg),
-            title: "Registration",
-            nav,
-            account_firstname,
-            account_lastname,
-            account_email,
-        });
-    }
-    next();
+    let nav = await utilities.getNav();
+    req.flash("notice", "Registration failed. Please fix the errors below.");
+    return res.status(400).render("account/register", {
+        errors: errors.array(), // Ensure errors are properly structured
+        title: "Registration",
+        nav,
+        account_firstname: req.body.account_firstname,
+        account_lastname: req.body.account_lastname,
+        account_email: req.body.account_email,
+    });
+}
+next();
+
 };
 
 module.exports = validate;
