@@ -1,3 +1,9 @@
+-- Ensure the database exists
+CREATE DATABASE IF NOT EXISTS CSE340;
+
+-- Switch to the CSE340 database
+\c CSE340;
+
 -- Create ENUM for account type
 DO $$
 BEGIN
@@ -83,6 +89,9 @@ CREATE TABLE IF NOT EXISTS public.wishlists (
     CONSTRAINT fk_account FOREIGN KEY (user_id) REFERENCES public.account (account_id)
         ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+-- Ensure passwords are stored hashed (Modify existing columns)
+ALTER TABLE public.account ALTER COLUMN account_password TYPE TEXT;
 
 -- Populate account table
 INSERT INTO public.account (

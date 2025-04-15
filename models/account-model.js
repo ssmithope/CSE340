@@ -1,4 +1,19 @@
 const pool = require("../database");
+const bcrypt = require("bcryptjs");
+
+async function registerAccount(account_firstname, account_lastname, account_email, account_password) {
+    try {
+        // Hash password before storing
+        const hashedPassword = await bcrypt.hash(account_password, 10);
+
+        const sql = "INSERT INTO public.account (account_firstname, account_lastname, account_email, account_password, account_type) VALUES ($1, $2, $3, $4, 'active') RETURNING *";
+        return await pool.query(sql, [account_firstname, account_lastname, account_email, hashedPassword]);
+    } catch (error) {
+        console.error("Registration error:", error.message);
+        return { success: false, error: error.message };
+    }
+}
+
 
 async function findByEmail(email) {
   try {
@@ -13,15 +28,6 @@ async function findByEmail(email) {
   }
 }
 
-async function registerAccount(account_firstname, account_lastname, account_email, account_password) {
-  try {
-    const sql = "INSERT INTO account (account_firstname, account_lastname, account_email, account_password, account_type) VALUES ($1, $2, $3, $4, 'Client') RETURNING *";
-    return await pool.query(sql, [account_firstname, account_lastname, account_email, account_password]);
-  } catch (error) {
-    console.error("Error registering account:", error.message);
-    return { success: false, error: error.message };
-  }
-}
 
 async function checkExistingEmail(account_email) {
   try {
